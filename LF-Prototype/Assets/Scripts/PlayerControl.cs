@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//This script is for controlling player movement on an 8-directional movement
+
 public class PlayerControl : MonoBehaviour {
 
     public float moveSpeed;

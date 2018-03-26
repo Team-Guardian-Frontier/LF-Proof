@@ -12,5 +12,6 @@ public class CrosshairBehavior : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         transform.position = Input.mousePosition;
+        //still a WIP for now
 	}
 }

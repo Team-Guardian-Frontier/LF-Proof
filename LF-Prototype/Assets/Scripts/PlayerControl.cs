@@ -12,8 +12,7 @@ public class PlayerControl : MonoBehaviour {
 
     private Vector3 moveInput;
 
-    //Sprite Stuff
-    public Sprite N, NE, E, SE, S, SW, W, NW;
+    
 
 
 
@@ -23,51 +22,52 @@ public class PlayerControl : MonoBehaviour {
 	
 	
 	void Update () {
+        
 		if (Input.GetKey(KeyCode.D))
         {
             transform.Translate(Vector2.right * moveSpeed);
-            this.GetComponent<SpriteRenderer>().sprite = E;
+            
         }
-
+        else
         if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
         {
-            this.GetComponent<SpriteRenderer>().sprite = SE;
+            
         }
-
+        else
         if (Input.GetKey(KeyCode.A))
         {
             transform.Translate(-Vector2.right * moveSpeed);
-            this.GetComponent<SpriteRenderer>().sprite = W;
+            
         }
-
+        else
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S))
         {
-            this.GetComponent<SpriteRenderer>().sprite = SW;
+            
         }
 
         if (Input.GetKey(KeyCode.W))
         {
             transform.Translate(Vector2.up * moveSpeed);
-            this.GetComponent<SpriteRenderer>().sprite = N;
+            
         }
 
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
         {
-            this.GetComponent<SpriteRenderer>().sprite = NW;
+            
         }
 
 
         if (Input.GetKey(KeyCode.S))
         {
             transform.Translate(-Vector2.up * moveSpeed);
-            this.GetComponent<SpriteRenderer>().sprite = S;
+            
         }
 
         if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
         {
-            this.GetComponent<SpriteRenderer>().sprite = NE;
+            
         }
-
+        
 
     }
 }

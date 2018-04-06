@@ -234,6 +234,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\BulletScript.cs" />
     <Compile Include="Assets\Scripts\CrosshairBehavior.cs" />
     <Compile Include="Assets\Scripts\MousePos.cs" />
     <Compile Include="Assets\Scripts\PlayerControl.cs" />

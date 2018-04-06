@@ -10,64 +10,67 @@ public class PlayerControl : MonoBehaviour {
     public float moveSpeed;
     private Rigidbody2D myRigidbody;
 
-    private Vector3 moveInput;
-
-    //Sprite Stuff
-    public Sprite N, NE, E, SE, S, SW, W, NW;
+    private float CDIAG = (Mathf.Sqrt(2)/2);
 
 
 
     void Start () {
         myRigidbody = GetComponent<Rigidbody2D>();
+
 	}
 	
 	
 	void Update () {
-		if (Input.GetKey(KeyCode.D))
-        {
-            transform.Translate(Vector2.right * moveSpeed);
-            this.GetComponent<SpriteRenderer>().sprite = E;
-        }
-
-        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
-        {
-            this.GetComponent<SpriteRenderer>().sprite = SE;
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Translate(-Vector2.right * moveSpeed);
-            this.GetComponent<SpriteRenderer>().sprite = W;
-        }
-
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S))
-        {
-            this.GetComponent<SpriteRenderer>().sprite = SW;
-        }
-
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.Translate(Vector2.up * moveSpeed);
-            this.GetComponent<SpriteRenderer>().sprite = N;
-        }
-
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
-        {
-            this.GetComponent<SpriteRenderer>().sprite = NW;
-        }
-
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.Translate(-Vector2.up * moveSpeed);
-            this.GetComponent<SpriteRenderer>().sprite = S;
-        }
 
         if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
         {
-            this.GetComponent<SpriteRenderer>().sprite = NE;
+            transform.Translate(Vector2.right * moveSpeed * CDIAG);
+            transform.Translate(Vector2.up * moveSpeed * CDIAG);
         }
+        else
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S))
+        {
+            transform.Translate(Vector2.left * moveSpeed * CDIAG);
+            transform.Translate(Vector2.down * moveSpeed * CDIAG);
+        }
+        else
+        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
+        {
+            transform.Translate(Vector2.right * moveSpeed * CDIAG);
+            transform.Translate(Vector2.down * moveSpeed * CDIAG);
+        }
+        else
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
+        {
+            transform.Translate(Vector2.left * moveSpeed * CDIAG);
+            transform.Translate(Vector2.up * moveSpeed * CDIAG);
+        }
+        else
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.Translate(Vector2.right * moveSpeed);
 
+        }
+        else
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.Translate(-Vector2.right * moveSpeed);
+            
+        }
+        else
+        if (Input.GetKey(KeyCode.W))
+        {
+            transform.Translate(Vector2.up * moveSpeed);
+            
+        }
+        else
+        if (Input.GetKey(KeyCode.S))
+        {
+            transform.Translate(-Vector2.up * moveSpeed);
+            
+        }
+        
+        
 
     }
 }

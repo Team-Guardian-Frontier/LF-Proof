@@ -217,14 +217,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.045
-  N: {fileID: 21300000, guid: 29bf42ba1ad2b464986646288401e0f7, type: 3}
-  NE: {fileID: 21300000, guid: b3878cf9ca47ec2448bfef32047de901, type: 3}
-  E: {fileID: 21300000, guid: 471546a57f9cb0843ae4d49088675e0b, type: 3}
-  SE: {fileID: 21300000, guid: 539fdcc8578f8b24b8a01ad95d29aa30, type: 3}
-  S: {fileID: 21300000, guid: 6c38059bb1ba5574fa58012bd9df4548, type: 3}
-  SW: {fileID: 21300000, guid: eb5fde9a2878c3f478be4ffe25533b7c, type: 3}
-  W: {fileID: 21300000, guid: d575a4ef5fd7ccf4ebb51fb890b301e1, type: 3}
-  NW: {fileID: 21300000, guid: 78330022879b00e45b097ca5efff3d99, type: 3}
 --- !u!212 &710106597
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -293,6 +285,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39e045a95ae9c22488cc3985c6ad7c9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  N: {fileID: 21300000, guid: 29bf42ba1ad2b464986646288401e0f7, type: 3}
+  NE: {fileID: 21300000, guid: b3878cf9ca47ec2448bfef32047de901, type: 3}
+  E: {fileID: 21300000, guid: 471546a57f9cb0843ae4d49088675e0b, type: 3}
+  SE: {fileID: 21300000, guid: 539fdcc8578f8b24b8a01ad95d29aa30, type: 3}
+  S: {fileID: 21300000, guid: 6c38059bb1ba5574fa58012bd9df4548, type: 3}
+  SW: {fileID: 21300000, guid: eb5fde9a2878c3f478be4ffe25533b7c, type: 3}
+  W: {fileID: 21300000, guid: d575a4ef5fd7ccf4ebb51fb890b301e1, type: 3}
+  NW: {fileID: 21300000, guid: 78330022879b00e45b097ca5efff3d99, type: 3}
+  mainCam: {fileID: 1711311965}
+  mAngle: 0
+  xdisty: 0
+  ydisty: 0
 --- !u!114 &710106600
 MonoBehaviour:
   m_ObjectHideFlags: 0

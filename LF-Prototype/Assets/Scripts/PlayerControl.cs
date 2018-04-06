@@ -10,28 +10,46 @@ public class PlayerControl : MonoBehaviour {
     public float moveSpeed;
     private Rigidbody2D myRigidbody;
 
-    private Vector3 moveInput;
-
-    
+    private float CDIAG = (Mathf.Sqrt(2)/2);
 
 
 
     void Start () {
         myRigidbody = GetComponent<Rigidbody2D>();
+
 	}
 	
 	
 	void Update () {
-        
-		if (Input.GetKey(KeyCode.D))
+
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
         {
-            transform.Translate(Vector2.right * moveSpeed);
-            
+            transform.Translate(Vector2.right * moveSpeed * CDIAG);
+            transform.Translate(Vector2.up * moveSpeed * CDIAG);
+        }
+        else
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S))
+        {
+            transform.Translate(Vector2.left * moveSpeed * CDIAG);
+            transform.Translate(Vector2.down * moveSpeed * CDIAG);
         }
         else
         if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
         {
-            
+            transform.Translate(Vector2.right * moveSpeed * CDIAG);
+            transform.Translate(Vector2.down * moveSpeed * CDIAG);
+        }
+        else
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
+        {
+            transform.Translate(Vector2.left * moveSpeed * CDIAG);
+            transform.Translate(Vector2.up * moveSpeed * CDIAG);
+        }
+        else
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.Translate(Vector2.right * moveSpeed);
+
         }
         else
         if (Input.GetKey(KeyCode.A))
@@ -40,33 +58,18 @@ public class PlayerControl : MonoBehaviour {
             
         }
         else
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S))
-        {
-            
-        }
-
         if (Input.GetKey(KeyCode.W))
         {
             transform.Translate(Vector2.up * moveSpeed);
             
         }
-
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
-        {
-            
-        }
-
-
+        else
         if (Input.GetKey(KeyCode.S))
         {
             transform.Translate(-Vector2.up * moveSpeed);
             
         }
-
-        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
-        {
-            
-        }
+        
         
 
     }

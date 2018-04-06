@@ -220,6 +220,10 @@ MonoBehaviour:
   SW: {fileID: 21300000, guid: eb5fde9a2878c3f478be4ffe25533b7c, type: 3}
   W: {fileID: 21300000, guid: d575a4ef5fd7ccf4ebb51fb890b301e1, type: 3}
   NW: {fileID: 21300000, guid: 78330022879b00e45b097ca5efff3d99, type: 3}
+  mainCam: {fileID: 1711311965}
+  mAngle: 0
+  xdisty: 0
+  ydisty: 0
 --- !u!114 &710106600
 MonoBehaviour:
   m_ObjectHideFlags: 0

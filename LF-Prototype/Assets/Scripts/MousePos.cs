@@ -10,12 +10,17 @@ public class MousePos : MonoBehaviour {
 
     //Sprite Stuff
     public Sprite N, NE, E, SE, S, SW, W, NW;
+    public Camera mainCam;
+    public float mAngle;
 
-    public float displayangle;
+    public float xdisty;
+    public float ydisty;
 
+    private Vector3 gps;
+    
     // Use this for initializing
     void Start () {
-		
+        gps = new Vector3(0, 0, 0);
 	}
 
     // Update is called once per frame
@@ -31,7 +36,7 @@ public class MousePos : MonoBehaviour {
 
         transform.up = direction;
         */
-        displayangle = MouseAngle();
+        MouseAngle();
         MouseRotation();
         
     }
@@ -39,32 +44,40 @@ public class MousePos : MonoBehaviour {
     //Utility methods
     
     // Calculate angle from character to mouse, for purposes of rotation or aim
-    float MouseAngle()
+    void MouseAngle()
     {
         //calculate manually.
-        Vector3 charPos = transform.position;
+        //Mouse is in pixel Loc(ScreenPoint) and char is on World Point.
+        Vector3 charPos = mainCam.WorldToScreenPoint(transform.position);
         Vector3 mousePos = Input.mousePosition;
+        float xdist = charPos.x - mousePos.x;
+        float ydist = charPos.y - mousePos.y;
 
-        float angle = Vector3.Angle(charPos, mousePos);
-        return angle;
+        mAngle = -Mathf.Atan2(ydist, xdist) * Mathf.Rad2Deg;
+
+        //Debug
+        xdisty = charPos.x;
+        ydisty = mousePos.x;
+
+
     }
 
     //Changes sprite according to mouse angle
     void MouseRotation()
     {
         //call mouse angle
-        float angle = MouseAngle();
+        float angle = mAngle;
 
         //Switch case to change sprite
         if (angle <= 22.5 && angle > -22.5)
         {
-            //East
-            this.GetComponent<SpriteRenderer>().sprite = E;
+            //west
+            this.GetComponent<SpriteRenderer>().sprite = W;
         }
         else if (angle <= 67.5 && angle > 22.5)
         {
-            //Northeast
-            this.GetComponent<SpriteRenderer>().sprite = NE;
+            //Northwest
+            this.GetComponent<SpriteRenderer>().sprite = NW;
         }
         else if (angle <= 112.5 && angle > 67.5)
         {
@@ -73,14 +86,14 @@ public class MousePos : MonoBehaviour {
         }
         else if (angle <= 157.5 && angle > 112.5)
         {
-            //Northwest
-            this.GetComponent<SpriteRenderer>().sprite = NW;
+            //Northeast
+            this.GetComponent<SpriteRenderer>().sprite = NE;
         }
         //negative
         else if (angle <= -22.5 && angle > -67.5)
         {
-            //Southeast
-            this.GetComponent<SpriteRenderer>().sprite = SE;
+            //Southwest
+            this.GetComponent<SpriteRenderer>().sprite = SW;
         }
         else if (angle <= -67.5 && angle > -112.5)
         {
@@ -89,13 +102,13 @@ public class MousePos : MonoBehaviour {
         }
         else if (angle <= -112.5 && angle > -157.5)
         {
-            //Southwest
-            this.GetComponent<SpriteRenderer>().sprite = SW;
+            //Southeast
+            this.GetComponent<SpriteRenderer>().sprite = SE;
         }
         else if (angle <= -157.5 || angle >157.5)
         {
-            //West
-            this.GetComponent<SpriteRenderer>().sprite = W;
+            //East
+            this.GetComponent<SpriteRenderer>().sprite = E;
         }
 
 

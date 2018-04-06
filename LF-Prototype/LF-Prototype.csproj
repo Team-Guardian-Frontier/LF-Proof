@@ -236,8 +236,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CrosshairBehavior.cs" />
-    <Compile Include="Assets\Scripts\MousePos.cs" />
-    <Compile Include="Assets\Scripts\PlayerControl.cs" />
     <Compile Include="Assets\Scripts\SpriteChange.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

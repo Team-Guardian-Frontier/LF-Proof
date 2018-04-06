@@ -13,29 +13,17 @@ public class MousePos : MonoBehaviour {
     public Camera mainCam;
     public float mAngle;
 
-    public float xdisty;
-    public float ydisty;
 
-    private Vector3 gps;
+
     
     // Use this for initializing
     void Start () {
-        gps = new Vector3(0, 0, 0);
+
 	}
 
     // Update is called once per frame
     void Update() {
-        /*
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-
-        Vector2 direction = new Vector2(
-        mousePosition.x - transform.position.x,
-        mousePosition.y - transform.position.y
-        );
-
-        transform.up = direction;
-        */
+        
         MouseAngle();
         MouseRotation();
         
@@ -55,9 +43,6 @@ public class MousePos : MonoBehaviour {
 
         mAngle = -Mathf.Atan2(ydist, xdist) * Mathf.Rad2Deg;
 
-        //Debug
-        xdisty = charPos.x;
-        ydisty = mousePos.x;
 
 
     }

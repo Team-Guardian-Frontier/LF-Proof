@@ -5,8 +5,10 @@ using UnityEngine;
 public class Gun : MonoBehaviour {
 
     public float fireRate = 3; //dependant on gun
-    public float damage = 8; //default damage value
     float TTF = 0; //Time until Fire
+    public Transform firePoint;
+    public GameObject bullet;
+
 
     void Update()
     {
@@ -21,8 +23,7 @@ public class Gun : MonoBehaviour {
 
     void Shoot()
     {
-        //Shooting placeholder
-        Debug.Log("Shooting");
+        Instantiate(bullet, firePoint.position, firePoint.rotation);
     }
 
 }

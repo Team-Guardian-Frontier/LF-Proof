@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletScript : MonoBehaviour {
+    public float bulletSpeed;
+    public float bulletDamage;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void FixedUpdate()
+    {
+        this.transform.Translate(Vector2.up * bulletSpeed * Time.deltaTime);
+    }
+
 }

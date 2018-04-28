@@ -17,10 +17,6 @@ public class MousePos : MonoBehaviour {
 
 	}
 
-    private float triggers;
-
-    private float hAxis;
-    private float vAxis;
 
     private float aimX;
     private float aimY;
@@ -30,21 +26,7 @@ public class MousePos : MonoBehaviour {
     //part of Toggle
     //private float togDead = .5f;
 
-    private bool xbox_a;
 
-    void ControllerCheck() {
-        triggers = Input.GetAxis("Triggers");
-
-        xbox_a = Input.GetButton("XboxA");
-
-        hAxis = Input.GetAxis("Horizontal");
-        vAxis = Input.GetAxis("Vertical");
-
-        aimX = Input.GetAxis("AimX");
-        aimY = Input.GetAxis("AimY");
-
-        Debug.Log(triggers + " " + xbox_a + " " + hAxis + " " + vAxis + " " + aimX + " " + aimY);
-    }
 
     // Update is called once per frame
     void Update() {

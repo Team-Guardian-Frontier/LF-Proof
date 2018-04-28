@@ -6,7 +6,6 @@ using UnityEngine;
 //Gets rid of mouse cursor while replacing it with custom crosshair
 
 public class CrosshairBehavior : MonoBehaviour {
-
 	// Use this for initialization
 	void Start () {
         Cursor.visible = false;

@@ -1,0 +1,24 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GameManager : MonoBehaviour {
+    private static GameManager instance = null;
+
+    //Awake is always called before any Start functions
+    void Awake() {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+        
+        DontDestroyOnLoad(gameObject);
+    }
+
+	void Start() {
+        Food food = new Food(Food.FoodType.Fruit, Vector3.zero);
+	}
+	
+	void Update() {
+	}
+}

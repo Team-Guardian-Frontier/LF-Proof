@@ -14,12 +14,10 @@ public class PlayerControl : MonoBehaviour {
 
     private float CDIAG = (Mathf.Sqrt(2) / 2);
 
-    void Start () {
-        myRigidbody = GetComponent<Rigidbody2D>();
+    void Start() {
 	}
 	
-	
-	void Update () {
+	void Update() {
 
         if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
         {

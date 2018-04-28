@@ -218,6 +218,8 @@
     <Compile Include="Assets\Scripts\FoodScript.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\MousePos.cs" />
+    <Compile Include="Assets\Scripts\Player2Scripts\P2MousePos.cs" />
+    <Compile Include="Assets\Scripts\Player2Scripts\P2PlayerControl.cs" />
     <Compile Include="Assets\Scripts\PlayerControl.cs" />
     <Compile Include="Assets\Scripts\SpriteChange.cs" />
     <Compile Include="Assets\Scripts\StatsManager.cs" />

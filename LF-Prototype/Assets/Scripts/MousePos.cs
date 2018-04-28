@@ -24,6 +24,8 @@ public class MousePos : MonoBehaviour {
 
     private float aimX;
     private float aimY;
+
+    //Player 2 Feilds:
     
     //part of Toggle
     //private float togDead = .5f;

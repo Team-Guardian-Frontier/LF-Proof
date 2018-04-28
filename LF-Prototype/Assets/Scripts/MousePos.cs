@@ -17,21 +17,17 @@ public class MousePos : MonoBehaviour {
 
 	}
 
-<<<<<<< HEAD
     private float triggers;
 
     private float hAxis;
     private float vAxis;
 
-=======
->>>>>>> Pickup
     private float aimX;
     private float aimY;
     
     //part of Toggle
     //private float togDead = .5f;
 
-<<<<<<< HEAD
     private bool xbox_a;
 
     void ControllerCheck() {
@@ -47,8 +43,6 @@ public class MousePos : MonoBehaviour {
 
         Debug.Log(triggers + " " + xbox_a + " " + hAxis + " " + vAxis + " " + aimX + " " + aimY);
     }
-=======
->>>>>>> Pickup
 
     // Update is called once per frame
     void Update() {

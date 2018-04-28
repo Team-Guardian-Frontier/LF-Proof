@@ -56,7 +56,7 @@ public class Food : MonoBehaviour {
                 }
 
             default: {
-                    Debug.Log("No foodType specified. Refusing to instantiate Food Object.");
+                    Debug.Log("No FoodType specified. Refusing to instantiate Food Object.");
                     break;
                 }
         }

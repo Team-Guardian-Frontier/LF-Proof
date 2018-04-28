@@ -21,23 +21,23 @@ public class StatsManager : MonoBehaviour {
 		
 	}
 
-    public int getCarbCounter() {
+    public int GetCarbs() {
         return this.carbCounter;
     }
 
-    public int getProteinCounter() {
+    public int GetProteins() {
         return this.proteinCounter;
     }
 
-    public int getFatCounter() {
+    public int GetFats() {
         return this.fatCounter;
     }
 
-    public int getFruitCounter() {
+    public int GetFruits() {
         return this.fruitCounter;
     }
 
-    public int getVegetableCounter() {
+    public int GetVegetables() {
         return this.vegetableCounter;
     }
 }

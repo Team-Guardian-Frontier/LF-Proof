@@ -34,8 +34,6 @@ public class PlayerControl : MonoBehaviour {
             verti = 1;
         if (verti < -togDead)
             verti = -1;
-
-
     }
 	
 	void Update () {

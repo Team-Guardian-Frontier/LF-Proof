@@ -242,6 +242,7 @@
     <Compile Include="Assets\Scripts\MousePos.cs" />
     <Compile Include="Assets\Scripts\PlayerControl.cs" />
     <Compile Include="Assets\Scripts\SpriteChange.cs" />
+    <Compile Include="Assets\Scripts\StatsManager.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\Gun.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

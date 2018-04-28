@@ -17,11 +17,32 @@ public class MousePos : MonoBehaviour {
 
 	}
 
+    private float hAxis;
+    private float vAxis;
+    private float aimX;
+    private float aimY;
+
+    void ControllerCheck() {
+        float ltaxis = Input.GetAxis("XboxLeftTrigger");
+        float rtaxis = Input.GetAxis("XboxRightTrigger");
+
+        bool xbox_a = Input.GetButton("XboxA");
+
+        hAxis = Input.GetAxis("Horizontal");
+        vAxis = Input.GetAxis("Vertical");
+
+        aimX = Input.GetAxis("AimX");
+        aimY = Input.GetAxis("AimY");
+    }
+
     // Update is called once per frame
     void Update() {
+        // Camera Rig Movement Control
+
+        ControllerCheck();
+
         MouseAngle();
         MouseRotation();
-        
     }
     
     //Utility methods

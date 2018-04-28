@@ -17,10 +17,6 @@ public class PlayerControl : MonoBehaviour {
 
     void Start() {
 	}
-<<<<<<< HEAD
-	
-	void Update() {
-=======
 
     private float horiz;
     private float verti;
@@ -43,7 +39,6 @@ public class PlayerControl : MonoBehaviour {
     }
 	
 	void Update () {
->>>>>>> Pickup
 
         ControllerCheck();
         Movement();

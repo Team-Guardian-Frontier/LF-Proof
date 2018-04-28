@@ -13,47 +13,89 @@ public class PlayerControl : MonoBehaviour {
     private Rigidbody2D myRigidbody;
 
     private float CDIAG = (Mathf.Sqrt(2) / 2);
+    private const float togDead = .5f;
 
     void Start() {
 	}
+<<<<<<< HEAD
 	
 	void Update() {
+=======
 
-        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
+    private float horiz;
+    private float verti;
+
+    void ControllerCheck() {
+        horiz = Input.GetAxis("Horizontal");
+        verti = Input.GetAxis("Vertical");
+
+
+        if (horiz > togDead)
+            horiz = 1;
+        if (horiz < -togDead)
+            horiz = -1;
+        if (verti > togDead)
+            verti = 1;
+        if (verti < -togDead)
+            verti = -1;
+
+
+    }
+	
+	void Update () {
+>>>>>>> Pickup
+
+        ControllerCheck();
+        Movement();
+        
+    }
+
+    void Movement(){
+
+        if (verti == -1 && horiz == 1)
         {
+            //NE
             transform.Translate(Vector2.right * moveSpeed * CDIAG);
             transform.Translate(Vector2.up * moveSpeed * CDIAG);
         }
-        else if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S))
+        else if (verti == 1 && horiz == -1)
         {
+            //SW
             transform.Translate(Vector2.left * moveSpeed * CDIAG);
             transform.Translate(Vector2.down * moveSpeed * CDIAG);
         }
-        else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
+        else if (verti == 1 && horiz == 1)
         {
+            //SE
             transform.Translate(Vector2.right * moveSpeed * CDIAG);
             transform.Translate(Vector2.down * moveSpeed * CDIAG);
         }
-        else if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
+        else if (verti == -1 && horiz == -1)
         {
+            //NW
             transform.Translate(Vector2.left * moveSpeed * CDIAG);
             transform.Translate(Vector2.up * moveSpeed * CDIAG);
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (horiz == 1)
         {
+            //E
             transform.Translate(Vector2.right * moveSpeed);
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (horiz == -1)
         {
+            //W
             transform.Translate(-Vector2.right * moveSpeed);
         }
-        else if (Input.GetKey(KeyCode.W))
+        else if (verti == -1)
         {
+            //N
             transform.Translate(Vector2.up * moveSpeed);
         }
-        else if (Input.GetKey(KeyCode.S))
+        else if (verti == 1)
         {
+            //S
             transform.Translate(-Vector2.up * moveSpeed);
         }
+
     }
 }

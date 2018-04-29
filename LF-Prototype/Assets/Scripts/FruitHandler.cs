@@ -7,8 +7,7 @@ public class FruitHandler : MonoBehaviour {
 
     //Calls StatsManager script
     private StatsManager stats;
-    private Food food;
-
+    private Food prisoner;
     //fruit object space
 
 
@@ -27,8 +26,10 @@ public class FruitHandler : MonoBehaviour {
     {
         if (other.tag == "Food")
         {
-            food = other.gameObject.GetComponent<Food>();
-            Destroy(other.gameObject);
+            string pname = other.gameObject.name;
+            GameObject tempCast = GameObject.Find(pname);
+            prisoner = (Food)prisoner.GetComponent(typeof(Food));
+            prisoner.Pickup(this.gameObject);
         }
         else if (other.tag == "Bullet")
         {
@@ -49,8 +50,7 @@ public class FruitHandler : MonoBehaviour {
 
     public void UseFood()
     {
-        Food.FoodType type = food.foodType;
-        stats.eatFood(type);
+        
     }
 
     /*  Guide to food interaction:

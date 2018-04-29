@@ -31,7 +31,6 @@ public class Food : MonoBehaviour {
     private Vector3 offset;
 
     //Launch fields
-    private float lAngle;
     public float maxSpeed;
     private float xspeed;
     private float yspeed;
@@ -106,6 +105,7 @@ public class Food : MonoBehaviour {
                 Held();
                 break;
             case FoodState.Shot:
+                Shot();
                 break;
             default:
                 break;
@@ -114,21 +114,17 @@ public class Food : MonoBehaviour {
     }
 
     //trigger events
-    private void OnTriggerEnter(Collider other)
+    public void Pickup(GameObject other)
     {
         //pass ref to this object to player (for shooting and eating, and type.)
 
-        
-
-        if (other.tag == "Player")
-        {
-            player = other.gameObject;
+            player = other;
             foodState = FoodState.Held;
 
-            offset = this.transform.position - other.transform.position;
-        }
+            Debug.Log("I am touched by you!");
 
-        
+            offset = this.transform.position - other.transform.position;
+
     }
         //call on player, when press trigger. (this instance already passed.)
     public void Launched(float angle)

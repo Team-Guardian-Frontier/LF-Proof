@@ -136,7 +136,6 @@ public class Food : MonoBehaviour {
         player = other;
         foodState = FoodState.Held;
 
-        Debug.Log("I am touched by you!");
 
         offset = Vector3.zero; // this.transform.position - other.transform.position;
 
@@ -153,8 +152,8 @@ public class Food : MonoBehaviour {
         foodState = FoodState.Shot;
 
 
-        Debug.Log("I was shot!");
-        Debug.Log(xspeed +"speed" + yspeed + angle);
+        Debug.Log("I was shot!" + foodState);
+
 
         
     }

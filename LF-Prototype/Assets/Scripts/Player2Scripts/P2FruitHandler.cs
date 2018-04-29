@@ -11,6 +11,7 @@ public class P2FruitHandler : MonoBehaviour
 
 
     //held food object
+    private Food visitor;
     private Food prisoner;
     private GameObject tempCast;
 
@@ -49,24 +50,41 @@ public class P2FruitHandler : MonoBehaviour
 
         if (other.tag == "Food")
         {
+            Debug.Log("Collision Detected");
+
+            //find a way to check state of other, without taking prisoner.
+            string pname = other.gameObject.name;
+            tempCast = GameObject.Find(pname);
+            visitor = (Food)tempCast.GetComponent(typeof(Food));
 
 
-            if (prisoner == null)
+
+            if (visitor.foodState == Food.FoodState.Shot)
             {
-                string pname = other.gameObject.name;
-                tempCast = GameObject.Find(pname);
-                prisoner = (Food)tempCast.GetComponent(typeof(Food));
-                if (prisoner.foodState == Food.FoodState.Shot)
-                {
-                    stats.takeDamage();
-                    // add food count for damage
-                    Destroy(other.gameObject);
-                    
-                }
-                else if(prisoner.foodState != Food.FoodState.Held)
-                    prisoner.Pickup(this.gameObject);
+                stats.takeDamage();
+                // add food count for damage
+                Destroy(other.gameObject);
 
             }
+            else if (prisoner == null)
+            {
+                prisoner = visitor;
+                Debug.Log("prisonerstate" + prisoner.foodState);
+
+                if (prisoner.foodState == Food.FoodState.Held)
+                {
+                    //bump
+                    prisoner = null;
+                    tempCast = null;
+                }
+                else
+                {
+                    prisoner.Pickup(this.gameObject);
+
+                }
+
+            }
+                
 
         }
 

@@ -18,6 +18,8 @@ public class P2PlayerControl : MonoBehaviour
 
     void Start()
     {
+        myRigidbody = (Rigidbody2D)this.gameObject.GetComponent(typeof(Rigidbody2D));
+        myRigidbody.freezeRotation = true;
     }
 
     private float horiz;

@@ -16,6 +16,8 @@ public class PlayerControl : MonoBehaviour {
     private const float togDead = .5f;
 
     void Start() {
+        myRigidbody = (Rigidbody2D)this.gameObject.GetComponent(typeof(Rigidbody2D));
+        myRigidbody.freezeRotation = true;
 	}
 
     private float horiz;
@@ -35,6 +37,8 @@ public class PlayerControl : MonoBehaviour {
         if (verti < -togDead)
             verti = -1;
     }
+
+     
 	
 	void Update () {
 

@@ -85,6 +85,7 @@ public class StatsManager : MonoBehaviour {
     public void takeDamage()
     {
         health -= servingSize;
+        Debug.Log("Hurt");
     }
 
     public void Loss()

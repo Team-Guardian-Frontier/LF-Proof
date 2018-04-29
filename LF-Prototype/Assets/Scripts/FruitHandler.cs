@@ -6,7 +6,7 @@ public class FruitHandler : MonoBehaviour {
 
 
     //Calls StatsManager script
-    public StatsManager stats;
+    private StatsManager stats;
 
 
     //held food object

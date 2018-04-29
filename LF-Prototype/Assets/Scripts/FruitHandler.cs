@@ -22,7 +22,7 @@ public class FruitHandler : MonoBehaviour {
 		
 	}
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Food")
         {
@@ -30,6 +30,7 @@ public class FruitHandler : MonoBehaviour {
             GameObject tempCast = GameObject.Find(pname);
             prisoner = (Food)prisoner.GetComponent(typeof(Food));
             prisoner.Pickup(this.gameObject);
+            DestroyObject(other);
         }
         else if (other.tag == "Bullet")
         {

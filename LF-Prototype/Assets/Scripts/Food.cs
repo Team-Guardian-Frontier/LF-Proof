@@ -114,19 +114,22 @@ public class Food : MonoBehaviour {
     }
 
     //trigger events
+
     public void Pickup(GameObject other)
     {
         //pass ref to this object to player (for shooting and eating, and type.)
 
-            player = other;
-            foodState = FoodState.Held;
+        player = other;
+        foodState = FoodState.Held;
 
-            Debug.Log("I am touched by you!");
+        Debug.Log("I am touched by you!");
 
-            offset = this.transform.position - other.transform.position;
+        offset = this.transform.position - other.transform.position;
 
+
+        
     }
-        //call on player, when press trigger. (this instance already passed.)
+    //call on player, when press trigger. (this instance already passed.)
     public void Launched(float angle)
     {
         //set speed and transforming

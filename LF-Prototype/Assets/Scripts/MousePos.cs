@@ -39,7 +39,7 @@ public class MousePos : MonoBehaviour {
         //ggle, Saves last direction. Odd issue registering.
         float aimDelta = Mathf.Sqrt(Mathf.Pow(aimX, 2) + Mathf.Pow(aimY, 2));
 
-        if (aimDelta < 0)
+        if (aimDelta > togDead )
         {
 
             StickAngle();

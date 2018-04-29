@@ -24,7 +24,6 @@ public class Food : MonoBehaviour {
     public FoodType foodType;
     public FoodState foodState;
 
-    public bool isShot;
 
     //game object field for being held
     private GameObject player;
@@ -111,7 +110,6 @@ public class Food : MonoBehaviour {
     {
         //set speed
         maxSpeed = .01f;
-        isShot = false;
     }
     void Update()
     {
@@ -154,7 +152,6 @@ public class Food : MonoBehaviour {
 
         foodState = FoodState.Shot;
 
-        isShot = true;
 
         Debug.Log("I was shot!");
         Debug.Log(xspeed +"speed" + yspeed + angle);

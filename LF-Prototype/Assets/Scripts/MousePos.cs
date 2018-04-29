@@ -24,27 +24,29 @@ public class MousePos : MonoBehaviour {
     //Player 2 Feilds:
     
     //part of Toggle
-    //private float togDead = .5f;
+    private float togDead = .5f;
 
 
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         // Camera Rig Movement Control
 
         aimX = Input.GetAxis("AimX");
         aimY = -(Input.GetAxis("AimY"));
-        /*
-         * Toggle, Saves last direction. Odd issue registering.
-        float aimDelta = (togDead - Mathf.Abs(aimX)) + (togDead - Mathf.Abs(aimY));
-         * 
-         * if (aimDelta < 0)
-            StickAngle();
-        */
-        StickAngle();
-        MouseRotation();
 
-            }
+        //ggle, Saves last direction. Odd issue registering.
+        float aimDelta = Mathf.Sqrt(Mathf.Pow(aimX, 2) + Mathf.Pow(aimY, 2));
+
+        if (aimDelta < 0)
+        {
+
+            StickAngle();
+            MouseRotation();
+
+        }
+    }
     
     //Utility methods
     

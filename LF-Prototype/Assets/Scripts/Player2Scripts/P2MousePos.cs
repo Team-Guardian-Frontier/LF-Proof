@@ -26,7 +26,7 @@ public class P2MousePos : MonoBehaviour
     //Player 2 Feilds:
 
     //part of Toggle
-    //private float togDead = .5f;
+    private float togDead = .5f;
 
 
 
@@ -37,21 +37,21 @@ public class P2MousePos : MonoBehaviour
 
         aimX = Input.GetAxis("P2AimX");
         aimY = Input.GetAxis("P2AimY");
-        /*
-         * Toggle, Saves last direction. Odd issue registering.
-        float aimDelta = (togDead - Mathf.Abs(aimX)) + (togDead - Mathf.Abs(aimY));
-         * 
-         * if (aimDelta < 0)
+        //tpogglele, Saves last direction. Odd issue registering.
+        float aimDelta = Mathf.Sqrt(Mathf.Pow(aimX, 2) + Mathf.Pow(aimY, 2));
+
+        if (aimDelta < 0)
+        {
+
             StickAngle();
-        */
-        StickAngle();
-        MouseRotation();
+            MouseRotation();
+
+        }
     }
+        //Utility methods
 
-    //Utility methods
-
-    // Calculate angle from character to mouse, for purposes of rotation or aim
-    void StickAngle()
+        // Calculate angle from character to mouse, for purposes of rotation or aim
+         void StickAngle()
     {
 
         //calculate angle from controller

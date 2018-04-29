@@ -45,7 +45,7 @@ public class FoodSpawner : MonoBehaviour {
                 foodInArea = Physics2D.OverlapCircle(spawnLocation, 1f); // check again
             }
             // spawn the food
-            food = new Food(spawnType, spawnLocation);
+            food = new Food(spawnType, spawnLocation, foodCount);
             foodCount += 1;
             Debug.Log("Created food: '" + food.foodType + "' at " + Time.time);
         }

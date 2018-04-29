@@ -45,9 +45,9 @@ public class Food : MonoBehaviour {
     /**
      * Constructor that takes in food type, and a vector3 for position.
      */
-    public Food(FoodType _foodType, Vector3 _initialPosition) {
+    public Food(FoodType _foodType, Vector3 _initialPosition, int _count) {
 
-        foodObject = new GameObject(_foodType.ToString());
+        foodObject = new GameObject(_foodType.ToString() + _count);
 
         foodObject.gameObject.tag = "Food";
         foodType = _foodType;

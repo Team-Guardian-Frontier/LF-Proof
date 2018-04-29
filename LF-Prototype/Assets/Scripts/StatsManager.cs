@@ -1,9 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//import ui
+using UnityEngine.UI;
 
 public class StatsManager : MonoBehaviour {
-    private int health;
+    public Text playerText;
+    public Text winText;
+
+
+    public int health;
+    private int totalH;
     private int carbCounter;
     private int proteinCounter;
     private int vegetableCounter;
@@ -21,11 +28,15 @@ public class StatsManager : MonoBehaviour {
         vegetableCounter = 0;
         carbCounter = 0;
         proteinCounter = 0;
+
+        //this is to set total health.
+        totalH = health;
+        DisplayHealth();
+        winText.text = "";
 	}
 	
 	void Update () {
-        if (health <= 0)
-            Loss();
+        DisplayHealth();
 	}
 
     public int GetVegetables() {
@@ -43,6 +54,8 @@ public class StatsManager : MonoBehaviour {
     public void eatFood(Food.FoodType foodType)
     {
         health += servingSize;
+
+        /*
         int penalty;
         switch (foodType)
         {
@@ -80,16 +93,26 @@ public class StatsManager : MonoBehaviour {
                 Debug.Log("No foodType specified. Cannot add food to counter.");
                 break;
         }
+        */
     }
 
     public void takeDamage()
     {
         health -= servingSize;
-        Debug.Log("Hurt");
+        
+    }
+
+    private void DisplayHealth()
+    {
+        playerText.text = this.gameObject.name + ": " + health + "/" + totalH;
+        if (health <= 0)
+            Loss();
+
     }
 
     public void Loss()
     {
+        winText.text = "Game Over! You are Winner!";
         Destroy(gameObject);
     }
 }

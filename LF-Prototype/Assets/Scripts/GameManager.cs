@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour {
     }
 
 	void Start() {
-        Food food = new Food(Food.FoodType.Fruit, Vector3.zero);
 	}
 	
 	void Update() {

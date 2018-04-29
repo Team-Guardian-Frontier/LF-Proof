@@ -74,10 +74,10 @@ public class Food : MonoBehaviour {
         boxCollider.isTrigger = true;
 
     }
-
-    private void OnTriggerEnter(Collider other)
+    private void OnCollsionEnter(Collider other)
     {
-        Destroy(foodObject);
+        if (other.tag == "Player")
+            Destroy(gameObject);
     }
 }
 

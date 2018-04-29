@@ -33,13 +33,13 @@ public class FoodSpawner : MonoBehaviour {
             foodNumber = 0; // Set to Fruit for debugging
                             //foodNumber = Random.Range(0, 4);                                                  // Randomizes the FoodType
             spawnType = (Food.FoodType)foodNumber;                                              // Sets the FoodType using the random number
-            spawnLocation = new Vector2(Random.Range(-4.8f, 4.8f), Random.Range(-2.5f, 2.5f));  // Sets the random location of food spawn within a certain area
+            spawnLocation = new Vector2(Random.Range(-6.75f, 6.75f), Random.Range(-2.25f, 2.25f));  // Sets the random location of food spawn within a certain area
 
             // check an area around the food to see if another food is nearby, if so then move the spawn location to another spot
             Collider2D foodInArea = Physics2D.OverlapCircle(spawnLocation, 1.0f);
             while (foodInArea != null)
             {
-                spawnLocation = new Vector2(Random.Range(-3.0f, 3.0f), Random.Range(-1.5f, 1.5f)); // checks a smaller area if the first location is too close
+                spawnLocation = new Vector2(Random.Range(-5.0f, 5.0f), Random.Range(-1.75f, 1.75f)); // checks a smaller area if the first location is too close
                 foodInArea = null; // reset array
                 foodInArea = Physics2D.OverlapCircle(spawnLocation, 1f); // check again
             }

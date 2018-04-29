@@ -24,6 +24,8 @@ public class Food : MonoBehaviour {
     public FoodType foodType;
     public FoodState foodState;
 
+    public bool isShot;
+
     //game object field for being held
     private GameObject player;
 
@@ -41,6 +43,7 @@ public class Food : MonoBehaviour {
     private Sprite foodSprite;
     private Texture2D foodTexture;
     private GameObject foodObject;
+    private Rigidbody2D foodRigid;
 
     /**
      * Constructor that takes in food type, and a vector3 for position.
@@ -92,6 +95,11 @@ public class Food : MonoBehaviour {
         boxCollider = foodObject.AddComponent<BoxCollider2D>();
         boxCollider.isTrigger = true;
 
+        /*add rigidbody2d, if needed
+        foodRigid = (Rigidbody2D)foodObject.AddComponent(typeof(Rigidbody2D));
+        foodRigid.gravityScale = 0;
+        */
+
         //add Script
         foodObject.AddComponent(typeof(Food));
 
@@ -99,6 +107,12 @@ public class Food : MonoBehaviour {
 
 
     //Unity Events
+    private void Start()
+    {
+        //set speed
+        maxSpeed = .01f;
+        isShot = false;
+    }
     void Update()
     {
         switch (foodState)
@@ -134,11 +148,18 @@ public class Food : MonoBehaviour {
     {
         //set speed and transforming
         //calculate xspeed and yspeed with trig, set to Vector3
-        xspeed = Mathf.Cos(angle) * Mathf.Rad2Deg * maxSpeed;
-        yspeed = Mathf.Sin(angle) * Mathf.Rad2Deg * maxSpeed;
+        xspeed = Mathf.Cos(angle * Mathf.Deg2Rad) * maxSpeed;
+        yspeed = Mathf.Sin(angle * Mathf.Deg2Rad) * maxSpeed;
         speedWagon = new Vector3(xspeed, yspeed);
 
         foodState = FoodState.Shot;
+
+        isShot = true;
+
+        Debug.Log("I was shot!");
+        Debug.Log(xspeed +"speed" + yspeed + angle);
+
+        
     }
 
 

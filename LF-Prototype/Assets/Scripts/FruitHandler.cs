@@ -6,58 +6,92 @@ public class FruitHandler : MonoBehaviour {
 
 
     //Calls StatsManager script
-    private StatsManager stats;
+    public StatsManager stats;
+
+
+    //held food object
     private Food prisoner;
-    //fruit object space
+    private GameObject tempCast;
+
+    //trigger inputs
+    private float ltrigger;
+    private float rtrigger;
+
 
 
     // Use this for initialization
     void Start () {
-
+        //load stats
+        stats = (StatsManager)this.gameObject.GetComponent(typeof(StatsManager));
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        ltrigger = Input.GetAxis("ltrig1");
+        rtrigger = Input.GetAxis("rtrig1");
+
+
+
+        if (prisoner !=null)
+        {
+            UseFood();
+            CheckShoot();
+        }
 	}
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        
+
         if (other.tag == "Food")
         {
             
-            string pname = other.gameObject.name;
-            GameObject tempCast = GameObject.Find(pname);
-            prisoner = (Food)tempCast.GetComponent(typeof(Food));
-            prisoner.Pickup(this.gameObject);
 
-            Debug.Log(prisoner.ToString());
+            if (prisoner == null)
+            { 
+                string pname = other.gameObject.name;
+                tempCast = GameObject.Find(pname);
+                prisoner = (Food)tempCast.GetComponent(typeof(Food));
+                if(prisoner.isShot)
+                {
+                    stats.takeDamage();
+                    // add food count for damage
+                    Destroy(other.gameObject);
+                    Debug.Log("Yeowser");
+                }
+                else
+                    prisoner.Pickup(this.gameObject);
+
+            }
             
-            
-
- 
         }
-        else if (other.tag == "Bullet")
-        {
-            stats.takeDamage();
-        }
-        /*if Game Tag,
-        Read type,
-        set object to hold.
-
-        Need to have a variable to hold the specific object.
-
-        Shoot object, on button.
-
-        */
 
     }
 
 
     public void UseFood()
     {
-        
+        if (ltrigger > .5)
+        {
+            stats.eatFood(prisoner.foodType);
+            Destroy(tempCast);
+
+        }
+    }
+
+    public void CheckShoot()
+    {
+        if (rtrigger > .5)
+        {
+            GameObject player = GameObject.Find("Player");
+            MousePos scriptref = (MousePos)player.GetComponent(typeof(MousePos));
+            float launchAngle = scriptref.RAngle;
+            prisoner.Launched(launchAngle);
+
+            prisoner = null;
+            tempCast = null;
+        }
     }
 
     /*  Guide to food interaction:
@@ -79,6 +113,11 @@ public class FruitHandler : MonoBehaviour {
      *              - Hit
      *          If hit with an object in shot, then read in damage and food type.
      *              if food type ever goes over, apply a flat damage. this will decrease healing, and add damage.
+     * 
+     * 5:16 am 4/29:
+     * So this entire system is based off of finding game objects, then
+     * referencing and casting the Script components, so we can read
+     * values and run methods off of them. this seems to be pretty set then!
      * 
      */
 }

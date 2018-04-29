@@ -26,11 +26,17 @@ public class FruitHandler : MonoBehaviour {
     {
         if (other.tag == "Food")
         {
+            
             string pname = other.gameObject.name;
             GameObject tempCast = GameObject.Find(pname);
-            prisoner = (Food)prisoner.GetComponent(typeof(Food));
+            prisoner = (Food)tempCast.GetComponent(typeof(Food));
             prisoner.Pickup(this.gameObject);
-            DestroyObject(other);
+
+            Debug.Log(prisoner.ToString());
+            
+            
+
+ 
         }
         else if (other.tag == "Bullet")
         {

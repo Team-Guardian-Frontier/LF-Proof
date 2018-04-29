@@ -88,18 +88,20 @@ public class Food : MonoBehaviour {
                                    new Rect(0, 0, foodTexture.width, foodTexture.height),
                                    Vector2.zero);
         spriteRenderer.sprite = foodSprite;
-
+        //Add Collider
         boxCollider = foodObject.AddComponent<BoxCollider2D>();
         boxCollider.isTrigger = true;
 
-    }
+        //add Script
+        foodObject.AddComponent(typeof(Food));
 
+    }
 
 
     //Unity Events
     void Update()
     {
-        switch(foodState)
+        switch (foodState)
         {
             case FoodState.Held:
                 Held();
@@ -109,7 +111,7 @@ public class Food : MonoBehaviour {
                 break;
             default:
                 break;
- 
+
         }
     }
 
@@ -124,16 +126,14 @@ public class Food : MonoBehaviour {
 
         Debug.Log("I am touched by you!");
 
-        offset = this.transform.position - other.transform.position;
+        offset = Vector3.zero; // this.transform.position - other.transform.position;
 
-
-        
     }
     //call on player, when press trigger. (this instance already passed.)
     public void Launched(float angle)
     {
         //set speed and transforming
-            //calculate xspeed and yspeed with trig, set to Vector3
+        //calculate xspeed and yspeed with trig, set to Vector3
         xspeed = Mathf.Cos(angle) * Mathf.Rad2Deg * maxSpeed;
         yspeed = Mathf.Sin(angle) * Mathf.Rad2Deg * maxSpeed;
         speedWagon = new Vector3(xspeed, yspeed);

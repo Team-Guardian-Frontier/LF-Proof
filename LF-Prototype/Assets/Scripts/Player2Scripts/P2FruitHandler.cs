@@ -57,14 +57,14 @@ public class P2FruitHandler : MonoBehaviour
                 string pname = other.gameObject.name;
                 tempCast = GameObject.Find(pname);
                 prisoner = (Food)tempCast.GetComponent(typeof(Food));
-                if (prisoner.isShot)
+                if (prisoner.foodState == Food.FoodState.Shot)
                 {
                     stats.takeDamage();
                     // add food count for damage
                     Destroy(other.gameObject);
-                    Debug.Log("Yeowser");
+                    
                 }
-                else
+                else if(prisoner.foodState != Food.FoodState.Held)
                     prisoner.Pickup(this.gameObject);
 
             }

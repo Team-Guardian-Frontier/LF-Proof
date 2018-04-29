@@ -109,7 +109,7 @@ public class Food : MonoBehaviour {
     private void Start()
     {
         //set speed
-        maxSpeed = .01f;
+        maxSpeed = .1f;
     }
     void Update()
     {

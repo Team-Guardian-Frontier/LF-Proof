@@ -11,7 +11,7 @@ public class P2MousePos : MonoBehaviour
     // Sprite Stuff
     public Sprite N, NE, E, SE, S, SW, W, NW;
     public Camera mainCam;
-    public float RAngle;
+    public float RAngle2;
 
     // Use this for initializing
     void Start()
@@ -55,7 +55,7 @@ public class P2MousePos : MonoBehaviour
     {
 
         //calculate angle from controller
-        RAngle = -(Mathf.Atan2(aimY, aimX) * Mathf.Rad2Deg);
+        RAngle2 = -(Mathf.Atan2(aimY, aimX) * Mathf.Rad2Deg);
 
     }
 
@@ -63,7 +63,7 @@ public class P2MousePos : MonoBehaviour
     void MouseRotation()
     {
         // call mouse angle
-        float angle = RAngle;
+        float angle = RAngle2;
 
         // Switch case to change sprite
         if (angle <= 22.5 && angle > -22.5)

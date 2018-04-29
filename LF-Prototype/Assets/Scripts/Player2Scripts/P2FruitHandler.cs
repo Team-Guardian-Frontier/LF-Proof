@@ -15,8 +15,7 @@ public class P2FruitHandler : MonoBehaviour
     private GameObject tempCast;
 
     //trigger inputs
-    private float p2ltrigger;
-    private float p2rtrigger;
+    private float triggers;
 
 
 
@@ -32,8 +31,8 @@ public class P2FruitHandler : MonoBehaviour
     void Update()
     {
         //player 2 triggers, ltrig2, rtrig2
-        p2ltrigger = Input.GetAxis("ltrig2");
-        p2rtrigger = Input.GetAxis("rtrig2");
+        triggers = Input.GetAxis("triggers2");
+        
 
 
 
@@ -76,21 +75,24 @@ public class P2FruitHandler : MonoBehaviour
 
     public void UseFood()
     {
-        if (p2ltrigger > .5)
+        if (triggers > .5)
         {
             stats.eatFood(prisoner.foodType);
             Destroy(tempCast);
+            prisoner = null;
+            tempCast = null;
 
         }
     }
 
     public void CheckShoot()
     {
-        if (p2rtrigger > .5)
+        if (triggers < -.5)
         {
             GameObject player = GameObject.Find("Player2");
             P2MousePos scriptref = (P2MousePos)player.GetComponent(typeof(P2MousePos));
-            float launchAngle = scriptref.RAngle;
+
+            float launchAngle = scriptref.RAngle2;
             prisoner.Launched(launchAngle);
 
             prisoner = null;

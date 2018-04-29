@@ -14,8 +14,7 @@ public class FruitHandler : MonoBehaviour {
     private GameObject tempCast;
 
     //trigger inputs
-    private float ltrigger;
-    private float rtrigger;
+    private float triggers;
 
 
 
@@ -28,8 +27,8 @@ public class FruitHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        ltrigger = Input.GetAxis("ltrig1");
-        rtrigger = Input.GetAxis("rtrig1");
+        triggers = Input.GetAxis("triggers1");
+        
 
 
 
@@ -72,17 +71,18 @@ public class FruitHandler : MonoBehaviour {
 
     public void UseFood()
     {
-        if (ltrigger > .5)
+        if (triggers > .5)
         {
             stats.eatFood(prisoner.foodType);
             Destroy(tempCast);
-
+            prisoner = null;
+            tempCast = null;
         }
     }
 
     public void CheckShoot()
     {
-        if (rtrigger > .5)
+        if (triggers < -.5)
         {
             GameObject player = GameObject.Find("Player");
             MousePos scriptref = (MousePos)player.GetComponent(typeof(MousePos));

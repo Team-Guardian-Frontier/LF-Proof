@@ -33,7 +33,7 @@ public class MousePos : MonoBehaviour {
         // Camera Rig Movement Control
 
         aimX = Input.GetAxis("AimX");
-        aimY = Input.GetAxis("AimY");
+        aimY = -(Input.GetAxis("AimY"));
         /*
          * Toggle, Saves last direction. Odd issue registering.
         float aimDelta = (togDead - Mathf.Abs(aimX)) + (togDead - Mathf.Abs(aimY));
@@ -43,6 +43,7 @@ public class MousePos : MonoBehaviour {
         */
         StickAngle();
         MouseRotation();
+
             }
     
     //Utility methods
@@ -51,7 +52,7 @@ public class MousePos : MonoBehaviour {
     void StickAngle() {
 
         //calculate angle from controller
-        RAngle = -(Mathf.Atan2(aimY, aimX) * Mathf.Rad2Deg);
+        RAngle = (Mathf.Atan2(aimY, aimX) * Mathf.Rad2Deg);
 
     }
 

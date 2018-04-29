@@ -9,10 +9,9 @@ public class FoodSpawner : MonoBehaviour {
     private Food.FoodType spawnType;
     private int foodCount = 0;
     private int maxFood = 10; // may change for "food frenzy"
-    private bool spawnAvailable = true; // determines whether food can spawn
+ 
     private Vector2 spawnLocation;
-    private float spawnTimer = 2.0f;
-
+    private float spawnTimer = 2.0f;    
 	// Use this for initialization
 	void Start () {
         Spawner();
@@ -30,9 +29,9 @@ public class FoodSpawner : MonoBehaviour {
     {
         while (foodCount < maxFood)
         {
-            foodNumber = 0; // Set to Fruit for debugging
-                            //foodNumber = Random.Range(0, 4);                                                  // Randomizes the FoodType
-            spawnType = (Food.FoodType)foodNumber;                                              // Sets the FoodType using the random number
+            foodNumber = 2; // Set to Protein for debugging, delete this and uncomment the next line for random food type
+                            //foodNumber = Random.Range(0, 2);                                                  // Randomizes the FoodType
+            spawnType = (Food.FoodType)foodNumber;                                                  // Sets the FoodType using the random number
             spawnLocation = new Vector2(Random.Range(-6.75f, 6.75f), Random.Range(-2.25f, 2.25f));  // Sets the random location of food spawn within a certain area
 
             // check an area around the food to see if another food is nearby, if so then move the spawn location to another spot

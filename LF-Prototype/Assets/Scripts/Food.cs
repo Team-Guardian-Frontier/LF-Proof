@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class Food : MonoBehaviour {
     public enum FoodType {
-        Fruit,
         Vegetable,
         Carbs,
-        Fats,
         Proteins
     }
-
 
     public FoodType foodType;
 
@@ -21,34 +18,23 @@ public class Food : MonoBehaviour {
     private GameObject foodObject;
 
     public Food(FoodType _foodType, Vector3 _initialPosition) {
-        foodObject = new GameObject("Fruit");
+        foodObject = new GameObject("Protein");
 
+        foodObject.gameObject.tag = "Food";
         foodType = _foodType;
         foodObject.transform.position = _initialPosition;
 
-
-        switch (foodType) {
-            case FoodType.Fruit: {
-                    // setup fruit
-                    foodTexture = Resources.Load<Texture2D>("sprites/orange");
-                    break;
-                }
-
+        switch (foodType)
+        {
             case FoodType.Carbs: {
                     // setup carb
                     foodTexture = Resources.Load<Texture2D>("sprites/bread");
                     break;
                 }
 
-            case FoodType.Fats: {
-                    // setup fats
-                    foodTexture = Resources.Load<Texture2D>("sprites/fat");
-                    break;
-                }
-
             case FoodType.Proteins: {
                     // setup proteins
-                    foodTexture = Resources.Load<Texture2D>("sprites/protein");
+                    foodTexture = Resources.Load<Texture2D>("sprites/egg");
                     break;
                 }
 
@@ -73,11 +59,6 @@ public class Food : MonoBehaviour {
         boxCollider = foodObject.AddComponent<BoxCollider2D>();
         boxCollider.isTrigger = true;
 
-    }
-    private void OnCollsionEnter(Collider other)
-    {
-        if (other.tag == "Player")
-            Destroy(gameObject);
     }
 }
 

@@ -2,24 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class FruitHandler : MonoBehaviour {
+public class FruitHandler : MonoBehaviour {
 
-    //Player Stats
-    private float health;
-    private float veggies;
-    private float protein;
-    private float grain;
+
+    //Calls StatsManager script
+    private StatsManager stats;
+    private Food food;
 
     //fruit object space
 
 
-	// Use this for initialization
-	void Start () {
-        //instantiate Stats
-        health = 100;
-        veggies = 0;
-        protein = 0;
-        grain = 0;
+    // Use this for initialization
+    void Start () {
 
 		
 	}
@@ -31,6 +25,15 @@ public abstract class FruitHandler : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.tag == "Food")
+        {
+            food = other.gameObject.GetComponent<Food>();
+            Destroy(other.gameObject);
+        }
+        else if (other.tag == "Bullet")
+        {
+            stats.takeDamage();
+        }
         /*if Game Tag,
         Read type,
         set object to hold.
@@ -41,6 +44,13 @@ public abstract class FruitHandler : MonoBehaviour {
 
         */
 
+    }
+
+
+    public void UseFood()
+    {
+        Food.FoodType type = food.foodType;
+        stats.eatFood(type);
     }
 
     /*  Guide to food interaction:

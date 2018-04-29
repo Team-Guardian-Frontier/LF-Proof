@@ -30,7 +30,7 @@ public class FoodSpawner : MonoBehaviour {
     {
         while (foodCount < maxFood)
         {
-            foodNumber = 0; // Set to Fruit for debugging
+            foodNumber = 2; // Set to Fruit for debugging
                             //foodNumber = Random.Range(0, 4);                                                  // Randomizes the FoodType
             spawnType = (Food.FoodType)foodNumber;                                              // Sets the FoodType using the random number
             spawnLocation = new Vector2(Random.Range(-6.75f, 6.75f), Random.Range(-2.25f, 2.25f));  // Sets the random location of food spawn within a certain area

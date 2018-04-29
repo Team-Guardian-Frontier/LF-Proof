@@ -114,20 +114,18 @@ public class Food : MonoBehaviour {
     }
 
     //trigger events
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
         //pass ref to this object to player (for shooting and eating, and type.)
 
-        
-
-        if (other.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             player = other.gameObject;
             foodState = FoodState.Held;
-
+            Destroy(gameObject);
             offset = this.transform.position - other.transform.position;
         }
-
+        
         
     }
         //call on player, when press trigger. (this instance already passed.)

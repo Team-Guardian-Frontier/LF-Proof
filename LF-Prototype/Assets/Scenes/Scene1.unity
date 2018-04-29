@@ -639,9 +639,13 @@ GameObject:
   - component: {fileID: 710106602}
   - component: {fileID: 710106603}
   - component: {fileID: 710106604}
+<<<<<<< HEAD
+=======
+  - component: {fileID: 710106605}
+>>>>>>> 7053a58a5ee4a010db0a9d7e846f3bb2f9db5f30
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -773,6 +777,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aa458d94cd6e4246a0a4a555324f75a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxVegetable: 0
+  maxCarb: 0
+  maxProtein: 0
+  foodItem: {fileID: 0}
+  servingSize: 0
 --- !u!61 &710106603
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -798,7 +807,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32, y: 0.32}
   m_EdgeRadius: 0
+<<<<<<< HEAD
 --- !u!50 &710106604
+=======
+--- !u!114 &710106604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 710106595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f30c0cca6e8b10347b48b55315c755ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!50 &710106605
+>>>>>>> 7053a58a5ee4a010db0a9d7e846f3bb2f9db5f30
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -812,12 +836,20 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
+<<<<<<< HEAD
   m_GravityScale: 0
+=======
+  m_GravityScale: 1
+>>>>>>> 7053a58a5ee4a010db0a9d7e846f3bb2f9db5f30
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+<<<<<<< HEAD
   m_Constraints: 0
+=======
+  m_Constraints: 3
+>>>>>>> 7053a58a5ee4a010db0a9d7e846f3bb2f9db5f30
 --- !u!1 &896801855
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,13 +932,14 @@ GameObject:
   - component: {fileID: 1057730410}
   - component: {fileID: 1057730409}
   - component: {fileID: 1057730408}
+  - component: {fileID: 1057730415}
   m_Layer: 0
   m_Name: Player2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1057730408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -918,6 +951,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aa458d94cd6e4246a0a4a555324f75a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxVegetable: 33
+  maxCarb: 33
+  maxProtein: 33
+  foodItem: {fileID: 0}
+  servingSize: 10
 --- !u!114 &1057730409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1034,6 +1072,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1057730415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1057730407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f30c0cca6e8b10347b48b55315c755ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1159084063
 GameObject:
   m_ObjectHideFlags: 0
@@ -1325,7 +1374,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 1
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

@@ -939,9 +939,9 @@ MonoBehaviour:
   playerText: {fileID: 530310054}
   winText: {fileID: 1015563546}
   health: 100
-  maxVegetable: 0
-  maxCarb: 0
-  maxProtein: 0
+  maxVegetable: 33
+  maxCarb: 33
+  maxProtein: 33
   foodItem: {fileID: 0}
   servingSize: 50
 --- !u!61 &710106603
@@ -1229,7 +1229,7 @@ MonoBehaviour:
   SW: {fileID: 21300000, guid: 4417daf4744cafc40ac8c6d687d7d273, type: 3}
   W: {fileID: 21300000, guid: 2d6a874260e04764e9feac6ba8b58250, type: 3}
   NW: {fileID: 21300000, guid: ab1f214a90158714ab33ecfa83fa7729, type: 3}
-  mainCam: {fileID: 0}
+  mainCam: {fileID: 1711311965}
   RAngle2: 0
 --- !u!114 &1057730412
 MonoBehaviour:

@@ -40,11 +40,7 @@ public class P2MousePos : MonoBehaviour
         //tpogglele, Saves last direction. Odd issue registering.
         float aimDelta = Mathf.Sqrt(Mathf.Pow(aimX, 2) + Mathf.Pow(aimY, 2));
 
-<<<<<<< HEAD
         if (aimDelta > togDead)
-=======
-        if (aimDelta >togDead)
->>>>>>> d2e584314899cba43a167e2b3dba42e8feebe108
         {
 
             StickAngle();

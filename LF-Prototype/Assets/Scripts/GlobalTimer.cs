@@ -18,6 +18,7 @@ using UnityEngine.UI;
 public class GlobalTimer : MonoBehaviour {
     public float startingTime;
     private Text theText;
+    public Text timeUpText;
 
 	// Use this for initialization
 	void Start () {
@@ -35,6 +36,13 @@ public class GlobalTimer : MonoBehaviour {
 
         //updates time onscreen
         theText.text = "" + Mathf.Ceil(startingTime);
+
+        //when time reaches 0
+        if (startingTime <= 0)
+        {
+            timeUpText.text = "Time's up!!";
+            Destroy(gameObject);
+        }
         
 	}
 }

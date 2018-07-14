@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 /*
  * Author: Irvin Naylor
  * Last Change: 6/18/18
@@ -42,7 +43,13 @@ public class GlobalTimer : MonoBehaviour {
         {
             timeUpText.text = "Time's up!!";
             Destroy(gameObject);
+
         }
         
 	}
+
+    public float getstartingTime()
+    {
+        return startingTime;
+    }
 }

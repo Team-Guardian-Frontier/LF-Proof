@@ -310,6 +310,7 @@
     <Compile Include="Assets\Scripts\Player2Scripts\P2MousePos.cs" />
     <Compile Include="Assets\Scripts\Player2Scripts\P2PlayerControl.cs" />
     <Compile Include="Assets\Scripts\PlayerControl.cs" />
+    <Compile Include="Assets\Scripts\Restart.cs" />
     <Compile Include="Assets\Scripts\SpriteChange.cs" />
     <Compile Include="Assets\Scripts\StatsManager.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\Gun.cs" />

@@ -11,7 +11,7 @@ public class P2MousePos : MonoBehaviour
     // Sprite Stuff
     public Sprite N, NE, E, SE, S, SW, W, NW;
     public Camera mainCam;
-    public float RAngle;
+    public float RAngle2;
 
     // Use this for initializing
     void Start()
@@ -26,7 +26,7 @@ public class P2MousePos : MonoBehaviour
     //Player 2 Feilds:
 
     //part of Toggle
-    //private float togDead = .5f;
+    private float togDead = .5f;
 
 
 
@@ -37,25 +37,25 @@ public class P2MousePos : MonoBehaviour
 
         aimX = Input.GetAxis("P2AimX");
         aimY = Input.GetAxis("P2AimY");
-        /*
-         * Toggle, Saves last direction. Odd issue registering.
-        float aimDelta = (togDead - Mathf.Abs(aimX)) + (togDead - Mathf.Abs(aimY));
-         * 
-         * if (aimDelta < 0)
+        //tpogglele, Saves last direction. Odd issue registering.
+        float aimDelta = Mathf.Sqrt(Mathf.Pow(aimX, 2) + Mathf.Pow(aimY, 2));
+
+        if (aimDelta > togDead)
+        {
+
             StickAngle();
-        */
-        StickAngle();
-        MouseRotation();
+            MouseRotation();
+
+        }
     }
+        //Utility methods
 
-    //Utility methods
-
-    // Calculate angle from character to mouse, for purposes of rotation or aim
-    void StickAngle()
+        // Calculate angle from character to mouse, for purposes of rotation or aim
+         void StickAngle()
     {
 
         //calculate angle from controller
-        RAngle = -(Mathf.Atan2(aimY, aimX) * Mathf.Rad2Deg);
+        RAngle2 = -(Mathf.Atan2(aimY, aimX) * Mathf.Rad2Deg);
 
     }
 
@@ -63,7 +63,7 @@ public class P2MousePos : MonoBehaviour
     void MouseRotation()
     {
         // call mouse angle
-        float angle = RAngle;
+        float angle = RAngle2;
 
         // Switch case to change sprite
         if (angle <= 22.5 && angle > -22.5)

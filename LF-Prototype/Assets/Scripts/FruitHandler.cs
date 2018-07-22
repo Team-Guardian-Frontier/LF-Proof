@@ -10,12 +10,12 @@ public class FruitHandler : MonoBehaviour {
 
 
     //held food object
+    private Food visitor;
     private Food prisoner;
     private GameObject tempCast;
 
     //trigger inputs
-    private float ltrigger;
-    private float rtrigger;
+    private float triggers;
 
 
 
@@ -28,8 +28,8 @@ public class FruitHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        ltrigger = Input.GetAxis("ltrig1");
-        rtrigger = Input.GetAxis("rtrig1");
+        triggers = Input.GetAxis("triggers1");
+        
 
 
 
@@ -42,29 +42,46 @@ public class FruitHandler : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        
+        /*
+         * Prevent "Stealing" eggs, while also not registering it in object.
+         */
 
         if (other.tag == "Food")
         {
-            
+            //find a way to check state of other, without taking prisoner.
+            string pname = other.gameObject.name;
+            tempCast = GameObject.Find(pname);
+            visitor = (Food)tempCast.GetComponent(typeof(Food));
 
-            if (prisoner == null)
-            { 
-                string pname = other.gameObject.name;
-                tempCast = GameObject.Find(pname);
-                prisoner = (Food)tempCast.GetComponent(typeof(Food));
-                if (prisoner.foodState == Food.FoodState.Shot)
-                {
-                    stats.takeDamage();
-                    // add food count for damage
-                    Destroy(other.gameObject);
-                    
-                }
-                else if (prisoner.foodState != Food.FoodState.Held)
-                    prisoner.Pickup(this.gameObject);
+
+
+            if (visitor.foodState == Food.FoodState.Shot)
+            {
+                stats.takeDamage();
+                // add food count for damage
+                Destroy(other.gameObject);
 
             }
-            
+            else if (prisoner == null)
+            {
+                prisoner = visitor;
+                Debug.Log("prisonerstate" + prisoner.foodState);
+
+                if (prisoner.foodState == Food.FoodState.Held)
+                {
+                    //bump
+                    prisoner = null;
+                    tempCast = null;
+                }
+                else
+                {
+                    prisoner.Pickup(this.gameObject);
+
+                }
+
+            }
+
+
         }
 
     }
@@ -72,17 +89,18 @@ public class FruitHandler : MonoBehaviour {
 
     public void UseFood()
     {
-        if (ltrigger > .5)
+        if (triggers > .5)
         {
             stats.eatFood(prisoner.foodType);
             Destroy(tempCast);
-
+            prisoner = null;
+            tempCast = null;
         }
     }
 
     public void CheckShoot()
     {
-        if (rtrigger > .5)
+        if (triggers < -.5)
         {
             GameObject player = GameObject.Find("Player");
             MousePos scriptref = (MousePos)player.GetComponent(typeof(MousePos));

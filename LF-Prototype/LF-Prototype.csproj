@@ -314,6 +314,7 @@
     <Compile Include="Assets\Scripts\SpriteChange.cs" />
     <Compile Include="Assets\Scripts\StatsManager.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\Gun.cs" />
+    <Compile Include="Assets\Scripts\WinCondition.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Users\Inayl\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Resources\Styles\Main_Dark.uss" />

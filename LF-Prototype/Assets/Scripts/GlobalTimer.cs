@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 /*
  * Author: Irvin Naylor
- * Last Change: 7/14/18
+ * Last Change: 8/1/18
  * Object: Timer
  * What script does: Controls implementation of the global timer
  * List of Fields: 
@@ -51,6 +51,9 @@ public class GlobalTimer : MonoBehaviour {
             startingTime = 10;
             //resets the time immediately (could potentially hold a delay)
             //This is where the hunger damage takes place
+        
+
+
 
             //timeUpText.text = "Time's up!!";
             //Destroy(gameObject); //display time's up, first of all
@@ -75,5 +78,13 @@ public class GlobalTimer : MonoBehaviour {
         
         
 	}
+
+    //Stops the game completely
+    //(Will work as a pause feature for now, will work on a proper one sooon)
+    public void StopGame()
+    {
+        Time.timeScale = 0;
+    }
     
+
 }

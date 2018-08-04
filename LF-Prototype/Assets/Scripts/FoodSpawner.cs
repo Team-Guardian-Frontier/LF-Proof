@@ -11,6 +11,7 @@ public class FoodSpawner : MonoBehaviour {
     private int maxFood = 10; // may change for "food frenzy"
  
     private Vector2 spawnLocation;
+    //DILAPIDATED, have an entirely different timer system
     private float spawnTimer = 2.0f;    
 	// Use this for initialization
 	void Start () {
@@ -29,14 +30,14 @@ public class FoodSpawner : MonoBehaviour {
     {
         while (foodCount < maxFood)
         {
-
-            foodNumber = 2; // Set to Protein for debugging, delete this and uncomment the next line for random food type
-                            //foodNumber = Random.Range(0, 2);                                                  // Randomizes the FoodType
-            spawnType = (Food.FoodType)foodNumber;                                                  // Sets the FoodType using the random number
+            //Randomize food type
+                //mathf will pick even numbers on .5, may need your own math here.
+            foodNumber = Mathf.RoundToInt(Random.Range(0.0f,2.0f));                  // Randomizes the FoodType
+            spawnType = (Food.FoodType)foodNumber;                                   // Sets the FoodType enum using the random number
 
             spawnLocation = new Vector2(Random.Range(-6.75f, 6.75f), Random.Range(-2.25f, 2.25f));  // Sets the random location of food spawn within a certain area
 
-            // check an area around the food to see if another food is nearby, if so then move the spawn location to another spot
+            // check an area around the food to see if another food overlaps, if so then move the spawn location to another spot
             Collider2D foodInArea = Physics2D.OverlapCircle(spawnLocation, 1.0f);
             while (foodInArea != null)
             {
@@ -44,8 +45,9 @@ public class FoodSpawner : MonoBehaviour {
                 foodInArea = null; // reset array
                 foodInArea = Physics2D.OverlapCircle(spawnLocation, 1f); // check again
             }
+
             // spawn the food
-            food = new Food(spawnType, spawnLocation, foodCount);
+            food = new Food(spawnType, spawnLocation, foodCount); //constructor call
             foodCount += 1;
             Debug.Log("Created food: '" + food.foodType + "' at " + Time.time);
         }

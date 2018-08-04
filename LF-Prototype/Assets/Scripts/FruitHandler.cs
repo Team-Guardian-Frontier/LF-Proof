@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FruitHandler : MonoBehaviour {
 
+    //tempheader: this script is bound to the player, and lets them shoot and stuff.
 
     //Calls StatsManager script
     private StatsManager stats;

@@ -25,7 +25,7 @@ public class Food : MonoBehaviour {
     public FoodState foodState;
 
 
-    //game object field for being held
+    //Game Object, for "owner"
     private GameObject player;
 
     //positioning offset (for held)
@@ -37,6 +37,7 @@ public class Food : MonoBehaviour {
     private float yspeed;
     private Vector3 speedWagon;
 
+    //Physics and Sprites
     private BoxCollider2D boxCollider;
     private SpriteRenderer spriteRenderer;
     private Sprite foodSprite;
@@ -49,32 +50,39 @@ public class Food : MonoBehaviour {
      */
     public Food(FoodType _foodType, Vector3 _initialPosition, int _count) {
 
+        //instantiate and name the object
         foodObject = new GameObject(_foodType.ToString() + _count);
 
+        
         foodObject.gameObject.tag = "Food";
+        //setting food type
         foodType = _foodType;
         foodObject.transform.position = _initialPosition;
 
         //spawn set food state to none
         foodState = (FoodState)0;
 
+        //set food sprite
         switch (foodType) {
 
             case FoodType.Carbs: {
                     // setup carb
                     foodTexture = Resources.Load<Texture2D>("sprites/bread");
+                    Debug.Log("I am a bread!");
                     break;
                 }
 
             case FoodType.Proteins: {
                     // setup proteins
                     foodTexture = Resources.Load<Texture2D>("sprites/egg");
+                    Debug.Log("I am a Protein!");
                     break;
                 }
 
             case FoodType.Vegetable: {
                     // setup vegetables
-                    foodTexture = Resources.Load<Texture2D>("sprites/vegetable");
+                    foodTexture = Resources.Load<Texture2D>("sprites/tomato");
+                    Debug.Log("I am a vegetable!");
                     break;
                 }
 

@@ -5,6 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class StatsManager : MonoBehaviour {
+    //temp header: this controls the player's stats like health and food groups.
+
+
     public Text playerText;
     public Text winText;
 

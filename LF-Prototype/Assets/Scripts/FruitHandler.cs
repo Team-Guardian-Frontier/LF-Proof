@@ -5,6 +5,7 @@ using UnityEngine;
 public class FruitHandler : MonoBehaviour {
 
     //tempheader: this script is bound to the player, and lets them shoot and stuff.
+        //dictates firing, eating, and fruit interactions with player.
 
     //Calls StatsManager script
     private StatsManager stats;
@@ -29,6 +30,8 @@ public class FruitHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        //set triggers
         triggers = Input.GetAxis("triggers1");
         
 
@@ -41,21 +44,24 @@ public class FruitHandler : MonoBehaviour {
         }
 	}
 
+    //Collision --> pickup
     private void OnTriggerEnter2D(Collider2D other)
     {
         /*
          * Prevent "Stealing" eggs, while also not registering it in object.
          */
 
+        //upon collision with food
         if (other.tag == "Food")
         {
             //find a way to check state of other, without taking prisoner.
             string pname = other.gameObject.name;
             tempCast = GameObject.Find(pname);
+            //register other object as visitor.
             visitor = (Food)tempCast.GetComponent(typeof(Food));
 
 
-
+            //if collide with food that was shot, take damage
             if (visitor.foodState == Food.FoodState.Shot)
             {
                 stats.takeDamage();
@@ -63,19 +69,23 @@ public class FruitHandler : MonoBehaviour {
                 Destroy(other.gameObject);
 
             }
+            //if not shot, then check to see if player already has ammo
             else if (prisoner == null)
             {
+                //set it so that you now have a prisoner? idk if this is useful. //%Spot to optimize%, can check the state the prisoner, before taking it as a prisoner. not much damage.
                 prisoner = visitor;
+                    //DEBUG: tells you the state of the prisoner.
                 Debug.Log("prisonerstate" + prisoner.foodState);
 
-                if (prisoner.foodState == Food.FoodState.Held)
+                if (prisoner.foodState == Food.FoodState.Held)                           
                 {
-                    //bump
+                    //let go of the prisoner if held by another 
                     prisoner = null;
                     tempCast = null;
                 }
                 else
                 {
+                    //Now you have a prisoner, set it to the pickup state.  %optimize% unless there's a glitch, do the prisoner = visitor; here.
                     prisoner.Pickup(this.gameObject);
 
                 }
@@ -87,7 +97,7 @@ public class FruitHandler : MonoBehaviour {
 
     }
 
-
+    //method to call eat health function in stats manager, delete object, and clear prisoner.
     public void UseFood()
     {
         if (triggers > .5)
@@ -99,6 +109,7 @@ public class FruitHandler : MonoBehaviour {
         }
     }
 
+    //method to launch the food, and clear necesary local variables.
     public void CheckShoot()
     {
         if (triggers < -.5)

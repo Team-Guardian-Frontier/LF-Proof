@@ -68,21 +68,18 @@ public class Food : MonoBehaviour {
             case FoodType.Carbs: {
                     // setup carb
                     foodTexture = Resources.Load<Texture2D>("sprites/bread");
-                    Debug.Log("I am a bread!");
                     break;
                 }
 
             case FoodType.Proteins: {
                     // setup proteins
                     foodTexture = Resources.Load<Texture2D>("sprites/egg");
-                    Debug.Log("I am a Protein!");
                     break;
                 }
 
             case FoodType.Vegetable: {
                     // setup vegetables
                     foodTexture = Resources.Load<Texture2D>("sprites/tomato");
-                    Debug.Log("I am a vegetable!");
                     break;
                 }
 

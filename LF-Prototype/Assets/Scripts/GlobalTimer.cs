@@ -84,6 +84,7 @@ public class GlobalTimer : MonoBehaviour {
     public void StopGame()
     {
         Time.timeScale = 0;
+        //disable movement here
     }
     
 

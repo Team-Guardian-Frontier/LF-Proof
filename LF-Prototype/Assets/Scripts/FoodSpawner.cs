@@ -11,11 +11,11 @@ public class FoodSpawner : MonoBehaviour {
     private int maxFood = 10; // may change for "food frenzy"
  
     private Vector2 spawnLocation;
-    //DILAPIDATED, have an entirely different timer system
-    private float spawnTimer = 2.0f;    
+    //DILAPIDATED, have an entirely different timer system 
+
 	// Use this for initialization
 	void Start () {
-        Spawner();
+        SpawnFood();
     }
 	
 	// Update is called once per frame
@@ -23,11 +23,21 @@ public class FoodSpawner : MonoBehaviour {
 
     }
 
+    //food Respawn (spawn and respawn in the same command
+    void RespawnFood()
+    {
+        despawnFood();
+        SpawnFood();
+    }
+
+
     // Spawns food at random locations at a time interval based on the "timer" variable
     // An int timer spawns the food in rows and columns, great for specifying static spawn points (tends to spawn in the same spots)
     // A float timer makes the location completely random
-    void Spawner()
+    void SpawnFood()
     {
+        //reset food count
+        foodCount = 0;
         while (foodCount < maxFood)
         {
             //Randomize food type
@@ -50,6 +60,23 @@ public class FoodSpawner : MonoBehaviour {
             food = new Food(spawnType, spawnLocation, foodCount); //constructor call
             foodCount += 1;
             Debug.Log("Created food: '" + food.foodType + "' at " + Time.time);
+        }
+    }
+
+    void despawnFood()
+    {
+        //find all objects with food tag
+        GameObject[] hitList = GameObject.FindGameObjectsWithTag("food");
+        //interate through to check and destroy
+        for (int i = 0; i < hitList.Length; i++)
+        {
+            Food foodScript = hitList[i].GetComponent<Food>();
+
+            //if the object is not shot or held, destroy it.
+            if (foodScript.foodState == (Food.FoodState)0) //Foodstate 0 = none
+            {
+                Destroy(hitList[i]);
+            }
         }
     }
 }

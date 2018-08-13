@@ -24,7 +24,12 @@ public class StatsManager : MonoBehaviour {
     public int maxProtein;
 
     public Food foodItem;
-    public int servingSize; // default amount added for each food pickup
+    public int damage; //damage
+    public int healing; //healing
+    public int hungerD; //hunger damage
+    public int GroupD; //damage from exceeding food groups.
+    public int servingSize; // default food group amt added for each food pickup
+    
 
     void Start () {
         health = 100; // base health
@@ -36,12 +41,20 @@ public class StatsManager : MonoBehaviour {
         totalH = health;
         DisplayHealth();
         winText.text = "";
-	}
-	
-	void Update () {
+
+        //DEBUG: made these equal for testing purposes
+        damage = servingSize;
+        healing = servingSize;
+        hungerD = damage;
+        GroupD = hungerD;
+    }
+
+    void Update () {
         DisplayHealth();
 	}
 
+
+    //get methods
     public int GetVegetables() {
         return this.vegetableCounter;
     }
@@ -54,21 +67,25 @@ public class StatsManager : MonoBehaviour {
         return this.proteinCounter;
     }
 
-    public void eatFood(Food.FoodType foodType)
+    public void eatFood(Food.FoodType _Type)
     {
-        health += servingSize;
+        //adds health, applies food group method
+        health += healing;
+        FoodGroup(_Type);
+    }
 
-        /*
-        int penalty;
-        switch (foodType)
+    public void FoodGroup(Food.FoodType _foodType)
+    {
+        //Adds the appropriate amt to group, and then incurs appropriate penalty.
+        
+        switch (_foodType)
         {
             case Food.FoodType.Vegetable:
                 {
                     vegetableCounter += servingSize;
                     if (vegetableCounter > maxVegetable)
                     {
-                        penalty = (vegetableCounter - maxVegetable);  // penalty is taken from health based on overflow
-                        health -= penalty;
+                        health -= GroupD; //currently, set so that if any counter is over the max, then incur damage, so less healing
                     }
                     break;
                 }
@@ -77,8 +94,7 @@ public class StatsManager : MonoBehaviour {
                     carbCounter += servingSize;
                     if (carbCounter > maxCarb)
                     {
-                        penalty = (carbCounter - maxCarb);  // penalty is taken from health based on overflow
-                        health -= penalty;
+                        health -= GroupD;
                     }
                     break;
                 }
@@ -87,8 +103,7 @@ public class StatsManager : MonoBehaviour {
                     proteinCounter += servingSize;
                     if (proteinCounter > maxProtein)
                     {
-                        penalty = (proteinCounter - maxProtein);  // penalty is taken from health based on overflow
-                        health -= penalty;
+                        health -= GroupD;
                     }
                     break;
                 }
@@ -96,13 +111,28 @@ public class StatsManager : MonoBehaviour {
                 Debug.Log("No foodType specified. Cannot add food to counter.");
                 break;
         }
-        */
+        
     }
 
-    public void takeDamage()
+    public void takeDamage(Food.FoodType _Type)
     {
-        health -= servingSize;
-        
+        //adds damage, applies food group method.
+        health -= damage;
+        FoodGroup(_Type);
+    }
+
+    public void hungerDamage()
+    {
+        //hunger damage method
+        health -= hungerD;
+
+    }
+
+    public void groupReset()
+    {
+        vegetableCounter = 0;
+        carbCounter = 0;
+        proteinCounter = 0;
     }
 
     private void DisplayHealth()

@@ -64,8 +64,8 @@ public class FruitHandler : MonoBehaviour {
             //if collide with food that was shot, take damage
             if (visitor.foodState == Food.FoodState.Shot)
             {
-                stats.takeDamage();
-                // add food count for damage
+                //call damage method in stats
+                stats.takeDamage(visitor.foodType);
                 Destroy(other.gameObject);
 
             }
@@ -79,13 +79,13 @@ public class FruitHandler : MonoBehaviour {
 
                 if (prisoner.foodState == Food.FoodState.Held)                           
                 {
-                    //let go of the prisoner if held by another 
+                    //clear prisoner details if bump into others
                     prisoner = null;
                     tempCast = null;
                 }
                 else
                 {
-                    //Now you have a prisoner, set it to the pickup state.  %optimize% unless there's a glitch, do the prisoner = visitor; here.
+                    //physically capture the object (it now follows)  %optimize% unless there's a glitch, do the prisoner = visitor; here.
                     prisoner.Pickup(this.gameObject);
 
                 }

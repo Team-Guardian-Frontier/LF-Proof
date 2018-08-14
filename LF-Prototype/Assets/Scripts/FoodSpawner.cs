@@ -24,7 +24,7 @@ public class FoodSpawner : MonoBehaviour {
     }
 
     //food Respawn (spawn and respawn in the same command
-    void RespawnFood()
+    public void RespawnFood()
     {
         despawnFood();
         SpawnFood();
@@ -34,7 +34,7 @@ public class FoodSpawner : MonoBehaviour {
     // Spawns food at random locations at a time interval based on the "timer" variable
     // An int timer spawns the food in rows and columns, great for specifying static spawn points (tends to spawn in the same spots)
     // A float timer makes the location completely random
-    void SpawnFood()
+    public void SpawnFood()
     {
         //reset food count
         foodCount = 0;

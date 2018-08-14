@@ -145,6 +145,7 @@ public class StatsManager : MonoBehaviour {
 
     public void Loss()
     {
+        Debug.Log("Is this...?");
         winText.text = "Game Over! You are Winner!";
         Destroy(gameObject);
     }

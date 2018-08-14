@@ -46,39 +46,46 @@ public class P2FruitHandler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
+        /*
+        * Prevent "Stealing" eggs, while also not registering it in object.
+        */
 
         if (other.tag == "Food")
         {
-            Debug.Log("Collision Detected");
+
 
             //find a way to check state of other, without taking prisoner.
             string pname = other.gameObject.name;
             tempCast = GameObject.Find(pname);
+            //register other object as visitor
             visitor = (Food)tempCast.GetComponent(typeof(Food));
 
 
-
+            //if collide with food that was shot, take damage
             if (visitor.foodState == Food.FoodState.Shot)
             {
-                stats.takeDamage();
-                // add food count for damage
+                //call damage method in stats
+                stats.takeDamage(visitor.foodType);
                 Destroy(other.gameObject);
 
             }
+            //if not shot, then check to see if player already has ammo
             else if (prisoner == null)
             {
+                //set it so taht you now have a prisoner %possible optimization% see p1 fruit
                 prisoner = visitor;
+                    //DEBUG: tells you state of prisoner
                 Debug.Log("prisonerstate" + prisoner.foodState);
 
                 if (prisoner.foodState == Food.FoodState.Held)
                 {
-                    //bump
+                    //clear prisoner details if you bump into other's
                     prisoner = null;
                     tempCast = null;
                 }
                 else
                 {
+                    //physically capture the object (it now follows)
                     prisoner.Pickup(this.gameObject);
 
                 }

@@ -77,6 +77,7 @@
     <Compile Include="Assets\Scripts\SpriteChange.cs" />
     <Compile Include="Assets\Scripts\StatsManager.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\Gun.cs" />
+    <Compile Include="Assets\Scripts\WinCondition.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Zhong/Game Development/Unity Workspace/LF-Proof/LF-Prototype/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

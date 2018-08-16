@@ -59,7 +59,7 @@ public class FoodSpawner : MonoBehaviour {
             // spawn the food
             food = new Food(spawnType, spawnLocation, foodCount); //constructor call
             foodCount += 1;
-            Debug.Log("Created food: '" + food.foodType + "' at " + Time.time);
+            Debug.Log("Created food: '" + food.getType() + "' at " + Time.time);
         }
     }
 

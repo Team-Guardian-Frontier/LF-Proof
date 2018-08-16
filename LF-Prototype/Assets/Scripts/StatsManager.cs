@@ -11,46 +11,59 @@ public class StatsManager : MonoBehaviour {
     public Text playerText;
     public Text winText;
 
+    public Food foodItem;
 
-    public int health;
-    private int totalH;
-    private int carbCounter;
-    private int proteinCounter;
-    private int vegetableCounter;
-
+    //Public values available to set
+    public int health; //health
+    public int damage; //damage
+    public int healing; //healing
+    public int servingSize; // default food group amt added for each food pickup
+    public int hungerD; //hunger damage
+    public int GroupD; //damage from exceeding food groups.
     // maximum amount for each type
     public int maxVegetable;
     public int maxCarb;
     public int maxProtein;
 
-    public Food foodItem;
-    public int damage; //damage
-    public int healing; //healing
-    public int hungerD; //hunger damage
-    public int GroupD; //damage from exceeding food groups.
-    public int servingSize; // default food group amt added for each food pickup
-    
+    //set during play, counters
+    private int totalH;
+    private int carbCounter;
+    private int proteinCounter;
+    private int vegetableCounter;
+
 
     void Start () {
-        health = 100; // base health
+        
+
+        //reset counters
         vegetableCounter = 0;
         carbCounter = 0;
         proteinCounter = 0;
 
         //this is to set total health.
         totalH = health;
-        DisplayHealth();
+        Display();
         winText.text = "";
 
-        //DEBUG: made these equal for testing purposes
-        damage = servingSize;
-        healing = servingSize;
-        hungerD = damage;
-        GroupD = hungerD;
+        /*DESIGN: these are the values you set.
+        health = 100;
+        damage = 25;
+        healing = 25;
+        serving size = 15;
+
+        hungerD = 15;
+        GroupD = 15;
+
+        max groups
+            veg65
+            carb65
+            protein65
+        */
     }
 
     void Update () {
-        DisplayHealth();
+
+        Display();
 	}
 
 
@@ -83,6 +96,7 @@ public class StatsManager : MonoBehaviour {
             case Food.FoodType.Vegetable:
                 {
                     vegetableCounter += servingSize;
+                    
                     if (vegetableCounter > maxVegetable)
                     {
                         health -= GroupD; //currently, set so that if any counter is over the max, then incur damage, so less healing
@@ -135,9 +149,14 @@ public class StatsManager : MonoBehaviour {
         proteinCounter = 0;
     }
 
-    private void DisplayHealth()
+    private void Display()
     {
-        playerText.text = this.gameObject.name + ": " + health + "/" + totalH;
+        //don't forget the size of the text object!
+        playerText.text = this.gameObject.name + ": " + health + "/" + totalH
+                            + "\nVeggies: " + vegetableCounter + "/" + maxVegetable 
+                            +"\nCarbs: " + carbCounter + "/" + maxCarb
+                            +"\nProtein: " + proteinCounter + "/" + maxProtein;
+                           
         if (health <= 0)
             Loss();
 

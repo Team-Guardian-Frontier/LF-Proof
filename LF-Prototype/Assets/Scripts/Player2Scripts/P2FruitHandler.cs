@@ -65,7 +65,8 @@ public class P2FruitHandler : MonoBehaviour
             if (visitor.foodState == Food.FoodState.Shot)
             {
                 //call damage method in stats
-                stats.takeDamage(visitor.foodType);
+                stats.takeDamage(visitor.getType());
+                Debug.Log("hit with a " + visitor.getType());
                 Destroy(other.gameObject);
 
             }
@@ -74,8 +75,10 @@ public class P2FruitHandler : MonoBehaviour
             {
                 //set it so taht you now have a prisoner %possible optimization% see p1 fruit
                 prisoner = visitor;
-                    //DEBUG: tells you state of prisoner
+                    //DEBUG: tells you state of prisoner and type
                 Debug.Log("prisonerstate" + prisoner.foodState);
+                Debug.Log("prisonerType" + prisoner.getType());
+                Debug.Log("PrisonerName" + prisoner.name);
 
                 if (prisoner.foodState == Food.FoodState.Held)
                 {
@@ -102,7 +105,7 @@ public class P2FruitHandler : MonoBehaviour
     {
         if (triggers > .5)
         {
-            stats.eatFood(prisoner.foodType);
+            stats.eatFood(prisoner.getType());
             Destroy(tempCast);
             prisoner = null;
             tempCast = null;

@@ -21,7 +21,7 @@ public class Food : MonoBehaviour {
         Shot
     }
 
-    public FoodType foodType;
+    private FoodType foodType;
     public FoodState foodState;
 
 
@@ -58,6 +58,9 @@ public class Food : MonoBehaviour {
         //setting food type
         foodType = _foodType;
         foodObject.transform.position = _initialPosition;
+
+        //DEBUG: state type
+        Debug.Log("I am a " + foodType);
 
         //spawn set food state to none
         foodState = (FoodState)0;
@@ -104,18 +107,20 @@ public class Food : MonoBehaviour {
         foodRigid.gravityScale = 0;
         */
 
-        //add Script
+        //add Script ???What???
         foodObject.AddComponent(typeof(Food));
 
     }
 
 
     //Unity Events
-    private void Start()
+    private void Awake()
     {
         //set speed
         maxSpeed = .1f;
+        Debug.Log("Start, I am a " + foodType);
     }
+
     void Update()
     {
         switch (foodState)
@@ -163,7 +168,11 @@ public class Food : MonoBehaviour {
         
     }
 
-
+    //get method
+    public FoodType getType()
+    {
+        return foodType;
+    }
 
     //utility
     private void Held()

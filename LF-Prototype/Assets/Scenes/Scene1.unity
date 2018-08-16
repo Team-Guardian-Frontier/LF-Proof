@@ -1047,12 +1047,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerText: {fileID: 530310054}
   winText: {fileID: 1015563546}
-  health: 100
-  maxVegetable: 33
-  maxCarb: 33
-  maxProtein: 33
   foodItem: {fileID: 0}
-  servingSize: 50
+  health: 100
+  damage: 25
+  healing: 25
+  servingSize: 15
+  hungerD: 15
+  GroupD: 15
+  maxVegetable: 65
+  maxCarb: 65
+  maxProtein: 65
 --- !u!61 &710106603
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1290,12 +1294,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerText: {fileID: 1661338329}
   winText: {fileID: 1015563546}
-  health: 100
-  maxVegetable: 33
-  maxCarb: 33
-  maxProtein: 33
   foodItem: {fileID: 0}
-  servingSize: 50
+  health: 100
+  damage: 25
+  healing: 25
+  servingSize: 15
+  hungerD: 15
+  GroupD: 15
+  maxVegetable: 65
+  maxCarb: 65
+  maxProtein: 65
 --- !u!114 &1057730409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1826,7 +1834,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -131, y: -5}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 160, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1661338329
 MonoBehaviour:

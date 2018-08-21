@@ -87,6 +87,9 @@ public class Food : MonoBehaviour {
         //set position
         foodObject.transform.position = spawnLocation;
 
+        BoxCollider2D boxCollider = foodObject.AddComponent<BoxCollider2D>();
+        boxCollider.isTrigger = true;
+
         //DEBUG: say type
         Debug.Log("I am a " + foodType);
 
@@ -133,6 +136,8 @@ public class Food : MonoBehaviour {
                                    Vector2.zero);
         spriteRenderer.sprite = foodSprite;
 
+        //getting collider to match sprite
+        boxCollider.size = foodSprite.bounds.size;
 
         //set speed
         maxSpeed = .1f;

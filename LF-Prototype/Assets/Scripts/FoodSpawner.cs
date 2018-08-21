@@ -49,12 +49,9 @@ public class FoodSpawner : MonoBehaviour {
             // attatch scripts
             foodObject.AddComponent<Food>();
 
-            BoxCollider2D boxCollider = foodObject.AddComponent<BoxCollider2D>();
-            boxCollider.isTrigger = true;
+            //attatch collider after location set.
 
-            //add rigidbody2d, if needed
-            Rigidbody2D foodRigid = (Rigidbody2D)foodObject.AddComponent(typeof(Rigidbody2D));
-            foodRigid.gravityScale = 0;
+
 
 
             foodCount += 1;

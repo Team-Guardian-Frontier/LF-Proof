@@ -583,6 +583,9 @@ MonoBehaviour:
   startingTime: 10
   timeUpText: {fileID: 1763541368}
   playerWin: {fileID: 226820848}
+  player1: {fileID: 710106595}
+  player2: {fileID: 1057730407}
+  eventSystem: {fileID: 14005320}
 --- !u!114 &494838109
 MonoBehaviour:
   m_ObjectHideFlags: 0

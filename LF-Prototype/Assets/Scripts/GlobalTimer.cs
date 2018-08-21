@@ -10,11 +10,13 @@ using UnityEngine.SceneManagement;
  * What script does: Controls implementation of the global timer
  * List of Fields: 
  *      - startingTime: float value containing time of round left
- *      - theText: simply gets the text feild from the UI
+ *      - theText: simply gets the text field from the UI
  *      - timeUpText: Text containing "Time's Up Message"
  *      - playerWin: Text determining which player won the game 
  * List of Methods:
  * Notes:
+ * This object is attatched to the Time Value object in the UI canvas.
+ * Could move to manager: then attatch time values as variables
  * 
  */
 
@@ -24,11 +26,25 @@ public class GlobalTimer : MonoBehaviour {
     public Text timeUpText;
     public Text playerWin;
 
+    //objects to manipulate, attatch via public.
+    public GameObject player1;
+    public GameObject player2;
+    public GameObject eventSystem;
+    //scripts to access from these objects
+    private StatsManager p1Stats;
+    private StatsManager p2Stats;
+    private FoodSpawner spawner;
+
 	// Use this for initialization
 	void Start () {
 
         //getting the text
         theText = GetComponent<Text>();
+
+        //initialize which scripts to access for stat changes.
+        p1Stats = player1.GetComponent<StatsManager>();
+        p2Stats = player2.GetComponent<StatsManager>();
+        spawner = eventSystem.GetComponent<FoodSpawner>();
 
 	}
 	
@@ -50,8 +66,18 @@ public class GlobalTimer : MonoBehaviour {
 
             startingTime = 10;
             //resets the time immediately (could potentially hold a delay)
+
             //This is where the hunger damage takes place
-        
+            p1Stats.hungerDamage();
+            p2Stats.hungerDamage();
+            //this is where Food Groups Reset
+            p1Stats.groupReset();
+            p2Stats.groupReset();
+
+            //food respawn. (respawn includes despawning existing.
+            spawner.RespawnFood();
+            
+            
 
 
 

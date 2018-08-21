@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FoodSpawner : MonoBehaviour {
 
+    //attached to eventsystem
+
     private Food food;
     private int foodNumber;
     private Food.FoodType spawnType;
@@ -12,7 +14,7 @@ public class FoodSpawner : MonoBehaviour {
  
     private Vector2 spawnLocation;
     //DILAPIDATED, have an entirely different timer system 
-
+    
 	// Use this for initialization
 	void Start () {
         SpawnFood();
@@ -62,7 +64,7 @@ public class FoodSpawner : MonoBehaviour {
     void despawnFood()
     {
         //find all objects with food tag
-        GameObject[] hitList = GameObject.FindGameObjectsWithTag("food");
+        GameObject[] hitList = GameObject.FindGameObjectsWithTag("Food");
         //interate through to check and destroy
         for (int i = 0; i < hitList.Length; i++)
         {

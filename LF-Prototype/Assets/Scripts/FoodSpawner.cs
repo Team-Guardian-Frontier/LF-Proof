@@ -40,26 +40,25 @@ public class FoodSpawner : MonoBehaviour {
         foodCount = 0;
         while (foodCount < maxFood)
         {
-            //Randomize food type
-                //mathf will pick even numbers on .5, may need your own math here.
-            foodNumber = Mathf.RoundToInt(Random.Range(0.0f,2.0f));                  // Randomizes the FoodType
-            spawnType = (Food.FoodType)foodNumber;                                   // Sets the FoodType enum using the random number
+            //instance of object
+            //instantiate and name the gameobject
+            GameObject foodObject = new GameObject("food" + foodCount);
 
-            spawnLocation = new Vector2(Random.Range(-6.75f, 6.75f), Random.Range(-2.25f, 2.25f));  // Sets the random location of food spawn within a certain area
+            foodObject.gameObject.tag = "Food";
 
-            // check an area around the food to see if another food overlaps, if so then move the spawn location to another spot
-            Collider2D foodInArea = Physics2D.OverlapCircle(spawnLocation, 1.0f);
-            while (foodInArea != null)
-            {
-                spawnLocation = new Vector2(Random.Range(-5.0f, 5.0f), Random.Range(-1.75f, 1.75f)); // checks a smaller area if the first location is too close
-                foodInArea = null; // reset array
-                foodInArea = Physics2D.OverlapCircle(spawnLocation, 1f); // check again
-            }
+            // attatch scripts
+            foodObject.AddComponent<Food>();
 
-            // spawn the food
-            food = new Food(spawnType, spawnLocation, foodCount); //constructor call
+            BoxCollider2D boxCollider = foodObject.AddComponent<BoxCollider2D>();
+            boxCollider.isTrigger = true;
+
+            //add rigidbody2d, if needed
+            Rigidbody2D foodRigid = (Rigidbody2D)foodObject.AddComponent(typeof(Rigidbody2D));
+            foodRigid.gravityScale = 0;
+
+
             foodCount += 1;
-            Debug.Log("Created food: '" + food.getType() + "' at " + Time.time);
+            Debug.Log("Created food at " + Time.time);
         }
     }
 

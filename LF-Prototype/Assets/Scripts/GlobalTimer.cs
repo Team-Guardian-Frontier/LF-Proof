@@ -21,10 +21,13 @@ using UnityEngine.SceneManagement;
  */
 
 public class GlobalTimer : MonoBehaviour {
-    public float startingTime;
+    private float startingTime;
     private Text theText;
     public Text timeUpText;
     public Text playerWin;
+
+    //public
+    public int mealTime;
 
     //objects to manipulate, attatch via public.
     public GameObject player1;
@@ -64,7 +67,7 @@ public class GlobalTimer : MonoBehaviour {
             * Will be replaced with the code to restart the timer
             */
 
-            startingTime = 10;
+            startingTime = mealTime;
             //resets the time immediately (could potentially hold a delay)
 
             //This is where the hunger damage takes place

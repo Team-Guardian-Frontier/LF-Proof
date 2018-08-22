@@ -583,6 +583,7 @@ MonoBehaviour:
   startingTime: 10
   timeUpText: {fileID: 1763541368}
   playerWin: {fileID: 226820848}
+  mealTime: 10
   player1: {fileID: 710106595}
   player2: {fileID: 1057730407}
   eventSystem: {fileID: 14005320}
@@ -1054,12 +1055,12 @@ MonoBehaviour:
   health: 100
   damage: 25
   healing: 25
-  servingSize: 15
+  servingSize: 25
   hungerD: 15
   GroupD: 15
-  maxVegetable: 65
-  maxCarb: 65
-  maxProtein: 65
+  maxVegetable: 75
+  maxCarb: 75
+  maxProtein: 75
 --- !u!61 &710106603
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1301,12 +1302,12 @@ MonoBehaviour:
   health: 100
   damage: 25
   healing: 25
-  servingSize: 15
+  servingSize: 25
   hungerD: 15
   GroupD: 15
-  maxVegetable: 65
-  maxCarb: 65
-  maxProtein: 65
+  maxVegetable: 75
+  maxCarb: 75
+  maxProtein: 75
 --- !u!114 &1057730409
 MonoBehaviour:
   m_ObjectHideFlags: 0

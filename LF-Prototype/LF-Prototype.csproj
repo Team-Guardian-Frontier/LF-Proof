@@ -300,6 +300,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Board\BoardManager.cs" />
     <Compile Include="Assets\Scripts\BulletScript.cs" />
     <Compile Include="Assets\Scripts\CrosshairBehavior.cs" />
     <Compile Include="Assets\Scripts\Food.cs" />

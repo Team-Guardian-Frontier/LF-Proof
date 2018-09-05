@@ -11,12 +11,12 @@ public class P2FruitHandler : MonoBehaviour
 
 
     //held food object
+    private Food visitor;
     private Food prisoner;
     private GameObject tempCast;
 
     //trigger inputs
-    private float p2ltrigger;
-    private float p2rtrigger;
+    private float triggers;
 
 
 
@@ -32,8 +32,8 @@ public class P2FruitHandler : MonoBehaviour
     void Update()
     {
         //player 2 triggers, ltrig2, rtrig2
-        p2ltrigger = Input.GetAxis("ltrig2");
-        p2rtrigger = Input.GetAxis("rtrig2");
+        triggers = Input.GetAxis("triggers2");
+        
 
 
 
@@ -46,28 +46,55 @@ public class P2FruitHandler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
+        /*
+        * Prevent "Stealing" eggs, while also not registering it in object.
+        */
 
         if (other.tag == "Food")
         {
 
 
-            if (prisoner == null)
+            //find a way to check state of other, without taking prisoner.
+            string pname = other.gameObject.name;
+            tempCast = GameObject.Find(pname);
+            //register other object as visitor
+            visitor = (Food)tempCast.GetComponent(typeof(Food));
+
+
+            //if collide with food that was shot, take damage
+            if (visitor.foodState == Food.FoodState.Shot)
             {
-                string pname = other.gameObject.name;
-                tempCast = GameObject.Find(pname);
-                prisoner = (Food)tempCast.GetComponent(typeof(Food));
-                if (prisoner.foodState == Food.FoodState.Shot)
-                {
-                    stats.takeDamage();
-                    // add food count for damage
-                    Destroy(other.gameObject);
-                    
-                }
-                else if(prisoner.foodState != Food.FoodState.Held)
-                    prisoner.Pickup(this.gameObject);
+                //call damage method in stats
+                stats.takeDamage(visitor.getType());
+                Debug.Log("hit with a " + visitor.getType());
+                Destroy(other.gameObject);
 
             }
+            //if not shot, then check to see if player already has ammo
+            else if (prisoner == null)
+            {
+                //set it so taht you now have a prisoner %possible optimization% see p1 fruit
+                prisoner = visitor;
+                    //DEBUG: tells you state of prisoner and type
+                Debug.Log("prisonerstate" + prisoner.foodState);
+                Debug.Log("prisonerType" + prisoner.getType());
+                Debug.Log("PrisonerName" + prisoner.name);
+
+                if (prisoner.foodState == Food.FoodState.Held)
+                {
+                    //clear prisoner details if you bump into other's
+                    prisoner = null;
+                    tempCast = null;
+                }
+                else
+                {
+                    //physically capture the object (it now follows)
+                    prisoner.Pickup(this.gameObject);
+
+                }
+
+            }
+                
 
         }
 
@@ -76,21 +103,24 @@ public class P2FruitHandler : MonoBehaviour
 
     public void UseFood()
     {
-        if (p2ltrigger > .5)
+        if (triggers > .5)
         {
-            stats.eatFood(prisoner.foodType);
+            stats.eatFood(prisoner.getType());
             Destroy(tempCast);
+            prisoner = null;
+            tempCast = null;
 
         }
     }
 
     public void CheckShoot()
     {
-        if (p2rtrigger > .5)
+        if (triggers < -.5)
         {
             GameObject player = GameObject.Find("Player2");
             P2MousePos scriptref = (P2MousePos)player.GetComponent(typeof(P2MousePos));
-            float launchAngle = scriptref.RAngle;
+
+            float launchAngle = scriptref.RAngle2;
             prisoner.Launched(launchAngle);
 
             prisoner = null;

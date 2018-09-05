@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class FruitHandler : MonoBehaviour {
 
+    //tempheader: this script is bound to the player, and lets them shoot and stuff.
+        //dictates firing, eating, and fruit interactions with player.
 
     //Calls StatsManager script
     private StatsManager stats;
 
 
     //held food object
+    private Food visitor;
     private Food prisoner;
     private GameObject tempCast;
 
     //trigger inputs
-    private float ltrigger;
-    private float rtrigger;
+    private float triggers;
 
 
 
@@ -28,8 +30,10 @@ public class FruitHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        ltrigger = Input.GetAxis("ltrig1");
-        rtrigger = Input.GetAxis("rtrig1");
+
+        //set triggers
+        triggers = Input.GetAxis("triggers1");
+        
 
 
 
@@ -40,49 +44,78 @@ public class FruitHandler : MonoBehaviour {
         }
 	}
 
+    //Collision --> pickup
     private void OnTriggerEnter2D(Collider2D other)
     {
-        
+        /*
+         * Prevent "Stealing" eggs, while also not registering it in object.
+         */
 
+        //upon collision with food
         if (other.tag == "Food")
         {
-            
+            //find a way to check state of other, without taking prisoner.
+            string pname = other.gameObject.name;
+            tempCast = GameObject.Find(pname);
+            //register other object as visitor.
+            visitor = (Food)tempCast.GetComponent(typeof(Food));
 
-            if (prisoner == null)
-            { 
-                string pname = other.gameObject.name;
-                tempCast = GameObject.Find(pname);
-                prisoner = (Food)tempCast.GetComponent(typeof(Food));
-                if (prisoner.foodState == Food.FoodState.Shot)
-                {
-                    stats.takeDamage();
-                    // add food count for damage
-                    Destroy(other.gameObject);
-                    
-                }
-                else if (prisoner.foodState != Food.FoodState.Held)
-                    prisoner.Pickup(this.gameObject);
+
+            //if collide with food that was shot, take damage
+            if (visitor.foodState == Food.FoodState.Shot)
+            {
+                //call damage method in stats
+                stats.takeDamage(visitor.getType());
+                Debug.Log("hit with a " + visitor.getType());
+                Destroy(other.gameObject);
 
             }
-            
+            //if not shot, then check to see if player already has ammo
+            else if (prisoner == null)
+            {
+                //set it so that you now have a prisoner? idk if this is useful. //%Spot to optimize%, can check the state the prisoner, before taking it as a prisoner. not much damage.
+                prisoner = visitor;
+                     //DEBUG: tells you state of prisoner and type
+                Debug.Log("prisonerstate" + prisoner.foodState);
+                Debug.Log("prisonerType" + prisoner.getType());
+                Debug.Log("PrisonerName" + prisoner.name);
+
+                if (prisoner.foodState == Food.FoodState.Held)                           
+                {
+                    //clear prisoner details if bump into others
+                    prisoner = null;
+                    tempCast = null;
+                }
+                else
+                {
+                    //physically capture the object (it now follows)  %optimize% unless there's a glitch, do the prisoner = visitor; here.
+                    prisoner.Pickup(this.gameObject);
+
+                }
+
+            }
+
+
         }
 
     }
 
-
+    //method to call eat health function in stats manager, delete object, and clear prisoner.
     public void UseFood()
     {
-        if (ltrigger > .5)
+        if (triggers > .5)
         {
-            stats.eatFood(prisoner.foodType);
+            stats.eatFood(prisoner.getType());
             Destroy(tempCast);
-
+            prisoner = null;
+            tempCast = null;
         }
     }
 
+    //method to launch the food, and clear necesary local variables.
     public void CheckShoot()
     {
-        if (rtrigger > .5)
+        if (triggers < -.5)
         {
             GameObject player = GameObject.Find("Player");
             MousePos scriptref = (MousePos)player.GetComponent(typeof(MousePos));

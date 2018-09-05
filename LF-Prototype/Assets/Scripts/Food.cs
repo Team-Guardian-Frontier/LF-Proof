@@ -21,11 +21,11 @@ public class Food : MonoBehaviour {
         Shot
     }
 
-    public FoodType foodType;
+    private FoodType foodType;
     public FoodState foodState;
 
 
-    //game object field for being held
+    //Game Object, for "owner"
     private GameObject player;
 
     //positioning offset (for held)
@@ -37,48 +37,93 @@ public class Food : MonoBehaviour {
     private float yspeed;
     private Vector3 speedWagon;
 
-    private BoxCollider2D boxCollider;
+    //Physics and Sprites
+
     private SpriteRenderer spriteRenderer;
     private Sprite foodSprite;
     private Texture2D foodTexture;
     private GameObject foodObject;
     private Rigidbody2D foodRigid;
 
-    /**
-     * Constructor that takes in food type, and a vector3 for position.
-     */
-    public Food(FoodType _foodType, Vector3 _initialPosition, int _count) {
+        //Add Collider
+        
 
-        foodObject = new GameObject(_foodType.ToString() + _count);
+        /*add rigidbody2d, if needed
+        foodRigid = (Rigidbody2D)foodObject.AddComponent(typeof(Rigidbody2D));
+        foodRigid.gravityScale = 0;
+        */
 
-        foodObject.gameObject.tag = "Food";
-        foodType = _foodType;
-        foodObject.transform.position = _initialPosition;
+        //add Script ???What???
+        
+
+
+
+
+    //Unity Events
+    private void Start()
+    {
+        //INITIALIZE
+        //find the object this script is attatched to
+        foodObject = gameObject;
+
+        //mathf will pick even numbers on .5, may need your own math here.
+        int foodNumber = Mathf.RoundToInt(Random.Range(0.0f, 2.0f));                  // Randomizes the FoodType
+        foodType = (Food.FoodType)foodNumber;                                   // Sets the FoodType enum using the random number
+
+
+
+       
+        //set position
+        Vector2 spawnLocation = new Vector2(Random.Range(-6.75f, 6.75f), Random.Range(-2.25f, 2.25f));  // Sets the random location of food spawn within a certain area
+
+        // check an area around the food to see if another food overlaps, if so then move the spawn location to another spot
+        Collider2D foodInArea = Physics2D.OverlapCircle(spawnLocation, 1.0f);
+        while (foodInArea != null)
+        {
+            spawnLocation = new Vector2(Random.Range(-5.0f, 5.0f), Random.Range(-1.75f, 1.75f)); // checks a smaller area if the first location is too close
+            foodInArea = null; // reset array
+            foodInArea = Physics2D.OverlapCircle(spawnLocation, 1f); // check again
+        }
+        //set position
+        foodObject.transform.position = spawnLocation;
+
+        BoxCollider2D boxCollider = foodObject.AddComponent<BoxCollider2D>();
+        boxCollider.isTrigger = true;
+
+        //DEBUG: say type
+        Debug.Log("I am a " + foodType);
 
         //spawn set food state to none
         foodState = (FoodState)0;
 
-        switch (foodType) {
+        //SPRITE RENDERING
+        //set food sprite
+        switch (foodType)
+        {
 
-            case FoodType.Carbs: {
+            case FoodType.Carbs:
+                {
                     // setup carb
                     foodTexture = Resources.Load<Texture2D>("sprites/bread");
                     break;
                 }
 
-            case FoodType.Proteins: {
+            case FoodType.Proteins:
+                {
                     // setup proteins
                     foodTexture = Resources.Load<Texture2D>("sprites/egg");
                     break;
                 }
 
-            case FoodType.Vegetable: {
+            case FoodType.Vegetable:
+                {
                     // setup vegetables
-                    foodTexture = Resources.Load<Texture2D>("sprites/vegetable");
+                    foodTexture = Resources.Load<Texture2D>("sprites/tomato");
                     break;
                 }
 
-            default: {
+            default:
+                {
                     Debug.Log("No foodType specified. Refusing to instantiate Food Object.");
                     break;
                 }
@@ -90,27 +135,15 @@ public class Food : MonoBehaviour {
                                    new Rect(0, 0, foodTexture.width, foodTexture.height),
                                    Vector2.zero);
         spriteRenderer.sprite = foodSprite;
-        //Add Collider
-        boxCollider = foodObject.AddComponent<BoxCollider2D>();
-        boxCollider.isTrigger = true;
 
-        /*add rigidbody2d, if needed
-        foodRigid = (Rigidbody2D)foodObject.AddComponent(typeof(Rigidbody2D));
-        foodRigid.gravityScale = 0;
-        */
+        //getting collider to match sprite
+        boxCollider.size = foodSprite.bounds.size;
 
-        //add Script
-        foodObject.AddComponent(typeof(Food));
-
-    }
-
-
-    //Unity Events
-    private void Start()
-    {
         //set speed
-        maxSpeed = .01f;
+        maxSpeed = .1f;
+        Debug.Log("Start, I am a " + foodType);
     }
+
     void Update()
     {
         switch (foodState)
@@ -127,7 +160,7 @@ public class Food : MonoBehaviour {
         }
     }
 
-    //trigger events
+    //State Change calls (call from other scripts.
 
     public void Pickup(GameObject other)
     {
@@ -136,11 +169,11 @@ public class Food : MonoBehaviour {
         player = other;
         foodState = FoodState.Held;
 
-        Debug.Log("I am touched by you!");
 
         offset = Vector3.zero; // this.transform.position - other.transform.position;
 
     }
+
     //call on player, when press trigger. (this instance already passed.)
     public void Launched(float angle)
     {
@@ -153,13 +186,17 @@ public class Food : MonoBehaviour {
         foodState = FoodState.Shot;
 
 
-        Debug.Log("I was shot!");
-        Debug.Log(xspeed +"speed" + yspeed + angle);
+        Debug.Log("I was shot!" + foodState);
+
 
         
     }
 
-
+    //get method
+    public FoodType getType()
+    {
+        return foodType;
+    }
 
     //utility
     private void Held()

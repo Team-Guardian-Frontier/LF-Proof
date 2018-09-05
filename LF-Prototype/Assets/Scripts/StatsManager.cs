@@ -5,40 +5,69 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class StatsManager : MonoBehaviour {
+    //temp header: this controls the player's stats like health and food groups.
+
+
     public Text playerText;
     public Text winText;
 
+    public Food foodItem;
 
-    public int health;
-    private int totalH;
-    private int carbCounter;
-    private int proteinCounter;
-    private int vegetableCounter;
-
+    //Public values available to set
+    public int health; //health
+    public int damage; //damage
+    public int healing; //healing
+    public int servingSize; // default food group amt added for each food pickup
+    public int hungerD; //hunger damage
+    public int GroupD; //damage from exceeding food groups.
     // maximum amount for each type
     public int maxVegetable;
     public int maxCarb;
     public int maxProtein;
 
-    public Food foodItem;
-    public int servingSize; // default amount added for each food pickup
+    //set during play, counters
+    private int totalH;
+    private int carbCounter;
+    private int proteinCounter;
+    private int vegetableCounter;
+
 
     void Start () {
-        health = 100; // base health
+        
+
+        //reset counters
         vegetableCounter = 0;
         carbCounter = 0;
         proteinCounter = 0;
 
         //this is to set total health.
         totalH = health;
-        DisplayHealth();
+        Display();
         winText.text = "";
-	}
-	
-	void Update () {
-        DisplayHealth();
+
+        /*DESIGN: these are the values you set.
+        health = 100;
+        damage = 25;
+        healing = 25;
+        serving size = 15;
+
+        hungerD = 15;
+        GroupD = 15;
+
+        max groups
+            veg65
+            carb65
+            protein65
+        */
+    }
+
+    void Update () {
+
+        Display();
 	}
 
+
+    //get methods
     public int GetVegetables() {
         return this.vegetableCounter;
     }
@@ -51,21 +80,26 @@ public class StatsManager : MonoBehaviour {
         return this.proteinCounter;
     }
 
-    public void eatFood(Food.FoodType foodType)
+    public void eatFood(Food.FoodType _Type)
     {
-        health += servingSize;
+        //adds health, applies food group method
+        health += healing;
+        FoodGroup(_Type);
+    }
 
-        /*
-        int penalty;
-        switch (foodType)
+    public void FoodGroup(Food.FoodType _foodType)
+    {
+        //Adds the appropriate amt to group, and then incurs appropriate penalty.
+        
+        switch (_foodType)
         {
             case Food.FoodType.Vegetable:
                 {
                     vegetableCounter += servingSize;
+                    
                     if (vegetableCounter > maxVegetable)
                     {
-                        penalty = (vegetableCounter - maxVegetable);  // penalty is taken from health based on overflow
-                        health -= penalty;
+                        health -= GroupD; //currently, set so that if any counter is over the max, then incur damage, so less healing
                     }
                     break;
                 }
@@ -74,8 +108,7 @@ public class StatsManager : MonoBehaviour {
                     carbCounter += servingSize;
                     if (carbCounter > maxCarb)
                     {
-                        penalty = (carbCounter - maxCarb);  // penalty is taken from health based on overflow
-                        health -= penalty;
+                        health -= GroupD;
                     }
                     break;
                 }
@@ -84,8 +117,7 @@ public class StatsManager : MonoBehaviour {
                     proteinCounter += servingSize;
                     if (proteinCounter > maxProtein)
                     {
-                        penalty = (proteinCounter - maxProtein);  // penalty is taken from health based on overflow
-                        health -= penalty;
+                        health -= GroupD;
                     }
                     break;
                 }
@@ -93,18 +125,38 @@ public class StatsManager : MonoBehaviour {
                 Debug.Log("No foodType specified. Cannot add food to counter.");
                 break;
         }
-        */
-    }
-
-    public void takeDamage()
-    {
-        health -= servingSize;
         
     }
 
-    private void DisplayHealth()
+    public void takeDamage(Food.FoodType _Type)
     {
-        playerText.text = this.gameObject.name + ": " + health + "/" + totalH;
+        //adds damage, applies food group method.
+        health -= damage;
+        FoodGroup(_Type);
+    }
+
+    public void hungerDamage()
+    {
+        //hunger damage method
+        health -= hungerD;
+
+    }
+
+    public void groupReset()
+    {
+        vegetableCounter = 0;
+        carbCounter = 0;
+        proteinCounter = 0;
+    }
+
+    private void Display()
+    {
+        //don't forget the size of the text object!
+        playerText.text = this.gameObject.name + ": " + health + "/" + totalH
+                            + "\nVeggies: " + vegetableCounter + "/" + maxVegetable 
+                            +"\nCarbs: " + carbCounter + "/" + maxCarb
+                            +"\nProtein: " + proteinCounter + "/" + maxProtein;
+                           
         if (health <= 0)
             Loss();
 
@@ -112,6 +164,7 @@ public class StatsManager : MonoBehaviour {
 
     public void Loss()
     {
+        Debug.Log("Is this...?");
         winText.text = "Game Over! You are Winner!";
         Destroy(gameObject);
     }

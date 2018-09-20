@@ -13,6 +13,7 @@ public class PlayerControl : MonoBehaviour {
 
     private Rigidbody2D myRigidbody;
     private BoxCollider2D myBox;
+    private ContactFilter2D brita;
 
     private float cDiag = (Mathf.Sqrt(2) / 2);
     private const float ROSEDIST = .01f;
@@ -20,8 +21,8 @@ public class PlayerControl : MonoBehaviour {
     private const float togDead = .5f;
     private RaycastHit2D[] hitResults;
 
-    //previous position
-    private Vector3 lastPosition;
+    private float horiz;
+    private float verti;
 
     void Start() {
         myRigidbody = GetComponent<Rigidbody2D>();
@@ -30,10 +31,13 @@ public class PlayerControl : MonoBehaviour {
 
         hitResults = new RaycastHit2D[3];
 
+        //set up filter to just not pick up the food pickups
+        brita.useTriggers = false;
+
+
 	}
 
-    private float horiz;
-    private float verti;
+
 
     void ControllerCheck() {
         horiz = Input.GetAxis("Horizontal");
@@ -52,7 +56,7 @@ public class PlayerControl : MonoBehaviour {
     
 
     void Update () {
-        lastPosition = transform.position;
+
         ControllerCheck();
         Movement();
         
@@ -60,70 +64,41 @@ public class PlayerControl : MonoBehaviour {
     
     void Movement(){
 
+        //if one button is not zero, and the other is then set speed to movespeed*cdiag.
+        //if the absolute value of both buttons is 2, then set speed
+        float dPos = moveSpeed;
+        if (Mathf.Abs(horiz) + Mathf.Abs(verti) == 2)
+            dPos = moveSpeed * cDiag;
+        
 
-        if (verti == -1 && horiz == 1)
-        {
-            //NE
-            if (CheckDirect(Vector2.one, cDiag))
-            {
-                transform.Translate(Vector2.right * moveSpeed * cDiag);
-                transform.Translate(Vector2.up * moveSpeed * cDiag);
-            }
-        }
-        else if (verti == 1 && horiz == -1)
-        {
-            //SW
-            if (CheckDirect(new Vector2(-1,-1), cDiag))
-            {
-                transform.Translate(Vector2.left * moveSpeed * cDiag);
-                transform.Translate(Vector2.down * moveSpeed * cDiag);
-            }
-        }
-        else if (verti == 1 && horiz == 1)
-        {
-            //SE
-            //SW
-            if (CheckDirect(new Vector2(1, -1),cDiag))
-            {
-                transform.Translate(Vector2.right * moveSpeed * cDiag);
-                transform.Translate(Vector2.down * moveSpeed * cDiag);
-            }
-        }
-        else if (verti == -1 && horiz == -1)
-        {
-            //NW
-            //SW
-            if (CheckDirect(new Vector2(-1, 1),ROSEDIST*cDiag))
-            {
-                transform.Translate(Vector2.left * moveSpeed * cDiag);
-                transform.Translate(Vector2.up * moveSpeed * cDiag);
-            }
-        }
-        else if (horiz == 1)
+        //horizontal movement
+        if (horiz == 1)
         {
             //E
             if (CheckDirect(Vector2.right,ROSEDIST))
-                transform.Translate(Vector2.right * moveSpeed);
+                transform.Translate(Vector2.right * dPos);
 
         }
         else if (horiz == -1)
         {
             //W
             if (CheckDirect(-Vector2.right,ROSEDIST))
-                transform.Translate(-Vector2.right * moveSpeed);
+                transform.Translate(-Vector2.right * dPos);
             
         }
-        else if (verti == -1)
+
+        //vertical movement
+        if (verti == -1)
         {
             //N
             if (CheckDirect(Vector2.up,ROSEDIST))
-                transform.Translate(Vector2.up * moveSpeed);
+                transform.Translate(Vector2.up * dPos);
         }
         else if (verti == 1)
         {
             //S
             if (CheckDirect(Vector2.down,ROSEDIST))
-                transform.Translate(-Vector2.up * moveSpeed);
+                transform.Translate(-Vector2.up * dPos);
         }
         
         
@@ -131,20 +106,15 @@ public class PlayerControl : MonoBehaviour {
 
     bool CheckDirect(Vector2 finnaGo, float disty)
     {
-        //Checks to see things are empty b4 moving.
+        //Checks to see things are empty, before moving.
         bool empty = false;
-        if (myBox.Cast(finnaGo, hitResults, disty, true) == 0)
+        if (myBox.Cast(finnaGo, brita, hitResults, disty, false) == 0)
             empty = true;
-        
+
         return empty;
-        
+
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        transform.position = lastPosition;
-        Debug.Log("I'm doin it" + myBox.bounciness);
-    }
 
 
     /* Movement Methods, Pros and Cons.
@@ -170,7 +140,13 @@ public class PlayerControl : MonoBehaviour {
      * 
      * 
      * last two parts. fix the bumpiness on the diags.
+     *      Switching to just 4 directions, so it only has two directions, with a yes or no. to limit speed, just do it buddy.
      * Use layer masks so that it doesn't detect the pickup colliders.
      * 
+     * Points of optimization: get rid of unnecessary vars, sort em out, and etc.
+     * use getaxisraw, and make it a single script, instead of two players. (use public vars, and get an input managing script. attatch values via that.)
+     *      for controller, if you aren't doing getaxisraw, work with the ==2 for the absolute vals.
+     *      
+     *  Cool Note!: Weirdly enough, the space here still lets the player bump into the other player, for a bit of an adorable and cool bump.
      */
 }

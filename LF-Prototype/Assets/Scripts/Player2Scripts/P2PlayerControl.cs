@@ -11,10 +11,19 @@ public class P2PlayerControl : MonoBehaviour
 {
 
     public float moveSpeed;
+
     private Rigidbody2D myRigidbody;
+    private BoxCollider2D myBox;
+    private ContactFilter2D brita;
 
     private float CDIAG = (Mathf.Sqrt(2) / 2);
+    private const float ROSEDIST = .01f;
+
     private const float togDead = .5f;
+    private RaycastHit2D[] hitResults;
+
+    private float horiz;
+    private float verti;
 
     void Start()
     {
@@ -22,8 +31,7 @@ public class P2PlayerControl : MonoBehaviour
         myRigidbody.freezeRotation = true;
     }
 
-    private float horiz;
-    private float verti;
+
 
     void ControllerCheck()
     {

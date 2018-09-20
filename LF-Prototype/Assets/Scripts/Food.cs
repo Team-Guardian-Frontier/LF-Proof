@@ -84,6 +84,8 @@ public class Food : MonoBehaviour {
             foodInArea = null; // reset array
             foodInArea = Physics2D.OverlapCircle(spawnLocation, 1f); // check again
         }
+
+
         //set position
         foodObject.transform.position = spawnLocation;
 

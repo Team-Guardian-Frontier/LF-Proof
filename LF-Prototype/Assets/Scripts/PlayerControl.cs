@@ -119,34 +119,36 @@ public class PlayerControl : MonoBehaviour {
 
     /* Movement Methods, Pros and Cons.
      * 
-     * myRigidbody.AddForce(Vector2.right*moveSpeed, ForceMode2D.Impulse);
+     * 1)myRigidbody.AddForce(Vector2.right*moveSpeed, ForceMode2D.Impulse);
      *      This method is useful for physics,  but it is very difficult to stop. myrigidbody.velocity is the same.
      *      
-     * Character controller
+     * 2)Character controller
      *      Seems the simplest method to move, is full of preexisting shortcuts. Problem being i have no idea how it works, can't coexist with a collider
      *      and well, is prebaked, so if you want something else, probably not gonna get it.
      *
-     * private void FixedUpdate()
-    {
-        Vector2 targetVelocity = new Vector2(horiz, -verti);
-        GetComponent<Rigidbody2D>().velocity = targetVelocity * moveSpeed;
-    }
+     * 3)private void FixedUpdate()
+        {
+            Vector2 targetVelocity = new Vector2(horiz, -verti);
+            GetComponent<Rigidbody2D>().velocity = targetVelocity * moveSpeed;
+        }
             Most promising one. Biggest problem is that it just applies forces to the other player, that I can't deal.
      * 
      * So we're going with something I can do, and honestly is the best right now.
-     * keeping the transforms, and using either a sweeptest,
-     *      nvm sweeptest is 3d only
-     * Or resetting the position before it can even change, either in fixedupdate or b4 it can move.
-     * 
+     * 4)
+     * keeping the transforms, and cast collider out.
+     *                      sweeptest is 3d only
+     *                      can try resetting the position before it can even change, either in fixedupdate or b4 it can move, but it's much lighter to cast
+     * 2d casts are surprisingly easy. cuz they aren't raycasts, i believe. collidercast is a little nicer bc of the sister colliders, I think.
      * 
      * last two parts. fix the bumpiness on the diags.
-     *      Switching to just 4 directions, so it only has two directions, with a yes or no. to limit speed, just do it buddy.
-     * Use layer masks so that it doesn't detect the pickup colliders.
+     *      Switching to just 4 directions, so it only has two directions, with a yes or no. to limit speed, a neat bit of logic.
+     * Layermasks filter out THAT layer. so we just went with triggers.
      * 
      * Points of optimization: get rid of unnecessary vars, sort em out, and etc.
      * use getaxisraw, and make it a single script, instead of two players. (use public vars, and get an input managing script. attatch values via that.)
      *      for controller, if you aren't doing getaxisraw, work with the ==2 for the absolute vals.
      *      
      *  Cool Note!: Weirdly enough, the space here still lets the player bump into the other player, for a bit of an adorable and cool bump.
+     * 
      */
 }

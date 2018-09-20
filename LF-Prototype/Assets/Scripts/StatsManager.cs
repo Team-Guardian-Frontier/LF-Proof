@@ -33,12 +33,13 @@ public class StatsManager : MonoBehaviour {
 
 
     void Start () {
-        
+
 
         //reset counters
-        vegetableCounter = 0;
-        carbCounter = 0;
-        proteinCounter = 0;
+        Debug.Log("I added foodo");
+        vegetableCounter = 25;
+        carbCounter = 25;
+        proteinCounter = 25;
 
         //this is to set total health.
         totalH = health;

@@ -10,14 +10,26 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour {
 
     public float moveSpeed;
-    private Rigidbody2D myRigidbody;
 
-    private float CDIAG = (Mathf.Sqrt(2) / 2);
+    private Rigidbody2D myRigidbody;
+    private BoxCollider2D myBox;
+
+    private float cDiag = (Mathf.Sqrt(2) / 2);
+    private const float ROSEDIST = .01f;
+
     private const float togDead = .5f;
+    private RaycastHit2D[] hitResults;
+
+    //previous position
+    private Vector3 lastPosition;
 
     void Start() {
-        myRigidbody = (Rigidbody2D)this.gameObject.GetComponent(typeof(Rigidbody2D));
+        myRigidbody = GetComponent<Rigidbody2D>();
         myRigidbody.freezeRotation = true;
+        myBox = GetComponent<BoxCollider2D>();
+
+        hitResults = new RaycastHit2D[3];
+
 	}
 
     private float horiz;
@@ -37,62 +49,128 @@ public class PlayerControl : MonoBehaviour {
         if (verti < -togDead)
             verti = -1;
     }
+    
 
-     
-	
-	void Update () {
-
+    void Update () {
+        lastPosition = transform.position;
         ControllerCheck();
         Movement();
         
     }
-
+    
     void Movement(){
+
 
         if (verti == -1 && horiz == 1)
         {
             //NE
-            transform.Translate(Vector2.right * moveSpeed * CDIAG);
-            transform.Translate(Vector2.up * moveSpeed * CDIAG);
+            if (CheckDirect(Vector2.one, cDiag))
+            {
+                transform.Translate(Vector2.right * moveSpeed * cDiag);
+                transform.Translate(Vector2.up * moveSpeed * cDiag);
+            }
         }
         else if (verti == 1 && horiz == -1)
         {
             //SW
-            transform.Translate(Vector2.left * moveSpeed * CDIAG);
-            transform.Translate(Vector2.down * moveSpeed * CDIAG);
+            if (CheckDirect(new Vector2(-1,-1), cDiag))
+            {
+                transform.Translate(Vector2.left * moveSpeed * cDiag);
+                transform.Translate(Vector2.down * moveSpeed * cDiag);
+            }
         }
         else if (verti == 1 && horiz == 1)
         {
             //SE
-            transform.Translate(Vector2.right * moveSpeed * CDIAG);
-            transform.Translate(Vector2.down * moveSpeed * CDIAG);
+            //SW
+            if (CheckDirect(new Vector2(1, -1),cDiag))
+            {
+                transform.Translate(Vector2.right * moveSpeed * cDiag);
+                transform.Translate(Vector2.down * moveSpeed * cDiag);
+            }
         }
         else if (verti == -1 && horiz == -1)
         {
             //NW
-            transform.Translate(Vector2.left * moveSpeed * CDIAG);
-            transform.Translate(Vector2.up * moveSpeed * CDIAG);
+            //SW
+            if (CheckDirect(new Vector2(-1, 1),ROSEDIST*cDiag))
+            {
+                transform.Translate(Vector2.left * moveSpeed * cDiag);
+                transform.Translate(Vector2.up * moveSpeed * cDiag);
+            }
         }
         else if (horiz == 1)
         {
             //E
-            transform.Translate(Vector2.right * moveSpeed);
+            if (CheckDirect(Vector2.right,ROSEDIST))
+                transform.Translate(Vector2.right * moveSpeed);
+
         }
         else if (horiz == -1)
         {
             //W
-            transform.Translate(-Vector2.right * moveSpeed);
+            if (CheckDirect(-Vector2.right,ROSEDIST))
+                transform.Translate(-Vector2.right * moveSpeed);
+            
         }
         else if (verti == -1)
         {
             //N
-            transform.Translate(Vector2.up * moveSpeed);
+            if (CheckDirect(Vector2.up,ROSEDIST))
+                transform.Translate(Vector2.up * moveSpeed);
         }
         else if (verti == 1)
         {
             //S
-            transform.Translate(-Vector2.up * moveSpeed);
+            if (CheckDirect(Vector2.down,ROSEDIST))
+                transform.Translate(-Vector2.up * moveSpeed);
         }
-
+        
+        
     }
+
+    bool CheckDirect(Vector2 finnaGo, float disty)
+    {
+        //Checks to see things are empty b4 moving.
+        bool empty = false;
+        if (myBox.Cast(finnaGo, hitResults, disty, true) == 0)
+            empty = true;
+        
+        return empty;
+        
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        transform.position = lastPosition;
+        Debug.Log("I'm doin it" + myBox.bounciness);
+    }
+
+
+    /* Movement Methods, Pros and Cons.
+     * 
+     * myRigidbody.AddForce(Vector2.right*moveSpeed, ForceMode2D.Impulse);
+     *      This method is useful for physics,  but it is very difficult to stop. myrigidbody.velocity is the same.
+     *      
+     * Character controller
+     *      Seems the simplest method to move, is full of preexisting shortcuts. Problem being i have no idea how it works, can't coexist with a collider
+     *      and well, is prebaked, so if you want something else, probably not gonna get it.
+     *
+     * private void FixedUpdate()
+    {
+        Vector2 targetVelocity = new Vector2(horiz, -verti);
+        GetComponent<Rigidbody2D>().velocity = targetVelocity * moveSpeed;
+    }
+            Most promising one. Biggest problem is that it just applies forces to the other player, that I can't deal.
+     * 
+     * So we're going with something I can do, and honestly is the best right now.
+     * keeping the transforms, and using either a sweeptest,
+     *      nvm sweeptest is 3d only
+     * Or resetting the position before it can even change, either in fixedupdate or b4 it can move.
+     * 
+     * 
+     * last two parts. fix the bumpiness on the diags.
+     * Use layer masks so that it doesn't detect the pickup colliders.
+     * 
+     */
 }

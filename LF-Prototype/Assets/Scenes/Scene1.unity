@@ -1058,7 +1058,7 @@ MonoBehaviour:
   hungerD: 15
   GroupD: 15
   maxVegetable: 75
-  maxCarb: 0
+  maxCarb: 75
   maxProtein: 75
 --- !u!61 &710106603
 BoxCollider2D:

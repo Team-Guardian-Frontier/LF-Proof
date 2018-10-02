@@ -39,10 +39,13 @@ public class GlobalTimer : MonoBehaviour {
     private FoodSpawner spawner;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 
         //getting the text
         theText = GetComponent<Text>();
+
+        //Start with meal time so that the players don't start with hunger damage [hungerDamage()]
+        startingTime = mealTime;
 
         //initialize which scripts to access for stat changes.
         p1Stats = player1.GetComponent<StatsManager>();

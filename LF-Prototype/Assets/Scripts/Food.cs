@@ -25,7 +25,7 @@ public class Food : MonoBehaviour {
     public FoodState foodState;
 
 
-    //Game Object, for "owner"
+    //Object for "Owner" player
     private GameObject player;
 
     //positioning offset (for held)
@@ -42,19 +42,20 @@ public class Food : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
     private Sprite foodSprite;
     private Texture2D foodTexture;
-    private GameObject foodObject;
     private Rigidbody2D foodRigid;
+    //game object attatched
+    private GameObject foodObject;
 
-        //Add Collider
-        
+    //Add Collider
 
-        /*add rigidbody2d, if needed
-        foodRigid = (Rigidbody2D)foodObject.AddComponent(typeof(Rigidbody2D));
-        foodRigid.gravityScale = 0;
-        */
 
-        //add Script ???What???
-        
+    /*add rigidbody2d, if needed
+    foodRigid = (Rigidbody2D)foodObject.AddComponent(typeof(Rigidbody2D));
+    foodRigid.gravityScale = 0;
+    */
+
+    //add Script ???What???
+
 
 
 
@@ -85,12 +86,20 @@ public class Food : MonoBehaviour {
             foodInArea = Physics2D.OverlapCircle(spawnLocation, 1f); // check again
         }
 
+        
 
         //set position
         foodObject.transform.position = spawnLocation;
 
+        //add collider + rigidbody
         BoxCollider2D boxCollider = foodObject.AddComponent<BoxCollider2D>();
         boxCollider.isTrigger = true;
+        boxCollider.offset = new Vector2(.16f, .16f);
+
+        Rigidbody2D hardBody = foodObject.AddComponent<Rigidbody2D>();
+        //make it so physics doesn't apply to these objects, but still detect collisions/use oncollisionenter
+        hardBody.isKinematic = true;
+        hardBody.useFullKinematicContacts = true;
 
         //DEBUG: say type
         Debug.Log("I am a " + foodType);
@@ -212,6 +221,16 @@ public class Food : MonoBehaviour {
         this.transform.Translate(speedWagon);
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        
+        GameObject punch = other.gameObject;
+        if (punch.CompareTag("Wall"))
+            Destroy(this.gameObject);
+        Debug.Log("Am I doing this Right?");
+    }
+    //oncollisionenter
+    //delete the food here, not in the fruit handler.
 
 }
 

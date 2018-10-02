@@ -16,7 +16,7 @@ public class FruitHandler : MonoBehaviour {
     //held food object
     [SerializeField]
     private Food prisoner;
-    private GameObject tempCast;
+    private GameObject foodObject;
 
     //trigger inputs
     private float triggers;
@@ -56,11 +56,8 @@ public class FruitHandler : MonoBehaviour {
         //upon collision with food
         if (other.tag == "Food")
         {
-            //find a way to check state of other, without taking prisoner.
-            string pname = other.gameObject.name;
-            tempCast = GameObject.Find(pname);
             //register other object as visitor.
-            visitor = (Food)tempCast.GetComponent(typeof(Food));
+            visitor = other.GetComponent<Food>();
 
 
             //if collide with food that was shot, take damage
@@ -86,12 +83,13 @@ public class FruitHandler : MonoBehaviour {
                 {
                     //clear prisoner details if bump into others
                     prisoner = null;
-                    tempCast = null;
+                    foodObject = null;
                 }
                 else
                 {
                     //physically capture the object (it now follows)  %optimize% unless there's a glitch, do the prisoner = visitor; here.
                     prisoner.Pickup(this.gameObject);
+                    foodObject = prisoner.gameObject;
 
                 }
 
@@ -108,9 +106,9 @@ public class FruitHandler : MonoBehaviour {
         if (triggers > .5)
         {
             stats.eatFood(prisoner.getType());
-            Destroy(tempCast);
+            Destroy(foodObject);
             prisoner = null;
-            tempCast = null;
+            foodObject = null;
         }
     }
 
@@ -125,7 +123,7 @@ public class FruitHandler : MonoBehaviour {
             prisoner.Launched(launchAngle);
 
             prisoner = null;
-            tempCast = null;
+            foodObject = null;
         }
     }
 

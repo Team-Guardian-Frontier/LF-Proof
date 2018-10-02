@@ -11,8 +11,10 @@ public class FruitHandler : MonoBehaviour {
     private StatsManager stats;
 
 
-    //held food object
+    //collision food object
     private Food visitor;
+    //held food object
+    [SerializeField]
     private Food prisoner;
     private GameObject tempCast;
 

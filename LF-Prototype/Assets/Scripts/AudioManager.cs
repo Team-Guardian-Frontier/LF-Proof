@@ -14,6 +14,7 @@ public class AudioManager : MonoBehaviour {
 
     //instance checker
     public static AudioManager instance;
+    private bool startedLoop;
 
 	// Use this for initialization
 	void Awake () {
@@ -38,6 +39,7 @@ public class AudioManager : MonoBehaviour {
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
         }
+        
 	}
 
     public void Play(string name)
@@ -53,11 +55,18 @@ public class AudioManager : MonoBehaviour {
 
     void Start()
     {
-        Play("Theme1");
+        Play("LevelIntro");
+        startedLoop = false;
+        
     }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
+    
+    void FixedUpdate () {
+        if (!sounds[1].source.isPlaying && !startedLoop)
+        {
+            sounds[0].source.Play();
+            Debug.Log("Done playing");
+            startedLoop = true;
+        }
+    }
 }

@@ -74,7 +74,7 @@ public class Food : MonoBehaviour {
 
 
        
-        //set position
+        //generate location to check
         Vector2 spawnLocation = new Vector2(Random.Range(-6.75f, 6.75f), Random.Range(-2.25f, 2.25f));  // Sets the random location of food spawn within a certain area
 
         // check an area around the food to see if another food overlaps, if so then move the spawn location to another spot

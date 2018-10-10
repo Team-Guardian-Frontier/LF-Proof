@@ -582,7 +582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeUpText: {fileID: 1763541368}
   playerWin: {fileID: 226820848}
-  mealTime: 10
+  mealTime: 60
   player1: {fileID: 710106595}
   player2: {fileID: 1057730407}
   eventSystem: {fileID: 14005320}
@@ -1034,9 +1034,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 437d1689eeac42d449cf2d5863ba6a42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 3
-  firePoint: {fileID: 528345895}
-  bullet: {fileID: 1948219483739732, guid: 5796acb4f220b2749a6c6e4317a96772, type: 2}
 --- !u!114 &710106602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1469,9 +1466,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 437d1689eeac42d449cf2d5863ba6a42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 3
-  firePoint: {fileID: 642410087}
-  bullet: {fileID: 1948219483739732, guid: 5796acb4f220b2749a6c6e4317a96772, type: 2}
 --- !u!114 &1057730410
 MonoBehaviour:
   m_ObjectHideFlags: 0

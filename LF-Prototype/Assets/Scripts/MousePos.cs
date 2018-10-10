@@ -21,7 +21,7 @@ public class MousePos : MonoBehaviour {
     private float aimX;
     private float aimY;
 
-    //Player 2 Feilds:
+    //Player 2 Fields:
     
     //part of Toggle
     private float togDead = .5f;
@@ -36,24 +36,34 @@ public class MousePos : MonoBehaviour {
         aimX = Input.GetAxis("AimX");
         aimY = -(Input.GetAxis("AimY"));
 
-        //ggle, Saves last direction. Odd issue registering.
+        //toggle, makes it so it's not as sensitive.
         float aimDelta = Mathf.Sqrt(Mathf.Pow(aimX, 2) + Mathf.Pow(aimY, 2));
 
-        if (aimDelta > togDead )
+        if (aimDelta > togDead)
         {
+            Debug.Log("New boi aims");
+        if (aimX > togDead)
+            aimX = 1;
+        if (aimX < -togDead)
+            aimX = -1;
+        if (aimY > togDead)
+            aimY = 1;
+        if (aimY < -togDead)
+            aimY = -1;
 
             StickAngle();
             MouseRotation();
 
         }
+
     }
     
     //Utility methods
     
-    // Calculate angle from character to mouse, for purposes of rotation or aim
+    // Calculate angle from controller
     void StickAngle() {
 
-        //calculate angle from controller
+        //2 components physics
         RAngle = (Mathf.Atan2(aimY, aimX) * Mathf.Rad2Deg);
 
     }

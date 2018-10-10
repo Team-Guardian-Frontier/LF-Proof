@@ -74,7 +74,7 @@ public class Food : MonoBehaviour {
 
 
        
-        //set position
+        //generate location to check
         Vector2 spawnLocation = new Vector2(Random.Range(-6.75f, 6.75f), Random.Range(-2.25f, 2.25f));  // Sets the random location of food spawn within a certain area
 
         // check an area around the food to see if another food overlaps, if so then move the spawn location to another spot
@@ -169,6 +169,7 @@ public class Food : MonoBehaviour {
                 break;
 
         }
+        
     }
 
     //State Change calls (call from other scripts.
@@ -197,6 +198,7 @@ public class Food : MonoBehaviour {
         foodState = FoodState.Shot;
 
 
+
         Debug.Log("I was shot!" + foodState);
 
 
@@ -219,15 +221,24 @@ public class Food : MonoBehaviour {
     {
         //move
         this.transform.Translate(speedWagon);
+
+        //sound
+        FindObjectOfType<AudioManager>().Play("FoodFly");
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         
         GameObject punch = other.gameObject;
+        Debug.Log("I died on a wall");
         if (punch.CompareTag("Wall"))
+        {
             Destroy(this.gameObject);
-        Debug.Log("Am I doing this Right?");
+
+            //sound
+            FindObjectOfType<AudioManager>().Play("SplatSound");
+        }
+
     }
     //oncollisionenter
     //delete the food here, not in the fruit handler.

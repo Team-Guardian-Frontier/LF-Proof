@@ -53,6 +53,17 @@ public class AudioManager : MonoBehaviour {
         s.source.Play();
     }
 
+    public void Stop(string name)
+    {
+        Sound s = Array.Find(sounds, Sound => Sound.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound" + name + " not Found!");
+            return;
+        }
+        s.source.Stop();
+    }
+
     void Start()
     {
         Play("LevelIntro");

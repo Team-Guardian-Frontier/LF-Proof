@@ -42,6 +42,15 @@ public class P2MousePos : MonoBehaviour
 
         if (aimDelta > togDead)
         {
+            Debug.Log("New boi aims");
+            if (aimX > togDead)
+                aimX = 1;
+            if (aimX < -togDead)
+                aimX = -1;
+            if (aimY > togDead)
+                aimY = 1;
+            if (aimY < -togDead)
+                aimY = -1;
 
             StickAngle();
             MouseRotation();

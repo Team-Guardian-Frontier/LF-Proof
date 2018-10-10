@@ -97,11 +97,15 @@ public class StatsManager : MonoBehaviour {
             case Food.FoodType.Vegetable:
                 {
                     vegetableCounter += servingSize;
-                    
+
                     if (vegetableCounter > maxVegetable)
                     {
                         health -= GroupD; //currently, set so that if any counter is over the max, then incur damage, so less healing
+
+                        //sound
+                        FindObjectOfType<AudioManager>().Play("FoodBarSound");
                     }
+
                     break;
                 }
             case Food.FoodType.Carbs:
@@ -110,6 +114,9 @@ public class StatsManager : MonoBehaviour {
                     if (carbCounter > maxCarb)
                     {
                         health -= GroupD;
+
+                        //sound
+                        FindObjectOfType<AudioManager>().Play("FoodBarSound");
                     }
                     break;
                 }
@@ -119,11 +126,14 @@ public class StatsManager : MonoBehaviour {
                     if (proteinCounter > maxProtein)
                     {
                         health -= GroupD;
+
+                        //sound
+                        FindObjectOfType<AudioManager>().Play("FoodBarSound");
                     }
                     break;
                 }
             default:
-                Debug.Log("No foodType specified. Cannot add food to counter.");
+                Debug.Log("Invalid foodType. Cannot add food to counter.");
                 break;
         }
         
@@ -157,9 +167,16 @@ public class StatsManager : MonoBehaviour {
                             + "\nVeggies: " + vegetableCounter + "/" + maxVegetable 
                             +"\nCarbs: " + carbCounter + "/" + maxCarb
                             +"\nProtein: " + proteinCounter + "/" + maxProtein;
-                           
+                       
+        //death
         if (health <= 0)
+        {
             Loss();
+
+            //sound
+            FindObjectOfType<AudioManager>().Play("DeathSound");
+        }
+            
 
     }
 

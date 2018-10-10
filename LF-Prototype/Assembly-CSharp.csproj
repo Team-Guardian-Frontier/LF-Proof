@@ -62,8 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\AudioManager.cs" />
-    <Compile Include="Assets\Scripts\BulletScript.cs" />
-    <Compile Include="Assets\Scripts\CrosshairBehavior.cs" />
     <Compile Include="Assets\Scripts\Food.cs" />
     <Compile Include="Assets\Scripts\FoodSpawner.cs" />
     <Compile Include="Assets\Scripts\FruitHandler.cs" />
@@ -78,7 +76,6 @@
     <Compile Include="Assets\Scripts\Sound.cs" />
     <Compile Include="Assets\Scripts\SpriteChange.cs" />
     <Compile Include="Assets\Scripts\StatsManager.cs" />
-    <Compile Include="Assets\Scripts\WeaponScripts\Gun.cs" />
     <Compile Include="Assets\Scripts\WinCondition.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Zhong/Game Development/Unity Workspace/LF-Proof/LF-Prototype/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

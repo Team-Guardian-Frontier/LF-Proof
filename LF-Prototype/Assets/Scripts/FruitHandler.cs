@@ -65,8 +65,11 @@ public class FruitHandler : MonoBehaviour {
             {
                 //call damage method in stats
                 stats.takeDamage(visitor.getType());
-                Debug.Log("hit with a " + visitor.getType());
+                Debug.Log("Food hit me!");
                 Destroy(other.gameObject);
+
+                //HitSound
+                FindObjectOfType<AudioManager>().Play("HitSound");
 
             }
             //if not shot, then check to see if player already has ammo
@@ -91,6 +94,9 @@ public class FruitHandler : MonoBehaviour {
                     prisoner.Pickup(this.gameObject);
                     foodObject = prisoner.gameObject;
 
+                    //sound
+                    FindObjectOfType<AudioManager>().Play("PickUpSound");
+
                 }
 
             }
@@ -109,6 +115,9 @@ public class FruitHandler : MonoBehaviour {
             Destroy(foodObject);
             prisoner = null;
             foodObject = null;
+
+            //sound
+            FindObjectOfType<AudioManager>().Play("EatSound");
         }
     }
 
@@ -124,6 +133,9 @@ public class FruitHandler : MonoBehaviour {
 
             prisoner = null;
             foodObject = null;
+
+            //sound
+            FindObjectOfType<AudioManager>().Play("ThrowSound");
         }
     }
 

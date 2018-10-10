@@ -69,6 +69,9 @@ public class P2FruitHandler : MonoBehaviour
                 Debug.Log("hit with a " + visitor.getType());
                 Destroy(other.gameObject);
 
+                //sound
+                FindObjectOfType<AudioManager>().Play("HitSound");
+
             }
             //if not shot, then check to see if player already has ammo
             else if (prisoner == null)
@@ -90,6 +93,12 @@ public class P2FruitHandler : MonoBehaviour
                 {
                     //physically capture the object (it now follows)
                     prisoner.Pickup(this.gameObject);
+                    //BUG: possibly here needs the foodobject ref.
+
+                    //sound
+                    FindObjectOfType<AudioManager>().Play("PickUpSound");
+
+
 
                 }
 
@@ -110,6 +119,9 @@ public class P2FruitHandler : MonoBehaviour
             prisoner = null;
             tempCast = null;
 
+            //sound
+            FindObjectOfType<AudioManager>().Play("EatSound");
+
         }
     }
 
@@ -125,6 +137,9 @@ public class P2FruitHandler : MonoBehaviour
 
             prisoner = null;
             tempCast = null;
+
+            //sound
+            FindObjectOfType<AudioManager>().Play("ThrowSound");
         }
     }
 }

@@ -582,7 +582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeUpText: {fileID: 1763541368}
   playerWin: {fileID: 226820848}
-  mealTime: 60
+  mealTime: 10
   player1: {fileID: 710106595}
   player2: {fileID: 1057730407}
   eventSystem: {fileID: 14005320}
@@ -907,7 +907,6 @@ GameObject:
   - component: {fileID: 710106596}
   - component: {fileID: 710106599}
   - component: {fileID: 710106600}
-  - component: {fileID: 710106601}
   - component: {fileID: 710106602}
   - component: {fileID: 710106603}
   - component: {fileID: 710106604}
@@ -1021,17 +1020,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71b4f46e6d8497242b5e7207b8c2ef1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &710106601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 710106595}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 437d1689eeac42d449cf2d5863ba6a42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &710106602
@@ -1420,7 +1408,6 @@ GameObject:
   - component: {fileID: 1057730412}
   - component: {fileID: 1057730411}
   - component: {fileID: 1057730410}
-  - component: {fileID: 1057730409}
   - component: {fileID: 1057730415}
   - component: {fileID: 1057730408}
   - component: {fileID: 1057730417}
@@ -1455,17 +1442,6 @@ MonoBehaviour:
   maxVegetable: 75
   maxCarb: 75
   maxProtein: 75
---- !u!114 &1057730409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1057730407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 437d1689eeac42d449cf2d5863ba6a42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1057730410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2389,12 +2365,102 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: Theme1
-    clip: {fileID: 8300000, guid: 0f2bbf1c2616f754d9f63d7b182dff69, type: 3}
-    volume: 0
+  - name: LevelLoop
+    clip: {fileID: 8300000, guid: 8a1db421500dd7f4a96d669eacb0b36e, type: 3}
+    volume: 0.075
     pitch: 1
     source: {fileID: 0}
     loop: 1
+  - name: LevelIntro
+    clip: {fileID: 8300000, guid: 1b1bb92312dd87a4da5ebc9cfb5a3d0e, type: 3}
+    volume: 0.075
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: EatSound
+    clip: {fileID: 8300000, guid: 864a01af289706545a9b80e9d2cd86b7, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: ThrowSound
+    clip: {fileID: 8300000, guid: 518f3fc1f22533f43ab1091721f67401, type: 3}
+    volume: 0.29
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: HitSound
+    clip: {fileID: 8300000, guid: 381fb6f1615902f48973b1c43f8c20f8, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PickUpSound
+    clip: {fileID: 8300000, guid: 05a4ce9e135069348ad97e9aa3a11a78, type: 3}
+    volume: 0.29
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: SplatSound
+    clip: {fileID: 8300000, guid: bcf9f8feda3effb428c94dfd23ff9cb8, type: 3}
+    volume: 0.07
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: TimerSound
+    clip: {fileID: 8300000, guid: 392dad2e5dd20e64bb09c8a07f103c38, type: 3}
+    volume: 0.29
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: DeathSound
+    clip: {fileID: 8300000, guid: c50aa507166c66d46b235e0760fdd1c3, type: 3}
+    volume: 0.29
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: FoodBarSound
+    clip: {fileID: 8300000, guid: 297b62581ff0e3a469170a5b8118e1e1, type: 3}
+    volume: 0.29
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: PauseSound
+    clip: {fileID: 8300000, guid: 29df5806f48f8c64f91f1d8bf6cef95c, type: 3}
+    volume: 0.29
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: ResumeSound
+    clip: {fileID: 8300000, guid: 4dd50547181b41548843df67462405bb, type: 3}
+    volume: 0.29
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: MenuPressSound
+    clip: {fileID: 8300000, guid: e3b9577bd291311469b86f9d5f1b8d1f, type: 3}
+    volume: 0.29
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: MenuMoveSound
+    clip: {fileID: 8300000, guid: 123f1208a3fe0354d84d854784a6763b, type: 3}
+    volume: 0.29
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
+  - name: FoodFly
+    clip: {fileID: 8300000, guid: 82fc508128393834a9e0aa2bc1b6e355, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+    loop: 1
+  - name: MenuTheme
+    clip: {fileID: 8300000, guid: cce82cc5b35117846b4df99129b45701, type: 3}
+    volume: 0.29
+    pitch: 1
+    source: {fileID: 0}
+    loop: 0
 --- !u!81 &2060981713
 AudioListener:
   m_ObjectHideFlags: 0

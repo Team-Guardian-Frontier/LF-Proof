@@ -46,6 +46,10 @@ public class Food : MonoBehaviour {
     //game object attatched
     private GameObject foodObject;
 
+    [SerializeField]
+    private Sound flyClone;
+
+
     //Add Collider
 
 
@@ -153,6 +157,11 @@ public class Food : MonoBehaviour {
         //set speed
         maxSpeed = .1f;
         Debug.Log("Start, I am a " + foodType);
+
+
+        //sound clone initialize.
+        flyClone = FindObjectOfType<AudioManager>().PlayClone("FoodFly");
+        flyClone.source.Stop();
     }
 
     void Update()
@@ -169,6 +178,7 @@ public class Food : MonoBehaviour {
                 break;
 
         }
+
     }
 
     //State Change calls (call from other scripts.
@@ -197,6 +207,10 @@ public class Food : MonoBehaviour {
         foodState = FoodState.Shot;
 
 
+        //sound
+
+        flyClone.source.Play();
+
         Debug.Log("I was shot!" + foodState);
 
 
@@ -219,15 +233,36 @@ public class Food : MonoBehaviour {
     {
         //move
         this.transform.Translate(speedWagon);
+        //do not put sound here, this is an update/state script!
+
+    }
+
+    public void Smash()
+    {
+        Destroy(this.gameObject);
+        
+        if (flyClone != null)
+           Destroy(flyClone.source);
+
+        //flyClone.source.Stop(); // this Does work
+        //sets up nicely for possible pooling later on
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         
         GameObject punch = other.gameObject;
+
         if (punch.CompareTag("Wall"))
+        {
             Destroy(this.gameObject);
-        Debug.Log("Am I doing this Right?");
+            Debug.Log("I died on a wall");
+
+            Smash();
+            FindObjectOfType<AudioManager>().Play("SplatSound");
+        }
+
     }
     //oncollisionenter
     //delete the food here, not in the fruit handler.

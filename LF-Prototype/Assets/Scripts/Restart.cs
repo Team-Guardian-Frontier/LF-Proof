@@ -12,12 +12,39 @@ using UnityEngine.SceneManagement;
  */
 
 public class Restart : MonoBehaviour {
-    
-	// Update is called once per frame
-	void Update () {
+
+    private bool isPaused;
+
+    private void Awake()
+    {
+        isPaused = false;
+
+    }
+    // Update is called once per frame
+    void Update () {
+
+   
 		if( Input.GetKeyDown(KeyCode.Escape)) //press escape at any time
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name); //scene resets
+            isPaused = !isPaused;
         }
+        
+        if (isPaused)
+        {
+            Time.timeScale = 0;
+
+            Debug.Log("I pause");
+
+            if (Input.GetKeyDown(KeyCode.BackQuote))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name); //scene resets
+                isPaused = false;
+            }
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+        
 	}
 }

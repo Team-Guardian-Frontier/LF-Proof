@@ -67,10 +67,12 @@ public class P2FruitHandler : MonoBehaviour
                 //call damage method in stats
                 stats.takeDamage(visitor.getType());
                 Debug.Log("hit with a " + visitor.getType());
-                Destroy(other.gameObject);
+                visitor.Smash();
+                
 
                 //sound
                 FindObjectOfType<AudioManager>().Play("HitSound");
+                
 
             }
             //if not shot, then check to see if player already has ammo

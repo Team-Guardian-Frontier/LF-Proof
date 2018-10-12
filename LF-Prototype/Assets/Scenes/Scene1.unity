@@ -582,7 +582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeUpText: {fileID: 1763541368}
   playerWin: {fileID: 226820848}
-  mealTime: 60
+  mealTime: 10
   player1: {fileID: 710106595}
   player2: {fileID: 1057730407}
   eventSystem: {fileID: 14005320}
@@ -2367,13 +2367,13 @@ MonoBehaviour:
   sounds:
   - name: LevelLoop
     clip: {fileID: 8300000, guid: 8a1db421500dd7f4a96d669eacb0b36e, type: 3}
-    volume: 0
+    volume: 0.075
     pitch: 1
     source: {fileID: 0}
     loop: 1
   - name: LevelIntro
     clip: {fileID: 8300000, guid: 1b1bb92312dd87a4da5ebc9cfb5a3d0e, type: 3}
-    volume: 0
+    volume: 0.075
     pitch: 1
     source: {fileID: 0}
     loop: 0
@@ -2408,7 +2408,7 @@ MonoBehaviour:
     source: {fileID: 0}
     loop: 0
   - name: TimerSound
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 392dad2e5dd20e64bb09c8a07f103c38, type: 3}
     volume: 0.29
     pitch: 1
     source: {fileID: 0}

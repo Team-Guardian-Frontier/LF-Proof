@@ -66,7 +66,7 @@ public class FruitHandler : MonoBehaviour {
                 //call damage method in stats
                 stats.takeDamage(visitor.getType());
                 Debug.Log("Food hit me!");
-                Destroy(other.gameObject);
+                visitor.Smash();
 
                 //HitSound
                 FindObjectOfType<AudioManager>().Play("HitSound");

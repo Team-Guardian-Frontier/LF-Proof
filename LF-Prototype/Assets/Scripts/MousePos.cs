@@ -41,7 +41,7 @@ public class MousePos : MonoBehaviour {
 
         if (aimDelta > togDead)
         {
-            Debug.Log("New boi aims");
+
         if (aimX > togDead)
             aimX = 1;
         if (aimX < -togDead)

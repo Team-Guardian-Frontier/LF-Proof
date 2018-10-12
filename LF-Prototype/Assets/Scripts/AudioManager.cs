@@ -29,17 +29,15 @@ public class AudioManager : MonoBehaviour {
 
         DontDestroyOnLoad(gameObject);
 
+
+        //Loading Sounds
         foreach (Sound s in sounds)
         {
             //Initialize each sound with an AudioSource component.
-            s.source = gameObject.AddComponent<AudioSource>();
-            s.source.clip = s.clip;
-
-            s.source.volume = s.volume;
-            s.source.pitch = s.pitch;
-            s.source.loop = s.loop;
+            SourceInstantiate(s);
         }
-        
+
+
 	}
 
     public void Play(string name)
@@ -62,6 +60,38 @@ public class AudioManager : MonoBehaviour {
             return;
         }
         s.source.Stop();
+    }
+
+    public Sound PlayClone(string name)
+    {
+            Sound s = Array.Find(sounds, Sound => Sound.name == name);
+            if (s == null)
+            {
+                Debug.LogWarning("Sound" + name + " not Found!");
+                return null;
+            }
+
+        Sound s2 = new Sound(s);
+        //new source
+        SourceInstantiate(s2);
+
+        s2.source.Play();
+
+        //return ref
+        return (s2);
+            
+        //will need to manually stop by the source.
+            
+    }
+
+    private void SourceInstantiate(Sound s)
+    {
+        s.source = gameObject.AddComponent<AudioSource>();
+        s.source.clip = s.clip;
+
+        s.source.volume = s.volume;
+        s.source.pitch = s.pitch;
+        s.source.loop = s.loop;
     }
 
     void Start()

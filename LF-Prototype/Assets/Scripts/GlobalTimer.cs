@@ -63,6 +63,11 @@ public class GlobalTimer : MonoBehaviour {
         //updates time onscreen
         theText.text = "" + Mathf.Ceil(startingTime);
 
+
+        if (startingTime == 3)
+            FindObjectOfType<AudioManager>().Play("TimerSound");
+
+
         //when time reaches 0
         if (startingTime <= 0)
         {

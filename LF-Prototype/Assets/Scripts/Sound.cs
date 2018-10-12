@@ -20,4 +20,14 @@ public class Sound {
     public AudioSource source;
 
     public bool loop;
+
+    public Sound(Sound og)
+    {
+        this.name = og.name;
+        this.clip = og.clip;
+        this.volume = og.volume;
+        this.pitch = og.pitch;
+        this.loop = og.loop;
+        //new source tho
+    }
 }

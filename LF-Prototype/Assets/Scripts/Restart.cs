@@ -44,7 +44,11 @@ public class Restart : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.BackQuote))
         {
             //Reset the Game
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+            //Resume minus sound
+            PauseMenuUI.SetActive(false);
+            Time.timeScale = 1;
             isPaused = false;
         }
     }

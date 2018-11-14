@@ -25,7 +25,7 @@ public class Food : MonoBehaviour {
     public FoodState foodState;
 
 
-    //Game Object, for "owner"
+    //Object for "Owner" player
     private GameObject player;
 
     //positioning offset (for held)
@@ -42,19 +42,24 @@ public class Food : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
     private Sprite foodSprite;
     private Texture2D foodTexture;
-    private GameObject foodObject;
     private Rigidbody2D foodRigid;
+    //game object attatched
+    private GameObject foodObject;
 
-        //Add Collider
-        
+    [SerializeField]
+    private Sound flyClone;
 
-        /*add rigidbody2d, if needed
-        foodRigid = (Rigidbody2D)foodObject.AddComponent(typeof(Rigidbody2D));
-        foodRigid.gravityScale = 0;
-        */
 
-        //add Script ???What???
-        
+    //Add Collider
+
+
+    /*add rigidbody2d, if needed
+    foodRigid = (Rigidbody2D)foodObject.AddComponent(typeof(Rigidbody2D));
+    foodRigid.gravityScale = 0;
+    */
+
+    //add Script ???What???
+
 
 
 
@@ -73,7 +78,7 @@ public class Food : MonoBehaviour {
 
 
        
-        //set position
+        //generate location to check
         Vector2 spawnLocation = new Vector2(Random.Range(-6.75f, 6.75f), Random.Range(-2.25f, 2.25f));  // Sets the random location of food spawn within a certain area
 
         // check an area around the food to see if another food overlaps, if so then move the spawn location to another spot
@@ -84,11 +89,21 @@ public class Food : MonoBehaviour {
             foodInArea = null; // reset array
             foodInArea = Physics2D.OverlapCircle(spawnLocation, 1f); // check again
         }
+
+        
+
         //set position
         foodObject.transform.position = spawnLocation;
 
+        //add collider + rigidbody
         BoxCollider2D boxCollider = foodObject.AddComponent<BoxCollider2D>();
         boxCollider.isTrigger = true;
+        boxCollider.offset = new Vector2(.16f, .16f);
+
+        Rigidbody2D hardBody = foodObject.AddComponent<Rigidbody2D>();
+        //make it so physics doesn't apply to these objects, but still detect collisions/use oncollisionenter
+        hardBody.isKinematic = true;
+        hardBody.useFullKinematicContacts = true;
 
         //DEBUG: say type
         Debug.Log("I am a " + foodType);
@@ -142,6 +157,11 @@ public class Food : MonoBehaviour {
         //set speed
         maxSpeed = .1f;
         Debug.Log("Start, I am a " + foodType);
+
+
+        //sound clone initialize.
+        flyClone = FindObjectOfType<AudioManager>().PlayClone("FoodFly");
+        flyClone.source.Stop();
     }
 
     void Update()
@@ -158,6 +178,7 @@ public class Food : MonoBehaviour {
                 break;
 
         }
+
     }
 
     //State Change calls (call from other scripts.
@@ -186,6 +207,10 @@ public class Food : MonoBehaviour {
         foodState = FoodState.Shot;
 
 
+        //sound
+
+        flyClone.source.Play();
+
         Debug.Log("I was shot!" + foodState);
 
 
@@ -208,8 +233,39 @@ public class Food : MonoBehaviour {
     {
         //move
         this.transform.Translate(speedWagon);
+        //do not put sound here, this is an update/state script!
+
     }
 
+    public void Smash()
+    {
+        Destroy(this.gameObject);
+        
+        if (flyClone != null)
+           Destroy(flyClone.source);
+
+        //flyClone.source.Stop(); // this Does work
+        //sets up nicely for possible pooling later on
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        
+        GameObject punch = other.gameObject;
+
+        if (punch.CompareTag("Wall"))
+        {
+            Destroy(this.gameObject);
+            Debug.Log("I died on a wall");
+
+            Smash();
+            FindObjectOfType<AudioManager>().Play("SplatSound");
+        }
+
+    }
+    //oncollisionenter
+    //delete the food here, not in the fruit handler.
 
 }
 

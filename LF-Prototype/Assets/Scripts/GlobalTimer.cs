@@ -39,10 +39,13 @@ public class GlobalTimer : MonoBehaviour {
     private FoodSpawner spawner;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 
         //getting the text
         theText = GetComponent<Text>();
+
+        //Start with meal time so that the players don't start with hunger damage [hungerDamage()]
+        startingTime = mealTime;
 
         //initialize which scripts to access for stat changes.
         p1Stats = player1.GetComponent<StatsManager>();
@@ -59,6 +62,12 @@ public class GlobalTimer : MonoBehaviour {
 
         //updates time onscreen
         theText.text = "" + Mathf.Ceil(startingTime);
+
+
+        if (Mathf.Ceil(startingTime) == 4)
+            FindObjectOfType<AudioManager>().Play("TimerSound");
+
+        
 
         //when time reaches 0
         if (startingTime <= 0)
@@ -79,8 +88,8 @@ public class GlobalTimer : MonoBehaviour {
 
             //food respawn. (respawn includes despawning existing.
             spawner.RespawnFood();
-            
-            
+
+            Debug.Log("I hunger");
 
 
 

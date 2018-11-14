@@ -11,19 +11,33 @@ public class P2PlayerControl : MonoBehaviour
 {
 
     public float moveSpeed;
-    private Rigidbody2D myRigidbody;
 
-    private float CDIAG = (Mathf.Sqrt(2) / 2);
+    private Rigidbody2D myRigidbody;
+    private BoxCollider2D myBox;
+    private ContactFilter2D brita;
+
+    private float cDiag = (Mathf.Sqrt(2) / 2);
+    private const float ROSEDIST = .01f;
+
     private const float togDead = .5f;
+    private RaycastHit2D[] hitResults;
+
+    private float horiz;
+    private float verti;
 
     void Start()
     {
         myRigidbody = (Rigidbody2D)this.gameObject.GetComponent(typeof(Rigidbody2D));
         myRigidbody.freezeRotation = true;
+        myBox = GetComponent<BoxCollider2D>();
+
+        hitResults = new RaycastHit2D[3];
+
+        //set up filter to just not pick up the food pickups
+        brita.useTriggers = false;
     }
 
-    private float horiz;
-    private float verti;
+
 
     void ControllerCheck()
     {
@@ -52,50 +66,56 @@ public class P2PlayerControl : MonoBehaviour
     void Movement()
     {
 
-        if (verti == -1 && horiz == 1)
-        {
-            //NE
-            transform.Translate(Vector2.right * moveSpeed * CDIAG);
-            transform.Translate(Vector2.up * moveSpeed * CDIAG);
-        }
-        else if (verti == 1 && horiz == -1)
-        {
-            //SW
-            transform.Translate(Vector2.left * moveSpeed * CDIAG);
-            transform.Translate(Vector2.down * moveSpeed * CDIAG);
-        }
-        else if (verti == 1 && horiz == 1)
-        {
-            //SE
-            transform.Translate(Vector2.right * moveSpeed * CDIAG);
-            transform.Translate(Vector2.down * moveSpeed * CDIAG);
-        }
-        else if (verti == -1 && horiz == -1)
-        {
-            //NW
-            transform.Translate(Vector2.left * moveSpeed * CDIAG);
-            transform.Translate(Vector2.up * moveSpeed * CDIAG);
-        }
-        else if (horiz == 1)
+        //if one button is not zero, and the other is then set speed to movespeed*cdiag.
+        //if the absolute value of both buttons is 2, then set speed
+        float dPos = moveSpeed;
+        if (Mathf.Abs(horiz) + Mathf.Abs(verti) == 2)
+            dPos = moveSpeed * cDiag;
+
+
+        //horizontal movement
+        if (horiz == 1)
         {
             //E
-            transform.Translate(Vector2.right * moveSpeed);
+            if (CheckDirect(Vector2.right, ROSEDIST))
+                transform.Translate(Vector2.right * dPos);
+
         }
         else if (horiz == -1)
         {
             //W
-            transform.Translate(-Vector2.right * moveSpeed);
+            if (CheckDirect(-Vector2.right, ROSEDIST))
+                transform.Translate(-Vector2.right * dPos);
+
         }
-        else if (verti == -1)
+
+        //vertical movement
+        if (verti == -1)
         {
             //N
-            transform.Translate(Vector2.up * moveSpeed);
+            if (CheckDirect(Vector2.up, ROSEDIST))
+                transform.Translate(Vector2.up * dPos);
         }
         else if (verti == 1)
         {
             //S
-            transform.Translate(-Vector2.up * moveSpeed);
+            if (CheckDirect(Vector2.down, ROSEDIST))
+                transform.Translate(-Vector2.up * dPos);
         }
 
     }
+
+    bool CheckDirect(Vector2 finnaGo, float disty)
+    {
+        //Checks to see things are empty, before moving.
+        bool empty = false;
+        if (myBox.Cast(finnaGo, brita, hitResults, disty, false) == 0)
+            empty = true;
+
+        return empty;
+
+    }
+
+    //see player 1 controller for notes
+
 }

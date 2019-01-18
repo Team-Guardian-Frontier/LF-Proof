@@ -4,6 +4,10 @@ using UnityEngine;
 
 /*
  * This script is for the mouse position and getting the sprite (rectangle) to look at the cursor
+ * 
+ * Input Values:
+ * Player 1 - "AimX", "AimY"
+ * Player 2 - "P2AimX", "P2AimY"
  */
 
 public class MousePos : MonoBehaviour {
@@ -17,11 +21,13 @@ public class MousePos : MonoBehaviour {
 
 	}
 
-
+    //Player 2 Fields:
     private float aimX;
     private float aimY;
 
-    //Player 2 Fields:
+    //INPUT STRINGS
+    public string aimXInput;
+    public string aimYInput;
     
     //part of Toggle
     private float togDead = .5f;
@@ -32,9 +38,9 @@ public class MousePos : MonoBehaviour {
     void Update()
     {
         // Camera Rig Movement Control
-
-        aimX = Input.GetAxis("AimX");
-        aimY = -(Input.GetAxis("AimY"));
+        
+        aimX = Input.GetAxis(aimXInput);
+        aimY = -(Input.GetAxis(aimYInput));
 
         //toggle, makes it so it's not as sensitive.
         float aimDelta = Mathf.Sqrt(Mathf.Pow(aimX, 2) + Mathf.Pow(aimY, 2));

@@ -5,6 +5,10 @@ using UnityEngine;
 /* 
  * This script is for controlling player movement on an 8-directional movement
  * It also serves as Sprite changing
+ * 
+ * Input Values:
+ * Player 1 - "Horizontal", "Vertical"
+ * Player 2 - "P2Horizontal", "P2Vertical"
  */
 
 public class PlayerControl : MonoBehaviour {
@@ -24,6 +28,10 @@ public class PlayerControl : MonoBehaviour {
     private float horiz;
     private float verti;
 
+    //Input Strings
+    public string horizInput;
+    public string vertiInput;
+
     void Start() {
         myRigidbody = GetComponent<Rigidbody2D>();
         myRigidbody.freezeRotation = true;
@@ -40,8 +48,8 @@ public class PlayerControl : MonoBehaviour {
 
 
     void ControllerCheck() {
-        horiz = Input.GetAxis("Horizontal");
-        verti = Input.GetAxis("Vertical");
+        horiz = Input.GetAxis(horizInput);
+        verti = Input.GetAxis(vertiInput);
 
 
         if (horiz > togDead)

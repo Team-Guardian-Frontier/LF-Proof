@@ -77,38 +77,39 @@ public class PlayerControl : MonoBehaviour {
         float dPos = moveSpeed;
         if (Mathf.Abs(horiz) + Mathf.Abs(verti) == 2)
             dPos = moveSpeed * cDiag;
-        
 
-        //horizontal movement
-        if (horiz == 1)
+        if (Restart.isPaused == false)
         {
-            //E
-            if (CheckDirect(Vector2.right,ROSEDIST))
-                transform.Translate(Vector2.right * dPos);
+            //horizontal movement
+            if (horiz == 1)
+            {
+                //E
+                if (CheckDirect(Vector2.right, ROSEDIST))
+                    transform.Translate(Vector2.right * dPos);
 
-        }
-        else if (horiz == -1)
-        {
-            //W
-            if (CheckDirect(-Vector2.right,ROSEDIST))
-                transform.Translate(-Vector2.right * dPos);
-            
-        }
+            }
+            else if (horiz == -1)
+            {
+                //W
+                if (CheckDirect(-Vector2.right, ROSEDIST))
+                    transform.Translate(-Vector2.right * dPos);
 
-        //vertical movement
-        if (verti == -1)
-        {
-            //N
-            if (CheckDirect(Vector2.up,ROSEDIST))
-                transform.Translate(Vector2.up * dPos);
+            }
+
+            //vertical movement
+            if (verti == -1)
+            {
+                //N
+                if (CheckDirect(Vector2.up, ROSEDIST))
+                    transform.Translate(Vector2.up * dPos);
+            }
+            else if (verti == 1)
+            {
+                //S
+                if (CheckDirect(Vector2.down, ROSEDIST))
+                    transform.Translate(-Vector2.up * dPos);
+            }
         }
-        else if (verti == 1)
-        {
-            //S
-            if (CheckDirect(Vector2.down,ROSEDIST))
-                transform.Translate(-Vector2.up * dPos);
-        }
-        
         
     }
 

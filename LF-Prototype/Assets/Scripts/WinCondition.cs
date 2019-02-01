@@ -23,6 +23,8 @@ public class WinCondition : MonoBehaviour {
 		
 	}
 	
+
+
 	// Update is called once per frame
 	void Update () {
 
@@ -32,13 +34,19 @@ public class WinCondition : MonoBehaviour {
             someScript.playerWin.text = "Player 2 Wins!";
             Destroy(gameObject); //keeps you from getting a null reference exception
             someScript.StopGame(); //calls the stop game function in the timer 
+
+            Restart.isPaused = true; //set game to pause, so everything is paused. but not game menu tho.
         }
             else if (GameObject.Find("Player2").GetComponent<StatsManager>().health <= 0) //Player 2 Health = 0
         {
             someScript.playerWin.text = "Player 1 Wins!";
             Destroy(gameObject);
             someScript.StopGame();
+
+            Restart.isPaused = true;
         }
+
+            
 
 
 	}

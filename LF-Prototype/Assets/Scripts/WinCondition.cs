@@ -16,6 +16,8 @@ using UnityEngine;
 public class WinCondition : MonoBehaviour {
 
     private GlobalTimer someScript;
+    public GameObject EndScreen;
+
 
 	// Use this for initialization
 	void Start () {
@@ -31,17 +33,27 @@ public class WinCondition : MonoBehaviour {
 
 		    if (GameObject.Find("Player").GetComponent<StatsManager>().health <= 0) //Player 1 Health = 0
         {
+            //enable end screen
+            EndScreen.SetActive(true);
+
             someScript.playerWin.text = "Player 2 Wins!";
             Destroy(gameObject); //keeps you from getting a null reference exception
             someScript.StopGame(); //calls the stop game function in the timer 
+
+            
 
             Restart.isPaused = true; //set game to pause, so everything is paused. but not game menu tho.
         }
             else if (GameObject.Find("Player2").GetComponent<StatsManager>().health <= 0) //Player 2 Health = 0
         {
+            //enable end screen
+            EndScreen.SetActive(true);
+
             someScript.playerWin.text = "Player 1 Wins!";
             Destroy(gameObject);
             someScript.StopGame();
+
+            
 
             Restart.isPaused = true;
         }

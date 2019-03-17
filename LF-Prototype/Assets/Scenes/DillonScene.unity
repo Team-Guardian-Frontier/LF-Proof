@@ -829,6 +829,16 @@ PrefabInstance:
       propertyPath: EndScreen
       value: 
       objectReference: {fileID: 250251349609609503}
+    - target: {fileID: 6024141250680293735, guid: 004ac651c229ce141bc3792fe57f0b02,
+        type: 3}
+      propertyPath: Player1
+      value: 
+      objectReference: {fileID: 710106595}
+    - target: {fileID: 6024141250680293735, guid: 004ac651c229ce141bc3792fe57f0b02,
+        type: 3}
+      propertyPath: Player2
+      value: 
+      objectReference: {fileID: 1057730407}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 004ac651c229ce141bc3792fe57f0b02, type: 3}
 --- !u!1001 &7336647519823267995
@@ -1100,6 +1110,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481857362599507741, guid: ce226d6a6fcdf054781d7ea307807b00,
+        type: 3}
+      propertyPath: sounds.Array.data[0].volume
+      value: 0.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481857362599507741, guid: ce226d6a6fcdf054781d7ea307807b00,
+        type: 3}
+      propertyPath: sounds.Array.data[1].volume
+      value: 0.52
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce226d6a6fcdf054781d7ea307807b00, type: 3}

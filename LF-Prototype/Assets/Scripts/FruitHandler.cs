@@ -144,6 +144,9 @@ public class FruitHandler : MonoBehaviour {
 
             //sound
             FindObjectOfType<AudioManager>().Play("ThrowSound");
+
+            //get stats to increment GOthrows
+            player.GetComponent<StatsManager>().CountThrow();
         }
     }
 

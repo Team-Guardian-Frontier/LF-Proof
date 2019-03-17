@@ -56,3 +56,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 975732514b0b0bb46b7975b10d383b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EndScreen: {fileID: 0}
+  Player1: {fileID: 0}
+  Player2: {fileID: 0}

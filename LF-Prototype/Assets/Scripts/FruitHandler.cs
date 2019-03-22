@@ -6,6 +6,12 @@ public class FruitHandler : MonoBehaviour {
 
     //tempheader: this script is bound to the player, and lets them shoot and stuff.
         //dictates firing, eating, and fruit interactions with player.
+        /*
+         * Input values:
+         * Player 1 - "triggers1"
+         * Player 2 - "triggers2"
+         * 
+         */
 
     //Calls StatsManager script
     private StatsManager stats;
@@ -21,6 +27,8 @@ public class FruitHandler : MonoBehaviour {
     //trigger inputs
     private float triggers;
 
+    //INPUT STRINGS
+    public string triggersInput;
 
 
     // Use this for initialization
@@ -34,7 +42,7 @@ public class FruitHandler : MonoBehaviour {
 	void Update () {
 
         //set triggers
-        triggers = Input.GetAxis("triggers1");
+        triggers = Input.GetAxis(triggersInput);
         
 
 

@@ -1,4 +1,8 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/Scenes/Menu.unity
+=======
+- path: Assets/Scenes/IrvinScene.unity
+>>>>>>> 04982ccdb48f2e3a3ec1f2436ee068a877f5f70e
   isLoaded: 1
   isActive: 1

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 /*
  * Author: Irvin Naylor
  * Last Change: 3/17/19
@@ -34,12 +35,16 @@ public class WinCondition : MonoBehaviour {
     private double GOproteinPercent2;
     private double GOveggiesPercent2;
 
+     StatsManager P1Stats;
+     StatsManager P2Stats;
 
     // Use this for initialization
     void Start () {
         someScript = GameObject.Find("Time Value").GetComponent<GlobalTimer>(); ; //makes a copy of the GlobalTimer script
-		
-	}
+
+        P1Stats = Player1.GetComponent<StatsManager>();
+        P2Stats = Player2.GetComponent<StatsManager>();
+    }
 	
 
 
@@ -52,11 +57,14 @@ public class WinCondition : MonoBehaviour {
         if (Player1.GetComponent<StatsManager>().health <= 0) //Player 1 Health = 0
         {
             
-            //enable end screen
-            EndScreen.SetActive(true);
+            
             
             CalculateVars();
             //add code that gets all the other variables from stats, calculates vars in this, and displays in text.
+            SetVars();
+
+            //enable end screen
+            EndScreen.SetActive(true);
 
             someScript.playerWin.text = "Player 2 Wins!";
             //Destroy(gameObject); //keeps you from getting a null reference exception
@@ -68,16 +76,19 @@ public class WinCondition : MonoBehaviour {
         }
             else if (Player2.GetComponent<StatsManager>().health <= 0) //Player 2 Health = 0
         {
-            //enable end screen
-            
-
-            EndScreen.SetActive(true);
+         
             
             CalculateVars();
             //add code that gets all the other variables from stats, calculates vars in this, and displays in text.
+            SetVars();
+
+            //enable end screen
+            EndScreen.SetActive(true);
 
             someScript.playerWin.text = "Player 1 Wins!";
+
             
+
             someScript.StopGame();
 
             
@@ -94,9 +105,9 @@ public class WinCondition : MonoBehaviour {
     {
         Debug.Log("I activated");
 
-        StatsManager P1Stats = Player1.GetComponent<StatsManager>();
-        StatsManager P2Stats = Player2.GetComponent<StatsManager>();
+       
 
+        //local calculation stats.
         double P1throws = P1Stats.GetGOthrows();
         double P2throws = P2Stats.GetGOthrows();
 
@@ -107,12 +118,12 @@ public class WinCondition : MonoBehaviour {
         if (P1throws == 0)
             GOaccuracy1 = 0;
         else
-            GOaccuracy1 = P2Stats.GetGOhitten() / P1throws;
+            GOaccuracy1 = (P2Stats.GetGOhitten() / P1throws) * 100;
 
         if (P2throws == 0)
             GOaccuracy2 = 0;
         else
-            GOaccuracy2 = P1Stats.GetGOhitten() / P2throws;
+            GOaccuracy2 = (P1Stats.GetGOhitten() / P2throws) *100;
 
         if (P1totalFood == 0)
         {
@@ -122,9 +133,9 @@ public class WinCondition : MonoBehaviour {
         }
         else
         {
-            GOcarbPercent1 = P1Stats.GetGOcarbs() / P1totalFood;
-            GOproteinPercent1 = P1Stats.GetGOprotein() / P1totalFood;
-            GOveggiesPercent1 = P1Stats.GetGOveggies() / P1totalFood;
+            GOcarbPercent1 = (P1Stats.GetGOcarbs() / P1totalFood) * 100;
+            GOproteinPercent1 = (P1Stats.GetGOprotein() / P1totalFood) * 100;
+            GOveggiesPercent1 = (P1Stats.GetGOveggies() / P1totalFood) * 100;
         }
 
         if ( P2totalFood == 0)
@@ -135,15 +146,48 @@ public class WinCondition : MonoBehaviour {
         }
         else
         { 
-            GOcarbPercent2 = P2Stats.GetGOcarbs() / P2totalFood;
-            GOproteinPercent2 = P2Stats.GetGOprotein() / P2totalFood;
-            GOveggiesPercent2 = P2Stats.GetGOveggies() / P2totalFood;
+            GOcarbPercent2 = (P2Stats.GetGOcarbs() / P2totalFood) * 100;
+            GOproteinPercent2 = (P2Stats.GetGOprotein() / P2totalFood) * 100;
+            GOveggiesPercent2 = (P2Stats.GetGOveggies() / P2totalFood) * 100;
         }
 
         //debug
 
         Debug.Log("Checkers: " + GOaccuracy1 + "2:" + GOaccuracy2 + " carbs1 " + GOcarbPercent1 + " carbs2 " + GOcarbPercent2);
         //check numbers later.
+    }
+
+    private void SetVars()
+    {
+        Text p1Text = EndScreen.transform.GetChild(0).gameObject.GetComponent<Text>();
+        Text p2Text = EndScreen.transform.GetChild(1).gameObject.GetComponent<Text>();
+
+        
+        p1Text.text = "Player 1: \n" +
+            "\n" +
+            "Food Eaten: " + P1Stats.GetGOeaten() + " \n" +
+            "Food Thrown: " + P1Stats.GetGOthrows() + "\n" +
+            "Hits Taken: " + P1Stats.GetGOhitten() + "\n" +
+            "Accuracy: " + GOaccuracy1 + "%\n" + 
+            "\n" +
+            "Food Groups: \n" +
+            "Carbs: " + GOcarbPercent1 + "%\n" +
+            "Veggies: " + GOveggiesPercent1 + "%\n" +
+            "Protein: " + GOproteinPercent1 + "%";
+
+        p2Text.text = "Player 2: \n" +
+           "\n" +
+           "Food Eaten: " + P2Stats.GetGOeaten() + " \n" +
+           "Food Thrown: " + P2Stats.GetGOthrows() + "\n" +
+           "Hits Taken: " + P2Stats.GetGOhitten() + "\n" +
+           "Accuracy: " + GOaccuracy2 + "%\n" +
+           "\n" +
+           "Food Groups: \n" +
+           "Carbs: " + GOcarbPercent2 + "%\n" +
+           "Veggies: " + GOveggiesPercent2 + "%\n" +
+           "Protein: " + GOproteinPercent2 + "%";
+
+
     }
 
 }

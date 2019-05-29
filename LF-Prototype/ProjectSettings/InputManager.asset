@@ -169,7 +169,7 @@ InputManager:
     m_Name: Submit
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: '[0]'
+    negativeButton: 
     positiveButton: enter
     altNegativeButton: 
     altPositiveButton: 
@@ -185,7 +185,7 @@ InputManager:
     m_Name: Cancel
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: '[0]'
+    negativeButton: 
     positiveButton: backspace
     altNegativeButton: 
     altPositiveButton: 

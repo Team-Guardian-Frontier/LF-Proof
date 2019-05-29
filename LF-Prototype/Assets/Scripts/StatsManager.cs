@@ -62,7 +62,7 @@ public class StatsManager : MonoBehaviour {
         //this is to set total health.
         totalH = health;
         Display();
-        winText.text = "";
+        //winText.text = "";
 
         /*DESIGN: these are the values you set.
         health = 100;
@@ -230,11 +230,12 @@ public class StatsManager : MonoBehaviour {
 
     private void Display()
     {
-        //don't forget the size of the text object!
+        /*old display
         playerText.text = this.gameObject.name + ": " + health + "/" + totalH
                             + "\nVeggies: " + vegetableCounter + "/" + maxVegetable 
                             +"\nCarbs: " + carbCounter + "/" + maxCarb
                             +"\nProtein: " + proteinCounter + "/" + maxProtein;
+                            */
                        
         //death
         if (health <= 0)
@@ -251,7 +252,7 @@ public class StatsManager : MonoBehaviour {
     public void Loss()
     {
         Debug.Log("Is this...?");
-        winText.text = "Game Over! You are Winner!";
+        //winText.text = "Game Over! You are Winner!";
         //gameObject.SetActive(false);
     }
 }

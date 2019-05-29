@@ -33,6 +33,7 @@ public class StatsManager : MonoBehaviour {
     private int proteinCounter;
     private int vegetableCounter;
 
+
     //Game Over counters
     private int GOeaten =0;
     private int GOthrows =0;
@@ -41,6 +42,12 @@ public class StatsManager : MonoBehaviour {
     private int GOcarbs =0;
     private int GOprotein =0;
     private int GOveggies =0;
+
+    public Slider healthBar;
+    public Slider carbBar;
+    public Slider proteinBar;
+    public Slider vegtableBar;
+
 
 
     void Start () {
@@ -109,6 +116,7 @@ public class StatsManager : MonoBehaviour {
     {
         //adds health, applies food group method
         health += healing;
+        healthBar.value = health;
         FoodGroup(_Type);
 
         //increment GOeaten
@@ -129,6 +137,7 @@ public class StatsManager : MonoBehaviour {
             case Food.FoodType.Vegetable:
                 {
                     vegetableCounter += servingSize;
+                    vegtableBar.value = vegetableCounter;
 
                     //increment GOveggies
                     GOveggies++;
@@ -136,6 +145,7 @@ public class StatsManager : MonoBehaviour {
                     if (vegetableCounter > maxVegetable)
                     {
                         health -= GroupD; //currently, set so that if any counter is over the max, then incur damage, so less healing
+                        healthBar.value = health;
 
                         //sound
                         FindObjectOfType<AudioManager>().Play("FoodBarSound");
@@ -150,9 +160,13 @@ public class StatsManager : MonoBehaviour {
                     //increment GOcarbs
                     GOcarbs++;
 
+
+                    carbBar.value = carbCounter;
+
                     if (carbCounter > maxCarb)
                     {
                         health -= GroupD;
+                        healthBar.value = health;
 
                         //sound
                         FindObjectOfType<AudioManager>().Play("FoodBarSound");
@@ -166,9 +180,12 @@ public class StatsManager : MonoBehaviour {
                     //increment GOprotein
                     GOprotein++;
 
+                    proteinBar.value = proteinCounter;
+
                     if (proteinCounter > maxProtein)
                     {
                         health -= GroupD;
+                        healthBar.value = health;
 
                         //sound
                         FindObjectOfType<AudioManager>().Play("FoodBarSound");
@@ -186,6 +203,7 @@ public class StatsManager : MonoBehaviour {
     {
         //adds damage, applies food group method.
         health -= damage;
+        healthBar.value = health;
         FoodGroup(_Type);
 
         //increment GOhitten
@@ -196,14 +214,18 @@ public class StatsManager : MonoBehaviour {
     {
         //hunger damage method
         health -= hungerD;
+        healthBar.value = health;
 
     }
 
     public void groupReset()
     {
         vegetableCounter = 0;
+        vegtableBar.value = vegetableCounter;
         carbCounter = 0;
+        carbBar.value = carbCounter;
         proteinCounter = 0;
+        proteinBar.value = proteinCounter;
     }
 
     private void Display()

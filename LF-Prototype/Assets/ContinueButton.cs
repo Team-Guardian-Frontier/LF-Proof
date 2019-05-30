@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class ContinueButton : MonoBehaviour
@@ -18,12 +19,15 @@ public class ContinueButton : MonoBehaviour
         {
             Continue();
         }
+        
     }
 
     public void Continue()
     {
-        SceneManager.LoadScene("Menu");
         Debug.Log("I did it, but at what cost?");
+        SceneManager.LoadScene("Menu");
+
+        
     }
 
     public void Clickable()

@@ -61,14 +61,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\ContinueButton.cs" />
     <Compile Include="Assets\MainMenu.cs" />
     <Compile Include="Assets\Scripts\AudioManager.cs" />
+    <Compile Include="Assets\Scripts\ContinueButton.cs" />
     <Compile Include="Assets\Scripts\Food.cs" />
+    <Compile Include="Assets\Scripts\FoodPooler.cs" />
     <Compile Include="Assets\Scripts\FoodSpawner.cs" />
     <Compile Include="Assets\Scripts\FruitHandler.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\GlobalTimer.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IPooledObject.cs" />
     <Compile Include="Assets\Scripts\MousePos.cs" />
     <Compile Include="Assets\Scripts\Player2Scripts\P2FruitHandler.cs" />
     <Compile Include="Assets\Scripts\Player2Scripts\P2MousePos.cs" />

@@ -150,6 +150,13 @@ public class FruitHandler : MonoBehaviour {
         }
     }
 
+    public Food BailPrisoner()
+    {
+        Food release = prisoner;
+        prisoner = null;
+        return release;
+    }
+
     /*  Guide to food interaction:
      *  Fruit will have these states.
      *      - Held

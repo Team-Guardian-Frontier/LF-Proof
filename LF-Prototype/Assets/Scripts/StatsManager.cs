@@ -54,7 +54,6 @@ public class StatsManager : MonoBehaviour {
 
 
         //reset counters
-        Debug.Log("I added food");
         vegetableCounter = 25;
         carbCounter = 25;
         proteinCounter = 25;

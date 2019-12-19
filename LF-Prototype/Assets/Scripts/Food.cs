@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Food : MonoBehaviour {
+public class Food : MonoBehaviour, IPooledObject {
     /*To-Do:
      * - Add state changes, and behaviors. (public methods)
      * 
@@ -43,6 +43,7 @@ public class Food : MonoBehaviour {
     private Sprite foodSprite;
     private Texture2D foodTexture;
     private Rigidbody2D foodRigid;
+    private BoxCollider2D foodBox;
     //game object attatched
     private GameObject foodObject;
 
@@ -62,54 +63,81 @@ public class Food : MonoBehaviour {
 
 
 
-
+    
 
     //Unity Events
-    private void Start()
+    private void Awake()
     {
+        #region initialize 
         //INITIALIZE
         //find the object this script is attatched to
-        foodObject = gameObject;
+        foodObject = gameObject; 
+
+
+        //Get and initialize Rigidbody, Boxcollider, and Sprite Renderer
+        foodBox = foodObject.GetComponent<BoxCollider2D>();
+        if (foodBox != null)
+        { }
+            else
+        { foodBox = foodObject.AddComponent<BoxCollider2D>(); }
+
+        foodBox.isTrigger = true;
+        foodBox.offset = new Vector2(.16f, .16f);
+        foodBox.edgeRadius = 0;
+        //MAKE SURE EDGE RADIUS IS 0. Who in their right mind would use this on a boxcollider?
+
+
+        foodRigid = foodObject.GetComponent<Rigidbody2D>();
+        if (foodRigid != null)
+        { }
+        else
+        { foodRigid = foodObject.AddComponent<Rigidbody2D>(); }
+        //make it so physics doesn't apply to these objects, but still detect collisions/use oncollisionenter
+        foodRigid.isKinematic = true;
+        foodRigid.useFullKinematicContacts = true;
+
+        //Sprite renderer initialize 
+        spriteRenderer = foodObject.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        { }
+        else
+        { spriteRenderer = foodObject.AddComponent<SpriteRenderer>(); }
+
+        //set speed
+        maxSpeed = .1f;
+
+        //sound clone initialize.
+        flyClone = FindObjectOfType<AudioManager>().PlayClone("FoodFly");
+        flyClone.source.Stop();
+
+        #endregion
+
+
+    }
+
+    //Pooling functionality
+    public void OnObjectSpawn()
+    {
+        //spawn set food state to none
+        foodState = (FoodState)0;
+
+        if (player != null)
+        {
+            FruitHandler bail = player.GetComponent<FruitHandler>();
+            bail.BailPrisoner();
+            player = null;
+        }
+
+        //clear up prisoner
+
+        #region OnSpawn
 
         //mathf will pick even numbers on .5, may need your own math here.
         int foodNumber = Mathf.RoundToInt(Random.Range(0.0f, 2.0f));                  // Randomizes the FoodType
         foodType = (Food.FoodType)foodNumber;                                   // Sets the FoodType enum using the random number
 
-
-
-       
-        //generate location to check
-        Vector2 spawnLocation = new Vector2(Random.Range(-6.75f, 6.75f), Random.Range(-2.25f, 2.25f));  // Sets the random location of food spawn within a certain area
-
-        // check an area around the food to see if another food overlaps, if so then move the spawn location to another spot
-        Collider2D foodInArea = Physics2D.OverlapCircle(spawnLocation, 1.0f);
-        while (foodInArea != null)
-        {
-            spawnLocation = new Vector2(Random.Range(-5.0f, 5.0f), Random.Range(-1.75f, 1.75f)); // checks a smaller area if the first location is too close
-            foodInArea = null; // reset array
-            foodInArea = Physics2D.OverlapCircle(spawnLocation, 1f); // check again
-        }
-
-        
-
-        //set position
-        foodObject.transform.position = spawnLocation;
-
-        //add collider + rigidbody
-        BoxCollider2D boxCollider = foodObject.AddComponent<BoxCollider2D>();
-        boxCollider.isTrigger = true;
-        boxCollider.offset = new Vector2(.16f, .16f);
-
-        Rigidbody2D hardBody = foodObject.AddComponent<Rigidbody2D>();
-        //make it so physics doesn't apply to these objects, but still detect collisions/use oncollisionenter
-        hardBody.isKinematic = true;
-        hardBody.useFullKinematicContacts = true;
-
         //DEBUG: say type
-        Debug.Log("I am a " + foodType);
-
-        //spawn set food state to none
-        foodState = (FoodState)0;
+        //Debug.Log("I am a " + foodType);
 
         //SPRITE RENDERING
         //set food sprite
@@ -145,23 +173,37 @@ public class Food : MonoBehaviour {
         }
 
         //Sprite render
-        spriteRenderer = foodObject.AddComponent<SpriteRenderer>();
         foodSprite = Sprite.Create(foodTexture,
                                    new Rect(0, 0, foodTexture.width, foodTexture.height),
                                    Vector2.zero);
         spriteRenderer.sprite = foodSprite;
 
         //getting collider to match sprite
-        boxCollider.size = foodSprite.bounds.size;
-
-        //set speed
-        maxSpeed = .1f;
-        Debug.Log("Start, I am a " + foodType);
+        foodBox.size = spriteRenderer.size;
+        //foodBox.offset = new Vector2((spriteRenderer.size.x / 2), (spriteRenderer.size.y / 2));  Is Implied, with all our current sprites.
 
 
-        //sound clone initialize.
-        flyClone = FindObjectOfType<AudioManager>().PlayClone("FoodFly");
-        flyClone.source.Stop();
+        //generate location to check
+        Vector2 spawnLocation = new Vector2(Random.Range(-6.75f, 6.75f), Random.Range(-2.25f, 2.25f));  // Sets the random location of food spawn within a certain area
+
+        // check an area around the food to see if another food overlaps, if so then move the spawn location to another spot
+        Collider2D foodInArea = Physics2D.OverlapCircle(spawnLocation, 1.0f);
+        while (foodInArea != null)
+        {
+            spawnLocation = new Vector2(Random.Range(-5.0f, 5.0f), Random.Range(-1.75f, 1.75f)); // checks a smaller area if the first location is too close
+            foodInArea = null; // reset array
+            foodInArea = Physics2D.OverlapCircle(spawnLocation, 1f); // check again
+
+            //Debug.Log("Foodinarea:" + foodInArea);
+
+        }
+
+        //set position
+        foodObject.transform.position = spawnLocation;
+        //Debug.Log("I Shmoove to " + spawnLocation);
+
+
+        #endregion
     }
 
     void Update()
@@ -239,12 +281,10 @@ public class Food : MonoBehaviour {
 
     public void Smash()
     {
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
         
-        if (flyClone != null)
-           Destroy(flyClone.source);
 
-        //flyClone.source.Stop(); // this Does work
+        flyClone.source.Stop(); // this Does work
         //sets up nicely for possible pooling later on
 
     }
@@ -256,8 +296,8 @@ public class Food : MonoBehaviour {
 
         if (punch.CompareTag("Wall"))
         {
-            Destroy(this.gameObject);
-            Debug.Log("I died on a wall");
+            this.gameObject.SetActive(false);
+            Debug.Log("I died on a wall at: " + foodObject.transform.position);
 
             Smash();
             FindObjectOfType<AudioManager>().Play("SplatSound");

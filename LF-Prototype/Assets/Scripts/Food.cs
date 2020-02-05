@@ -119,12 +119,12 @@ public class Food : MonoBehaviour, IPooledObject {
     public void OnObjectSpawn()
     {
         //spawn set food state to none
-        foodState = (FoodState)0;
+        foodState = FoodState.None;
 
         if (player != null)
         {
-            FruitHandler bail = player.GetComponent<FruitHandler>();
-            bail.BailPrisoner();
+            FruitHandler bailer = player.GetComponent<FruitHandler>();
+            bailer.BailPrisoner();
             player = null;
         }
 
@@ -219,7 +219,10 @@ public class Food : MonoBehaviour, IPooledObject {
             default:
                 break;
 
+
+
         }
+
 
     }
 
@@ -269,6 +272,8 @@ public class Food : MonoBehaviour, IPooledObject {
     private void Held()
     {
         this.transform.position = player.transform.position + offset;
+
+        
     }
 
     private void Shot()
@@ -294,7 +299,8 @@ public class Food : MonoBehaviour, IPooledObject {
         
         GameObject punch = other.gameObject;
 
-        if (punch.CompareTag("Wall"))
+        //Just make it so it doesn't die on walls while held.
+        if (punch.CompareTag("Wall") && foodState != FoodState.Held)
         {
             this.gameObject.SetActive(false);
             Debug.Log("I died on a wall at: " + foodObject.transform.position);

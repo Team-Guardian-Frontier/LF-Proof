@@ -22,7 +22,7 @@ public class FruitHandler : MonoBehaviour {
     //held food object
     [SerializeField]
     private Food prisoner;
-    private GameObject foodObject;
+    private GameObject prisonerOBJ;
 
     //trigger inputs
     private float triggers;
@@ -83,24 +83,15 @@ public class FruitHandler : MonoBehaviour {
             //if not shot, then check to see if player already has ammo
             else if (prisoner == null)
             {
-                //set it so that you now have a prisoner? idk if this is useful. //%Spot to optimize%, can check the state the prisoner, before taking it as a prisoner. not much damage.
-                prisoner = visitor;
-                     //DEBUG: tells you state of prisoner and type
-                Debug.Log("prisonerstate" + prisoner.foodState);
-                Debug.Log("prisonerType" + prisoner.getType());
-                Debug.Log("PrisonerName" + prisoner.name);
+                    
 
-                if (prisoner.foodState == Food.FoodState.Held)                           
+                if (visitor.foodState != Food.FoodState.Held)                      
                 {
-                    //clear prisoner details if bump into others
-                    prisoner = null;
-                    foodObject = null;
-                }
-                else
-                {
+
+                    prisoner = visitor;
                     //physically capture the object (it now follows)  %optimize% unless there's a glitch, do the prisoner = visitor; here.
                     prisoner.Pickup(this.gameObject);
-                    foodObject = prisoner.gameObject;
+                    prisonerOBJ = prisoner.gameObject;
 
                     //sound
                     FindObjectOfType<AudioManager>().Play("PickUpSound");
@@ -120,9 +111,9 @@ public class FruitHandler : MonoBehaviour {
         if (triggers > .5)
         {
             stats.eatFood(prisoner.getType());
-            Destroy(foodObject);
+            Destroy(prisonerOBJ);
             prisoner = null;
-            foodObject = null;
+            prisonerOBJ = null;
 
             //sound
             FindObjectOfType<AudioManager>().Play("EatSound");
@@ -134,19 +125,19 @@ public class FruitHandler : MonoBehaviour {
     {
         if (triggers < -.5)
         {
-            GameObject player = GameObject.Find("Player");
-            MousePos scriptref = (MousePos)player.GetComponent(typeof(MousePos));
+        
+            MousePos scriptref = this.gameObject.GetComponent<MousePos>();
             float launchAngle = scriptref.RAngle;
             prisoner.Launched(launchAngle);
 
             prisoner = null;
-            foodObject = null;
+            prisonerOBJ = null;
 
             //sound
             FindObjectOfType<AudioManager>().Play("ThrowSound");
 
             //get stats to increment GOthrows
-            player.GetComponent<StatsManager>().CountThrow();
+            this.GetComponent<StatsManager>().CountThrow();
         }
     }
 
@@ -154,6 +145,7 @@ public class FruitHandler : MonoBehaviour {
     {
         Food release = prisoner;
         prisoner = null;
+        prisonerOBJ = null;
         return release;
     }
 

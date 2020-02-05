@@ -28,6 +28,8 @@ public class FoodPooler : MonoBehaviour
 
     //Dictionary/List<Pool> --> Queue-Pool
     //pools>poolDictionary --> objectPool-Pool
+    //dictionary is a dictionary of pools.
+    //pools is a list of objects.
 
     public void Start()
     {
@@ -75,6 +77,52 @@ public class FoodPooler : MonoBehaviour
         poolDictionary[tag].Enqueue(objectToSpawn);
 
         return objectToSpawn;
+    }
+
+    public GameObject SpawnFromPoolActive(string tag)
+    {
+        if (!poolDictionary.ContainsKey(tag))
+        {
+            Debug.LogWarning("Pool with tag " + tag + " doesn't exist.");
+            return null;
+        }
+
+        int loopcount = 0;
+        Pool pooltag = null;
+        foreach (Pool pool in pools)
+        {
+            if (pool.tag == tag)
+                pooltag = pool;
+        }
+        if (pooltag != null)
+        {
+            while (loopcount < pooltag.size)
+            {
+                GameObject objectToSpawn = poolDictionary[tag].Dequeue();
+
+                //spawn if the object is inactive
+                if (!objectToSpawn.activeInHierarchy)
+                {
+                        objectToSpawn.SetActive(true);
+
+                        IPooledObject poolObj = objectToSpawn.GetComponent<IPooledObject>();
+                        if (poolObj != null)
+                        {
+                            poolObj.OnObjectSpawn();
+                        }
+
+                    Food foodscr = objectToSpawn.GetComponent<Food>();
+                    Debug.Log("My State is: " + foodscr.foodState);
+
+                    poolDictionary[tag].Enqueue(objectToSpawn);
+
+                    return objectToSpawn;
+                }
+            }
+        }
+
+        return null;
+        
     }
 
     /*

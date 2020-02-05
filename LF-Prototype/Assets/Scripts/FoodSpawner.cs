@@ -48,13 +48,14 @@ public class FoodSpawner : MonoBehaviour {
             
             //instance of object
             //instantiate and name the gameobject
-            GameObject foodObject = foodPooler.SpawnFromPool("food");
+            GameObject foodObject = foodPooler.SpawnFromPoolActive("food");
 
-            foodObject.gameObject.tag = "Food";
-            
-            
-            foodCount += 1;
+            if (foodObject != null)
+            {
+                foodObject.gameObject.tag = "Food";
 
+                foodCount += 1;
+            }
             //run instantiate, since spawn food script already does all the math. For some reason. (Also, add interace for spawn in new locations.)
 
 
@@ -78,7 +79,7 @@ public class FoodSpawner : MonoBehaviour {
             Food foodScript = hitList[i].GetComponent<Food>();
 
             //if the object is not shot or held, destroy it.
-            if (foodScript.foodState == (Food.FoodState)0) //Foodstate 0 = none
+            if (foodScript.foodState == Food.FoodState.None)
             {
                 hitList[i].SetActive(false);
             }

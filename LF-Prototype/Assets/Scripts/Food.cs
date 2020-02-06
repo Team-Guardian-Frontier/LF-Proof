@@ -123,9 +123,8 @@ public class Food : MonoBehaviour, IPooledObject {
 
         if (player != null)
         {
-            FruitHandler bailer = player.GetComponent<FruitHandler>();
-            bailer.BailPrisoner();
-            player = null;
+            Debug.Log("Spawn Error: A held food has Respawned");
+            Smash();
         }
 
         //clear up prisoner
@@ -256,8 +255,6 @@ public class Food : MonoBehaviour, IPooledObject {
 
         flyClone.source.Play();
 
-        Debug.Log("I was shot!" + foodState);
-
 
         
     }
@@ -286,8 +283,13 @@ public class Food : MonoBehaviour, IPooledObject {
 
     public void Smash()
     {
+
+        player = null;
+
+        foodState = FoodState.None; //reset the player, reset the food's player, reset the foodstate.
+
         this.gameObject.SetActive(false);
-        
+
 
         flyClone.source.Stop(); // this Does work
         //sets up nicely for possible pooling later on

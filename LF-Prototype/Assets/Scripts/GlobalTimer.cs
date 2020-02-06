@@ -89,8 +89,6 @@ public class GlobalTimer : MonoBehaviour {
             //food respawn. (respawn includes despawning existing.
             spawner.RespawnFood();
 
-            Debug.Log("I hunger");
-
 
 
             //timeUpText.text = "Time's up!!";

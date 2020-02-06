@@ -111,9 +111,9 @@ public class FruitHandler : MonoBehaviour {
         if (triggers > .5)
         {
             stats.eatFood(prisoner.getType());
-            Destroy(prisonerOBJ);
-            prisoner = null;
-            prisonerOBJ = null;
+            prisoner.Smash();
+            BailPrisoner();
+
 
             //sound
             FindObjectOfType<AudioManager>().Play("EatSound");
@@ -130,8 +130,7 @@ public class FruitHandler : MonoBehaviour {
             float launchAngle = scriptref.RAngle;
             prisoner.Launched(launchAngle);
 
-            prisoner = null;
-            prisonerOBJ = null;
+            BailPrisoner();
 
             //sound
             FindObjectOfType<AudioManager>().Play("ThrowSound");
@@ -141,7 +140,8 @@ public class FruitHandler : MonoBehaviour {
         }
     }
 
-    public Food BailPrisoner()
+    //Only this object should ever bail itself. otherwise, it runs into issues when picking up other objects.
+    private Food BailPrisoner()
     {
         Food release = prisoner;
         prisoner = null;

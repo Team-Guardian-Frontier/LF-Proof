@@ -103,16 +103,18 @@ public class FoodPooler : MonoBehaviour
                 //spawn if the object is inactive
                 if (!objectToSpawn.activeInHierarchy)
                 {
+
                         objectToSpawn.SetActive(true);
 
-                        IPooledObject poolObj = objectToSpawn.GetComponent<IPooledObject>();
+                        Food foodscr = objectToSpawn.GetComponent<Food>();
+                        Debug.Log("My State is: " + foodscr.foodState);
+
+                         IPooledObject poolObj = objectToSpawn.GetComponent<IPooledObject>();
                         if (poolObj != null)
                         {
                             poolObj.OnObjectSpawn();
                         }
 
-                    Food foodscr = objectToSpawn.GetComponent<Food>();
-                    Debug.Log("My State is: " + foodscr.foodState);
 
                     poolDictionary[tag].Enqueue(objectToSpawn);
 

@@ -80,7 +80,7 @@ public class FoodSpawner : MonoBehaviour {
             //if the object is not shot or held, destroy it.
             if (foodScript.foodState == Food.FoodState.None)
             {
-                Debug.Log("My deacState is: " + foodScript.foodState);
+
                 hitList[i].SetActive(false);
             }
         }

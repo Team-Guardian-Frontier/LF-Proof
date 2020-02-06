@@ -50,6 +50,8 @@ public class Food : MonoBehaviour, IPooledObject {
     [SerializeField]
     private Sound flyClone;
 
+    AudioManager audioManager;
+
 
     //Add Collider
 
@@ -107,7 +109,9 @@ public class Food : MonoBehaviour, IPooledObject {
         maxSpeed = .1f;
 
         //sound clone initialize.
-        flyClone = FindObjectOfType<AudioManager>().PlayClone("FoodFly");
+        audioManager = AudioManager.instance;
+
+        flyClone = audioManager.PlayClone("FoodFly");
         flyClone.source.Stop();
 
         #endregion
@@ -305,10 +309,9 @@ public class Food : MonoBehaviour, IPooledObject {
         if (punch.CompareTag("Wall") && foodState != FoodState.Held)
         {
             this.gameObject.SetActive(false);
-            Debug.Log("I died on a wall at: " + foodObject.transform.position);
 
             Smash();
-            FindObjectOfType<AudioManager>().Play("SplatSound");
+            audioManager.Play("SplatSound");
         }
 
     }

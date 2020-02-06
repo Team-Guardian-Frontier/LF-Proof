@@ -12,16 +12,32 @@ public class FoodPooler : MonoBehaviour
         public int size;
     }
 
+    
     #region Singleton
     //Shortcut singletonesque
+    //This way, we will always have food loaded, and it should load all before game starts. hopefully, helps with framerate.
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            Debug.Log("Awake: " + Instance);
+        }
+        else
+        {
+            Object.Destroy(gameObject);
+            Debug.Log("Destroyed the extra");
+        }
+
+
+    }
+    #endregion
 
     public static FoodPooler Instance;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
-    #endregion
+
+    
+
 
     public List<Pool> pools;
     public Dictionary<string, Queue<GameObject>> poolDictionary;
@@ -31,7 +47,18 @@ public class FoodPooler : MonoBehaviour
     //dictionary is a dictionary of pools.
     //pools is a list of objects.
 
-    public void Start()
+
+    private void Start()
+    {
+        Populate();
+    }
+
+    private void Update()
+    {
+        //deactivate everything on scene load.
+    }
+
+    private void Populate()
     {
         //create dictionary
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
@@ -42,9 +69,10 @@ public class FoodPooler : MonoBehaviour
             //create the actual queue of GameObjects
             Queue<GameObject> objectPool = new Queue<GameObject>();
             //populate queue up to size
-            for (int i = 0; i< pool.size; i++)
+            for (int i = 0; i < pool.size; i++)
             {
                 GameObject obj = Instantiate(pool.prefab);
+                DontDestroyOnLoad(obj); //persistent pool objects
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
@@ -52,6 +80,11 @@ public class FoodPooler : MonoBehaviour
             //add pool-queue to dictionary
             poolDictionary.Add(pool.tag, objectPool);
         }
+    }
+
+    private void Depopulate()
+    {
+        //create a singleton function that just obliterates all the food. cuz eff that.
     }
 
     public GameObject SpawnFromPool (string tag)
@@ -81,6 +114,7 @@ public class FoodPooler : MonoBehaviour
 
     public GameObject SpawnFromPoolActive(string tag)
     {
+        
         if (!poolDictionary.ContainsKey(tag))
         {
             Debug.LogWarning("Pool with tag " + tag + " doesn't exist.");
@@ -106,8 +140,6 @@ public class FoodPooler : MonoBehaviour
 
                         objectToSpawn.SetActive(true);
 
-                        Food foodscr = objectToSpawn.GetComponent<Food>();
-                        Debug.Log("My State is: " + foodscr.foodState);
 
                          IPooledObject poolObj = objectToSpawn.GetComponent<IPooledObject>();
                         if (poolObj != null)

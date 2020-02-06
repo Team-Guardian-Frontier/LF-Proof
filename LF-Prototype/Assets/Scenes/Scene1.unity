@@ -708,7 +708,7 @@ PrefabInstance:
     - target: {fileID: 1012628024729362921, guid: 2db9963d92d0b3a43a35010e7bdcb879,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1012628024729362921, guid: 2db9963d92d0b3a43a35010e7bdcb879,
         type: 3}
@@ -746,11 +746,31 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1774168439755042, guid: 33bb1346d2afb6844b846dc6aa40c107,
         type: 3}
+    - target: {fileID: 1012628024729362926, guid: 2db9963d92d0b3a43a35010e7bdcb879,
+        type: 3}
+      propertyPath: foodPooler
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6383642408191436881, guid: 2db9963d92d0b3a43a35010e7bdcb879,
         type: 3}
       propertyPath: pools.Array.data[0].size
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 3909062163039838127, guid: 2db9963d92d0b3a43a35010e7bdcb879,
+        type: 3}
+      propertyPath: EndScreen
+      value: 
+      objectReference: {fileID: 529914850}
+    - target: {fileID: 3909062163039838127, guid: 2db9963d92d0b3a43a35010e7bdcb879,
+        type: 3}
+      propertyPath: Player1
+      value: 
+      objectReference: {fileID: 710106595}
+    - target: {fileID: 3909062163039838127, guid: 2db9963d92d0b3a43a35010e7bdcb879,
+        type: 3}
+      propertyPath: Player2
+      value: 
+      objectReference: {fileID: 1057730407}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2db9963d92d0b3a43a35010e7bdcb879, type: 3}
 --- !u!1001 &3837813303056742649
@@ -1126,7 +1146,7 @@ PrefabInstance:
     - target: {fileID: 6024141250680293737, guid: 004ac651c229ce141bc3792fe57f0b02,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6024141250680293737, guid: 004ac651c229ce141bc3792fe57f0b02,
         type: 3}
@@ -1158,6 +1178,37 @@ PrefabInstance:
       propertyPath: Player2
       value: 
       objectReference: {fileID: 1057730407}
+    - target: {fileID: 6024141250680293735, guid: 004ac651c229ce141bc3792fe57f0b02,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6057177174530070490, guid: 004ac651c229ce141bc3792fe57f0b02,
+        type: 3}
+      propertyPath: pools.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6057177174530070490, guid: 004ac651c229ce141bc3792fe57f0b02,
+        type: 3}
+      propertyPath: pools.Array.data[0].tag
+      value: food
+      objectReference: {fileID: 0}
+    - target: {fileID: 6057177174530070490, guid: 004ac651c229ce141bc3792fe57f0b02,
+        type: 3}
+      propertyPath: pools.Array.data[0].prefab
+      value: 
+      objectReference: {fileID: 1774168439755042, guid: 33bb1346d2afb6844b846dc6aa40c107,
+        type: 3}
+    - target: {fileID: 6057177174530070490, guid: 004ac651c229ce141bc3792fe57f0b02,
+        type: 3}
+      propertyPath: pools.Array.data[0].size
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6057177174530070490, guid: 004ac651c229ce141bc3792fe57f0b02,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 004ac651c229ce141bc3792fe57f0b02, type: 3}
 --- !u!1001 &7336647519823267995
@@ -1210,7 +1261,7 @@ PrefabInstance:
     - target: {fileID: 7336647520444655605, guid: cf19703fd93fe1d4da72465d2982df45,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7336647520444655605, guid: cf19703fd93fe1d4da72465d2982df45,
         type: 3}

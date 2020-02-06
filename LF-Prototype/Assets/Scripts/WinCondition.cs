@@ -50,7 +50,6 @@ public class WinCondition : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
         
         //if player is destroyed.
 
@@ -103,7 +102,6 @@ public class WinCondition : MonoBehaviour {
 
     private void CalculateVars()
     {
-        Debug.Log("I activated");
 
        
 
@@ -151,9 +149,6 @@ public class WinCondition : MonoBehaviour {
             GOveggiesPercent2 = (P2Stats.GetGOveggies() / P2totalFood) * 100;
         }
 
-        //debug
-
-        Debug.Log("Checkers: " + GOaccuracy1 + "2:" + GOaccuracy2 + " carbs1 " + GOcarbPercent1 + " carbs2 " + GOcarbPercent2);
         //check numbers later.
     }
 

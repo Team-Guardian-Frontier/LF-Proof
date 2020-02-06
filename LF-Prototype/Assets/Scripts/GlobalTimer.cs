@@ -39,7 +39,7 @@ public class GlobalTimer : MonoBehaviour {
     private FoodSpawner spawner;
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
 
         //getting the text
         theText = GetComponent<Text>();

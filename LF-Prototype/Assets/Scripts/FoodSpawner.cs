@@ -12,13 +12,14 @@ public class FoodSpawner : MonoBehaviour {
     private int foodCount = 0;
     private int maxFood = 10; // may change for "food frenzy"
     public GameObject FoodPrefab;
-
-    FoodPooler foodPooler;
+    public FoodPooler foodPooler;
     
 	// Use this for initialization
 	void Start () {
+        /*
         foodPooler = FoodPooler.Instance;
         SpawnFood();
+        */
     }
 	
 	// Update is called once per frame

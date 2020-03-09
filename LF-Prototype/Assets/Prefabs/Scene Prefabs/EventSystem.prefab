@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1012628024729362926}
   - component: {fileID: 1012628024729362927}
   - component: {fileID: 3909062163039838127}
+  - component: {fileID: 2433606155158914486}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -111,3 +112,19 @@ MonoBehaviour:
   EndScreen: {fileID: 0}
   Player1: {fileID: 0}
   Player2: {fileID: 0}
+--- !u!114 &2433606155158914486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012628024729362922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88ebe0774c6f67a478da3165e4349eea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pools:
+  - tag: food
+    prefab: {fileID: 1774168439755042, guid: 33bb1346d2afb6844b846dc6aa40c107, type: 3}
+    size: 15

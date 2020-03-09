@@ -118,6 +118,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1012628024724346274}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &14005321 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2433606155158914486, guid: 2db9963d92d0b3a43a35010e7bdcb879,
+    type: 3}
+  m_PrefabInstance: {fileID: 1012628024724346274}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14005320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88ebe0774c6f67a478da3165e4349eea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &24850081 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5112165869932647186, guid: b59c3f998ab7ddb448d9151f46e106d9,
@@ -750,7 +762,7 @@ PrefabInstance:
         type: 3}
       propertyPath: foodPooler
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 14005321}
     - target: {fileID: 6383642408191436881, guid: 2db9963d92d0b3a43a35010e7bdcb879,
         type: 3}
       propertyPath: pools.Array.data[0].size
@@ -1183,29 +1195,24 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6057177174530070490, guid: 004ac651c229ce141bc3792fe57f0b02,
-        type: 3}
+    - target: {fileID: 0}
       propertyPath: pools.Array.size
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6057177174530070490, guid: 004ac651c229ce141bc3792fe57f0b02,
-        type: 3}
+    - target: {fileID: 0}
       propertyPath: pools.Array.data[0].tag
       value: food
       objectReference: {fileID: 0}
-    - target: {fileID: 6057177174530070490, guid: 004ac651c229ce141bc3792fe57f0b02,
-        type: 3}
+    - target: {fileID: 0}
       propertyPath: pools.Array.data[0].prefab
       value: 
       objectReference: {fileID: 1774168439755042, guid: 33bb1346d2afb6844b846dc6aa40c107,
         type: 3}
-    - target: {fileID: 6057177174530070490, guid: 004ac651c229ce141bc3792fe57f0b02,
-        type: 3}
+    - target: {fileID: 0}
       propertyPath: pools.Array.data[0].size
       value: 15
       objectReference: {fileID: 0}
-    - target: {fileID: 6057177174530070490, guid: 004ac651c229ce141bc3792fe57f0b02,
-        type: 3}
+    - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}

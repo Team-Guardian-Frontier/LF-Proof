@@ -52,6 +52,8 @@ public class GlobalTimer : MonoBehaviour {
         p2Stats = player2.GetComponent<StatsManager>();
         spawner = eventSystem.GetComponent<FoodSpawner>();
 
+        //start by spawning food
+        spawner.RespawnFood();
 	}
 	
 	// Update is called once per frame

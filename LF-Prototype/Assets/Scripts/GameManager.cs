@@ -9,12 +9,12 @@ public class GameManager : MonoBehaviour {
     //Awake is always called before any Start functions
     void Awake() {
         //Prevent Duplicates
-        /*
+        
         if (instance == null)
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
-            */
+            
         
         DontDestroyOnLoad(gameObject);
     }

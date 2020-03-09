@@ -12,31 +12,10 @@ public class FoodPooler : MonoBehaviour
         public int size;
     }
 
-    
-    #region Singleton
-    //Shortcut singletonesque
-    //This way, we will always have food loaded, and it should load all before game starts. hopefully, helps with framerate.
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            Debug.Log("Awake: " + Instance);
-        }
-        else
-        {
-            Object.Destroy(gameObject);
-            Debug.Log("Destroyed the extra");
-        }
 
 
-    }
-    #endregion
-
-    public static FoodPooler Instance;
 
 
-    
 
 
     public List<Pool> pools;
@@ -48,7 +27,7 @@ public class FoodPooler : MonoBehaviour
     //pools is a list of objects.
 
 
-    private void Start()
+    private void Awake()
     {
         Populate();
     }
@@ -63,28 +42,29 @@ public class FoodPooler : MonoBehaviour
         //create dictionary
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
-        //Populate each pool
-        foreach (Pool pool in pools)
-        {
-            //create the actual queue of GameObjects
-            Queue<GameObject> objectPool = new Queue<GameObject>();
-            //populate queue up to size
-            for (int i = 0; i < pool.size; i++)
+            //Populate each pool
+            foreach (Pool pool in pools)
             {
-                GameObject obj = Instantiate(pool.prefab);
-                DontDestroyOnLoad(obj); //persistent pool objects
-                obj.SetActive(false);
-                objectPool.Enqueue(obj);
+                //create the actual queue of GameObjects
+                Queue<GameObject> objectPool = new Queue<GameObject>();
+                //populate queue up to size
+                for (int i = 0; i < pool.size; i++)
+                {
+                    GameObject obj = Instantiate(pool.prefab);
+                    obj.SetActive(false);
+                    objectPool.Enqueue(obj);
+                }
+
+                //add pool-queue to dictionary
+                poolDictionary.Add(pool.tag, objectPool);
             }
 
-            //add pool-queue to dictionary
-            poolDictionary.Add(pool.tag, objectPool);
-        }
+
     }
 
-    private void Depopulate()
+    private void reload()
     {
-        //create a singleton function that just obliterates all the food. cuz eff that.
+        //go through all pools and the dictionary, to deactivate and clear em.
     }
 
     public GameObject SpawnFromPool (string tag)

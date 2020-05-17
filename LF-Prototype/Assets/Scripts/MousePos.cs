@@ -119,7 +119,5 @@ public class MousePos : MonoBehaviour {
         anim.SetInteger("lookdir", lookdir);
         anim.SetBool("flipdir", flipdir);
 
-        //debug
-        Debug.Log("Angle: " + angle + ", lookdir: " + lookdir + ", flipdir:" + flipdir);
     }
 }

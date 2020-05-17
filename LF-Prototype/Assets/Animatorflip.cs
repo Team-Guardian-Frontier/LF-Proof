@@ -13,14 +13,12 @@ public class Animatorflip : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
-
         //get info from object and transform.
         transform = animator.GetComponent<Transform>();
         TempScale = transform.localScale;
         flipval = animator.GetBool("flipdir");
 
-        //Flip object appropriately
+        //Flip object appropriately, once no l  onger transitioning
         if (flipval)
         {
             TempScale.x = -Mathf.Abs(TempScale.x);
@@ -32,16 +30,16 @@ public class Animatorflip : StateMachineBehaviour
         transform.localScale = TempScale;
     }
 
+    /*
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+    }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
-    //    
+    //
     //}
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
@@ -55,4 +53,5 @@ public class Animatorflip : StateMachineBehaviour
     //{
     //    // Implement code that sets up animation IK (inverse kinematics)
     //}
+    */
 }

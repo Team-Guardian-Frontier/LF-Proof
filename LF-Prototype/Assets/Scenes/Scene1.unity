@@ -1071,6 +1071,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3893932379295123720, guid: d80e97b456846544c99ffbe3b1ba8d76,
+        type: 3}
+      propertyPath: mainCam
+      value: 
+      objectReference: {fileID: 1711311965}
     - target: {fileID: 3893932379295123717, guid: d80e97b456846544c99ffbe3b1ba8d76,
         type: 3}
       propertyPath: playerText
@@ -1101,11 +1106,6 @@ PrefabInstance:
       propertyPath: vegtableBar
       value: 
       objectReference: {fileID: 150889611}
-    - target: {fileID: 3893932379295123720, guid: d80e97b456846544c99ffbe3b1ba8d76,
-        type: 3}
-      propertyPath: mainCam
-      value: 
-      objectReference: {fileID: 1711311965}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d80e97b456846544c99ffbe3b1ba8d76, type: 3}
 --- !u!1001 &6024141250460744990
@@ -1115,6 +1115,27 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: pools.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: pools.Array.data[0].tag
+      value: food
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: pools.Array.data[0].prefab
+      value: 
+      objectReference: {fileID: 1774168439755042, guid: 33bb1346d2afb6844b846dc6aa40c107,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: pools.Array.data[0].size
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6024141250680293739, guid: 004ac651c229ce141bc3792fe57f0b02,
         type: 3}
       propertyPath: m_Name
@@ -1194,27 +1215,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: pools.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: pools.Array.data[0].tag
-      value: food
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: pools.Array.data[0].prefab
-      value: 
-      objectReference: {fileID: 1774168439755042, guid: 33bb1346d2afb6844b846dc6aa40c107,
-        type: 3}
-    - target: {fileID: 0}
-      propertyPath: pools.Array.data[0].size
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 004ac651c229ce141bc3792fe57f0b02, type: 3}

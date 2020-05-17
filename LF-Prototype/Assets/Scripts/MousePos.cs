@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*
- * This script is for the mouse position and getting the sprite (rectangle) to look at the cursor
+ * This script is for aiming, and changing the animator to match.
  * 
  * Input Values:
  * Player 1 - "AimX", "AimY"
@@ -11,60 +11,65 @@ using UnityEngine;
  */
 
 public class MousePos : MonoBehaviour {
-    // Sprite Stuff
-    public Sprite N, NE, E, SE, S, SW, W, NW;
+    // Sprite variables
     public Camera mainCam;
-    public float RAngle;
+    public Animator anim;
 
-    // Use this for initializing
-    void Start () {
+    [SerializeField] private int lookdir; //direction to animate. 0=S, 1=SE, 2=E, 3=NW, 4=N.
+    [SerializeField] private bool flipdir; //flip val for northeast, southwest, and west.
+    private Vector3 TempScale;
+    
 
-	}
-
-    //Player 2 Fields:
-    private float aimX;
-    private float aimY;
-
-    //INPUT STRINGS
+    //input strings
     public string aimXInput;
     public string aimYInput;
-    
-    //part of Toggle
-    private float togDead = .5f;
+    //Angle Caluclations
+    private float aimX;
+    private float aimY;
+    public float RAngle; //the final angle
+
+    //Toggle Deadzone
+    public float togDead;
 
 
+    void Start()
+    {
+        TempScale = transform.localScale;
+    }
 
-    // Update is called once per frame
     void Update()
     {
-        // Camera Rig Movement Control
-        
+        //Getting input from axis
         aimX = Input.GetAxis(aimXInput);
         aimY = -(Input.GetAxis(aimYInput));
 
-        //toggle, makes it so it's not as sensitive.
+        //find difference dead zone (circle)
         float aimDelta = Mathf.Sqrt(Mathf.Pow(aimX, 2) + Mathf.Pow(aimY, 2));
 
-        if (aimDelta > togDead)
+
+        
+
+        if (aimDelta > togDead) //if diff is greater than deadzone
         {
 
-        if (aimX > togDead)
-            aimX = 1;
-        if (aimX < -togDead)
-            aimX = -1;
-        if (aimY > togDead)
-            aimY = 1;
-        if (aimY < -togDead)
-            aimY = -1;
+            //set direction
+            if (aimX > togDead)
+                aimX = 1;
+            if (aimX < -togDead)
+                aimX = -1;
+            if (aimY > togDead)
+                aimY = 1;
+            if (aimY < -togDead)
+                aimY = -1;
 
-            StickAngle();
-            MouseRotation();
+            StickAngle(); //calculate angle
+            MouseRotation(); //set sprite
 
         }
 
+        
+
     }
-    
-    //Utility methods
     
     // Calculate angle from controller
     void StickAngle() {
@@ -79,33 +84,42 @@ public class MousePos : MonoBehaviour {
         // call mouse angle
         float angle = RAngle;
 
+        //current state
+
+
         // Switch case to change sprite
-        if (angle <= 22.5 && angle > -22.5) {
-            // west
-            this.GetComponent<SpriteRenderer>().sprite = E;
-        } else if (angle <= 67.5 && angle > 22.5) {
-            // Northwest
-            this.GetComponent<SpriteRenderer>().sprite = NE;
-        } else if (angle <= 112.5 && angle > 67.5) {
-            // North
-            this.GetComponent<SpriteRenderer>().sprite = N;
-        } else if (angle <= 157.5 && angle > 112.5) {
-            // Northeast
-            this.GetComponent<SpriteRenderer>().sprite = NW;
+        if (angle <= 22.5 && angle > -22.5) {  // East
+            lookdir = 2;
+            flipdir = false;
+        } else if (angle <= 67.5 && angle > 22.5) { // Northeast
+            lookdir = 3;
+            flipdir = true;
+        } else if (angle <= 112.5 && angle > 67.5) { // North
+            lookdir = 4;
+            flipdir = false;
+        } else if (angle <= 157.5 && angle > 112.5) { // Northwest
+            lookdir = 3;
+            flipdir = false;
         }
-          // negative
-          else if (angle <= -22.5 && angle > -67.5) {
-            // Southwest
-            this.GetComponent<SpriteRenderer>().sprite = SE;
-        } else if (angle <= -67.5 && angle > -112.5) {
-            // South
-            this.GetComponent<SpriteRenderer>().sprite = S;
-        } else if (angle <= -112.5 && angle > -157.5) {
-            // Southeast
-            this.GetComponent<SpriteRenderer>().sprite = SW;
-        } else if (angle <= -157.5 || angle > 157.5) {
-            // East
-            this.GetComponent<SpriteRenderer>().sprite = W;
+        else if (angle <= -22.5 && angle > -67.5) { // Southeast
+            lookdir = 1;
+            flipdir = false;
+        } else if (angle <= -67.5 && angle > -112.5) { // South
+            lookdir = 0;
+            flipdir = false;
+        } else if (angle <= -112.5 && angle > -157.5) { // Southwest
+            lookdir = 1;
+            flipdir = true;
+        } else if (angle <= -157.5 || angle > 157.5) { // Weast
+            lookdir = 2;
+            flipdir = true;
         }
+
+        //Set Animator and Sprite
+        anim.SetInteger("lookdir", lookdir);
+        anim.SetBool("flipdir", flipdir);
+
+        //debug
+        Debug.Log("Angle: " + angle + ", lookdir: " + lookdir + ", flipdir:" + flipdir);
     }
 }

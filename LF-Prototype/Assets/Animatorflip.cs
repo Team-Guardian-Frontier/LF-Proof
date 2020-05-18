@@ -15,10 +15,15 @@ public class Animatorflip : StateMachineBehaviour
     {
         //get info from object and transform.
         transform = animator.GetComponent<Transform>();
-        TempScale = transform.localScale;
-        flipval = animator.GetBool("flipdir");
+        TempScale = transform.localScale;        
+    }
 
-        //Flip object appropriately, once no l  onger transitioning
+    
+    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        flipval = animator.GetBool("flipdir");
+        //Flip object appropriately
         if (flipval)
         {
             TempScale.x = -Mathf.Abs(TempScale.x);
@@ -28,14 +33,10 @@ public class Animatorflip : StateMachineBehaviour
             TempScale.x = Mathf.Abs(TempScale.x);
         }
         transform.localScale = TempScale;
+        
     }
 
     /*
-    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-    }
-
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
@@ -53,5 +54,12 @@ public class Animatorflip : StateMachineBehaviour
     //{
     //    // Implement code that sets up animation IK (inverse kinematics)
     //}
+
+        //debug
+        AnimatorClipInfo[] bargy = animator.GetCurrentAnimatorClipInfo(0);
+        for (int i = 0; i < bargy.Length; i++) { 
+        AnimationClip argy = bargy[0].clip;
+        Debug.Log("This is: " + argy.ToString());
+        }
     */
 }

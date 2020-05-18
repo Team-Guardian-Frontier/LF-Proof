@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.045
+  anim: {fileID: 6084485934658269914}
   horizInput: P2Horizontal
   vertiInput: P2Vertical
 --- !u!114 &7336647520444655600
@@ -152,6 +153,7 @@ MonoBehaviour:
   aimXInput: P2AimX
   aimYInput: P2AimY
   RAngle: 0
+  togDead: 0
 --- !u!114 &7336647520444655601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,6 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f30c0cca6e8b10347b48b55315c755ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 6084485934658269914}
   prisoner: {fileID: 0}
   triggersInput: triggers2
 --- !u!114 &7336647520444655603

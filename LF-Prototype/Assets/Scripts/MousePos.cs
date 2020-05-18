@@ -17,7 +17,6 @@ public class MousePos : MonoBehaviour {
 
     [SerializeField] private int lookdir; //direction to animate. 0=S, 1=SE, 2=E, 3=NW, 4=N.
     [SerializeField] private bool flipdir; //flip val for northeast, southwest, and west.
-    private Vector3 TempScale;
     
 
     //input strings
@@ -34,7 +33,7 @@ public class MousePos : MonoBehaviour {
 
     void Start()
     {
-        TempScale = transform.localScale;
+
     }
 
     void Update()
@@ -47,7 +46,7 @@ public class MousePos : MonoBehaviour {
         float aimDelta = Mathf.Sqrt(Mathf.Pow(aimX, 2) + Mathf.Pow(aimY, 2));
 
 
-        
+
 
         if (aimDelta > togDead) //if diff is greater than deadzone
         {
@@ -85,7 +84,7 @@ public class MousePos : MonoBehaviour {
         float angle = RAngle;
 
         //current state
-
+        
 
         // Switch case to change sprite
         if (angle <= 22.5 && angle > -22.5) {  // East
@@ -100,8 +99,7 @@ public class MousePos : MonoBehaviour {
         } else if (angle <= 157.5 && angle > 112.5) { // Northwest
             lookdir = 3;
             flipdir = false;
-        }
-        else if (angle <= -22.5 && angle > -67.5) { // Southeast
+        }else if (angle <= -22.5 && angle > -67.5) { // Southeast
             lookdir = 1;
             flipdir = false;
         } else if (angle <= -67.5 && angle > -112.5) { // South
@@ -118,6 +116,8 @@ public class MousePos : MonoBehaviour {
         //Set Animator and Sprite
         anim.SetInteger("lookdir", lookdir);
         anim.SetBool("flipdir", flipdir);
+
+
 
     }
 }

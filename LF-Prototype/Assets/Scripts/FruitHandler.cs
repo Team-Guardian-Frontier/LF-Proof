@@ -16,6 +16,9 @@ public class FruitHandler : MonoBehaviour {
     //Calls StatsManager script
     private StatsManager stats;
 
+    //animator
+    public Animator anim;
+
 
     //collision food object
     private Food visitor;
@@ -23,6 +26,8 @@ public class FruitHandler : MonoBehaviour {
     [SerializeField]
     private Food prisoner;
     private GameObject prisonerOBJ;
+
+   
 
     //trigger inputs
     private float triggers;
@@ -94,6 +99,8 @@ public class FruitHandler : MonoBehaviour {
 
                     //sound
                     FindObjectOfType<AudioManager>().Play("PickUpSound");
+                    //animation
+                    anim.SetTrigger("pickup");
 
                 }
 
@@ -116,6 +123,9 @@ public class FruitHandler : MonoBehaviour {
 
             //sound
             FindObjectOfType<AudioManager>().Play("EatSound");
+
+            //animation
+            anim.SetTrigger("eat");
         }
     }
 
@@ -133,6 +143,8 @@ public class FruitHandler : MonoBehaviour {
 
             //sound
             FindObjectOfType<AudioManager>().Play("ThrowSound");
+            //animation
+            anim.SetTrigger("throw");
 
             //get stats to increment GOthrows
             this.GetComponent<StatsManager>().CountThrow();

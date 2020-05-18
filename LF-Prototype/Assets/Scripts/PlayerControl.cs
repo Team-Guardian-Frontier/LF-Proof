@@ -25,6 +25,9 @@ public class PlayerControl : MonoBehaviour {
     private const float togDead = .5f;
     private RaycastHit2D[] hitResults;
 
+    //Animator
+    public Animator anim;
+
     private float horiz;
     private float verti;
 
@@ -60,6 +63,16 @@ public class PlayerControl : MonoBehaviour {
             verti = 1;
         if (verti < -togDead)
             verti = -1;
+
+        //animate moving
+        if (Mathf.Abs(horiz) != 1 && Mathf.Abs(verti) != 1)
+        {
+            anim.SetFloat("moving", 0f);
+        }
+        else
+        {
+            anim.SetFloat("moving", 1f);
+        }
     }
     
 
@@ -67,7 +80,7 @@ public class PlayerControl : MonoBehaviour {
 
         ControllerCheck();
         Movement();
-        
+      
     }
     
     void Movement(){

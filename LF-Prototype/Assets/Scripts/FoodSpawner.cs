@@ -11,13 +11,15 @@ public class FoodSpawner : MonoBehaviour {
     private Food.FoodType spawnType;
     private int foodCount = 0;
     private int maxFood = 10; // may change for "food frenzy"
- 
-    private Vector2 spawnLocation;
-    //DILAPIDATED, have an entirely different timer system 
+    public GameObject FoodPrefab;
+    public FoodPooler foodPooler;
     
 	// Use this for initialization
 	void Start () {
+        /*
+        foodPooler = FoodPooler.Instance;
         SpawnFood();
+        */
     }
 	
 	// Update is called once per frame
@@ -38,27 +40,33 @@ public class FoodSpawner : MonoBehaviour {
     // A float timer makes the location completely random
     public void SpawnFood()
     {
+        
         //reset food count
         foodCount = 0;
         while (foodCount < maxFood)
         {
+            
+            
             //instance of object
             //instantiate and name the gameobject
-            GameObject foodObject = new GameObject("food" + foodCount);
+            GameObject foodObject = foodPooler.SpawnFromPoolActive("food");
 
-            foodObject.gameObject.tag = "Food";
+            if (foodObject != null)
+            {
+                foodObject.gameObject.tag = "Food";
 
-            // attatch scripts
-            foodObject.AddComponent<Food>();
-
-            //attatch collider after location set.
-
+                foodCount += 1;
+            }
+            //run instantiate, since spawn food script already does all the math. For some reason. (Also, add interace for spawn in new locations.)
 
 
+            //For some reason, food spawned keeps dying on the wall.
 
-            foodCount += 1;
-            Debug.Log("Created food at " + Time.time);
+
+
+
         }
+        
     }
 
     void despawnFood()
@@ -71,9 +79,10 @@ public class FoodSpawner : MonoBehaviour {
             Food foodScript = hitList[i].GetComponent<Food>();
 
             //if the object is not shot or held, destroy it.
-            if (foodScript.foodState == (Food.FoodState)0) //Foodstate 0 = none
+            if (foodScript.foodState == Food.FoodState.None)
             {
-                Destroy(hitList[i]);
+
+                hitList[i].SetActive(false);
             }
         }
     }

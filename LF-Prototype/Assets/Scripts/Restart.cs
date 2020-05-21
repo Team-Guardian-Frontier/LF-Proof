@@ -17,11 +17,11 @@ public class Restart : MonoBehaviour {
     public static bool isPaused = false;
     public GameObject PauseMenuUI;
 
-
-
+    //public static bool lets any of the other objects access the menu. if this object is destroyed, should be fine.
+    //just start as false whenever this object is instantiated, bc then game is running.
     private void Start()
     {
-       
+        isPaused = false;
     }
 
     void Update () {
@@ -48,9 +48,16 @@ public class Restart : MonoBehaviour {
 
             //Resume minus sound
             PauseMenuUI.SetActive(false);
-            Time.timeScale = 1;
+            //Time.timeScale = 1;  already set.
             isPaused = false;
         }
+
+        //toggle with the boolean. this way, other settings can "pause" the game, without pulling up the UI.
+
+        if (isPaused == true)
+            Time.timeScale = 0;
+        else
+            Time.timeScale = 1;
     }
 
     //Activate Pause
@@ -58,13 +65,13 @@ public class Restart : MonoBehaviour {
     {
         //Make PauseMenu Active
         PauseMenuUI.SetActive(true);
-        Time.timeScale = 0;
 
         //Pause Sound
         FindObjectOfType<AudioManager>().PauseAudio();
 
 
         isPaused = true;
+        //timescale already set in update.
 
     }
 
@@ -78,6 +85,13 @@ public class Restart : MonoBehaviour {
         FindObjectOfType<AudioManager>().UnPauseAudio();
 
         isPaused = false;
+        //timescale already set in update.
 
+    }
+
+    private void OnDestroy()
+    {
+        isPaused = false;
+        //just in case, when this object is destroyed.
     }
 }

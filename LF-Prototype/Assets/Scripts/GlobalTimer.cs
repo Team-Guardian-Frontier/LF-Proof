@@ -39,7 +39,7 @@ public class GlobalTimer : MonoBehaviour {
     private FoodSpawner spawner;
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
 
         //getting the text
         theText = GetComponent<Text>();
@@ -52,6 +52,8 @@ public class GlobalTimer : MonoBehaviour {
         p2Stats = player2.GetComponent<StatsManager>();
         spawner = eventSystem.GetComponent<FoodSpawner>();
 
+        //start by spawning food
+        spawner.RespawnFood();
 	}
 	
 	// Update is called once per frame
@@ -88,8 +90,6 @@ public class GlobalTimer : MonoBehaviour {
 
             //food respawn. (respawn includes despawning existing.
             spawner.RespawnFood();
-
-            Debug.Log("I hunger");
 
 
 

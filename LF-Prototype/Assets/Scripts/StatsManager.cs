@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class StatsManager : MonoBehaviour {
     //temp header: this controls the player's stats like health and food groups.
 
+    //NOTE: be wary. getCarbs and GetGOcarbs are very different methods.
+
 
     public Text playerText;
     public Text winText;
@@ -32,11 +34,26 @@ public class StatsManager : MonoBehaviour {
     private int vegetableCounter;
 
 
+    //Game Over counters
+    private int GOeaten =0;
+    private int GOthrows =0;
+    private int GOhitten =0;
+
+    private int GOcarbs =0;
+    private int GOprotein =0;
+    private int GOveggies =0;
+
+    public Slider healthBar;
+    public Slider carbBar;
+    public Slider proteinBar;
+    public Slider vegtableBar;
+
+
+
     void Start () {
 
 
         //reset counters
-        Debug.Log("I added food");
         vegetableCounter = 25;
         carbCounter = 25;
         proteinCounter = 25;
@@ -44,7 +61,7 @@ public class StatsManager : MonoBehaviour {
         //this is to set total health.
         totalH = health;
         Display();
-        winText.text = "";
+        //winText.text = "";
 
         /*DESIGN: these are the values you set.
         health = 100;
@@ -81,11 +98,33 @@ public class StatsManager : MonoBehaviour {
         return this.proteinCounter;
     }
 
+    public int GetGOeaten() { return GOeaten; }
+    public int GetGOthrows() { return GOthrows; }
+    public int GetGOhitten() { return GOhitten; }
+
+    public int GetGOcarbs() { return GOcarbs; }
+    public int GetGOprotein() { return GOprotein; }
+    public int GetGOveggies() { return GOveggies; }
+        //NOTE: be wary. getCarbs and GetGOcarbs are very different methods.
+
+
+
+
+    //Actions and stuff
     public void eatFood(Food.FoodType _Type)
     {
         //adds health, applies food group method
         health += healing;
+        healthBar.value = health;
         FoodGroup(_Type);
+
+        //increment GOeaten
+        GOeaten++;
+    }
+
+    public void CountThrow()
+    {
+        GOthrows++;
     }
 
     public void FoodGroup(Food.FoodType _foodType)
@@ -97,10 +136,15 @@ public class StatsManager : MonoBehaviour {
             case Food.FoodType.Vegetable:
                 {
                     vegetableCounter += servingSize;
+                    vegtableBar.value = vegetableCounter;
+
+                    //increment GOveggies
+                    GOveggies++;
 
                     if (vegetableCounter > maxVegetable)
                     {
                         health -= GroupD; //currently, set so that if any counter is over the max, then incur damage, so less healing
+                        healthBar.value = health;
 
                         //sound
                         FindObjectOfType<AudioManager>().Play("FoodBarSound");
@@ -111,9 +155,17 @@ public class StatsManager : MonoBehaviour {
             case Food.FoodType.Carbs:
                 {
                     carbCounter += servingSize;
+
+                    //increment GOcarbs
+                    GOcarbs++;
+
+
+                    carbBar.value = carbCounter;
+
                     if (carbCounter > maxCarb)
                     {
                         health -= GroupD;
+                        healthBar.value = health;
 
                         //sound
                         FindObjectOfType<AudioManager>().Play("FoodBarSound");
@@ -123,9 +175,16 @@ public class StatsManager : MonoBehaviour {
             case Food.FoodType.Proteins:
                 {
                     proteinCounter += servingSize;
+
+                    //increment GOprotein
+                    GOprotein++;
+
+                    proteinBar.value = proteinCounter;
+
                     if (proteinCounter > maxProtein)
                     {
                         health -= GroupD;
+                        healthBar.value = health;
 
                         //sound
                         FindObjectOfType<AudioManager>().Play("FoodBarSound");
@@ -143,30 +202,39 @@ public class StatsManager : MonoBehaviour {
     {
         //adds damage, applies food group method.
         health -= damage;
+        healthBar.value = health;
         FoodGroup(_Type);
+
+        //increment GOhitten
+        GOhitten++;
     }
 
     public void hungerDamage()
     {
         //hunger damage method
         health -= hungerD;
+        healthBar.value = health;
 
     }
 
     public void groupReset()
     {
         vegetableCounter = 0;
+        vegtableBar.value = vegetableCounter;
         carbCounter = 0;
+        carbBar.value = carbCounter;
         proteinCounter = 0;
+        proteinBar.value = proteinCounter;
     }
 
     private void Display()
     {
-        //don't forget the size of the text object!
+        /*old display
         playerText.text = this.gameObject.name + ": " + health + "/" + totalH
                             + "\nVeggies: " + vegetableCounter + "/" + maxVegetable 
                             +"\nCarbs: " + carbCounter + "/" + maxCarb
                             +"\nProtein: " + proteinCounter + "/" + maxProtein;
+                            */
                        
         //death
         if (health <= 0)
@@ -183,7 +251,7 @@ public class StatsManager : MonoBehaviour {
     public void Loss()
     {
         Debug.Log("Is this...?");
-        winText.text = "Game Over! You are Winner!";
-        Destroy(gameObject);
+        //winText.text = "Game Over! You are Winner!";
+        //gameObject.SetActive(false);
     }
 }

@@ -5,6 +5,10 @@ using UnityEngine;
 /* 
  * This script is for controlling player movement on an 8-directional movement
  * It also serves as Sprite changing
+ * 
+ * Input Values:
+ * Player 1 - "Horizontal", "Vertical"
+ * Player 2 - "P2Horizontal", "P2Vertical"
  */
 
 public class PlayerControl : MonoBehaviour {
@@ -21,8 +25,15 @@ public class PlayerControl : MonoBehaviour {
     private const float togDead = .5f;
     private RaycastHit2D[] hitResults;
 
+    //Animator
+    public Animator anim;
+
     private float horiz;
     private float verti;
+
+    //Input Strings
+    public string horizInput;
+    public string vertiInput;
 
     void Start() {
         myRigidbody = GetComponent<Rigidbody2D>();
@@ -40,8 +51,8 @@ public class PlayerControl : MonoBehaviour {
 
 
     void ControllerCheck() {
-        horiz = Input.GetAxis("Horizontal");
-        verti = Input.GetAxis("Vertical");
+        horiz = Input.GetAxis(horizInput);
+        verti = Input.GetAxis(vertiInput);
 
 
         if (horiz > togDead)
@@ -52,6 +63,16 @@ public class PlayerControl : MonoBehaviour {
             verti = 1;
         if (verti < -togDead)
             verti = -1;
+
+        //animate moving
+        if (Mathf.Abs(horiz) != 1 && Mathf.Abs(verti) != 1)
+        {
+            anim.SetFloat("moving", 0f);
+        }
+        else
+        {
+            anim.SetFloat("moving", 1f);
+        }
     }
     
 
@@ -59,7 +80,7 @@ public class PlayerControl : MonoBehaviour {
 
         ControllerCheck();
         Movement();
-        
+      
     }
     
     void Movement(){
@@ -69,38 +90,39 @@ public class PlayerControl : MonoBehaviour {
         float dPos = moveSpeed;
         if (Mathf.Abs(horiz) + Mathf.Abs(verti) == 2)
             dPos = moveSpeed * cDiag;
-        
 
-        //horizontal movement
-        if (horiz == 1)
+        if (Restart.isPaused == false)
         {
-            //E
-            if (CheckDirect(Vector2.right,ROSEDIST))
-                transform.Translate(Vector2.right * dPos);
+            //horizontal movement
+            if (horiz == 1)
+            {
+                //E
+                if (CheckDirect(Vector2.right, ROSEDIST))
+                    transform.Translate(Vector2.right * dPos);
 
-        }
-        else if (horiz == -1)
-        {
-            //W
-            if (CheckDirect(-Vector2.right,ROSEDIST))
-                transform.Translate(-Vector2.right * dPos);
-            
-        }
+            }
+            else if (horiz == -1)
+            {
+                //W
+                if (CheckDirect(-Vector2.right, ROSEDIST))
+                    transform.Translate(-Vector2.right * dPos);
 
-        //vertical movement
-        if (verti == -1)
-        {
-            //N
-            if (CheckDirect(Vector2.up,ROSEDIST))
-                transform.Translate(Vector2.up * dPos);
+            }
+
+            //vertical movement
+            if (verti == -1)
+            {
+                //N
+                if (CheckDirect(Vector2.up, ROSEDIST))
+                    transform.Translate(Vector2.up * dPos);
+            }
+            else if (verti == 1)
+            {
+                //S
+                if (CheckDirect(Vector2.down, ROSEDIST))
+                    transform.Translate(-Vector2.up * dPos);
+            }
         }
-        else if (verti == 1)
-        {
-            //S
-            if (CheckDirect(Vector2.down,ROSEDIST))
-                transform.Translate(-Vector2.up * dPos);
-        }
-        
         
     }
 

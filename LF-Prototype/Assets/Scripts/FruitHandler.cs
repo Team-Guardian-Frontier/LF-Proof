@@ -6,9 +6,18 @@ public class FruitHandler : MonoBehaviour {
 
     //tempheader: this script is bound to the player, and lets them shoot and stuff.
         //dictates firing, eating, and fruit interactions with player.
+        /*
+         * Input values:
+         * Player 1 - "triggers1"
+         * Player 2 - "triggers2"
+         * 
+         */
 
     //Calls StatsManager script
     private StatsManager stats;
+
+    //animator
+    public Animator anim;
 
 
     //collision food object
@@ -16,11 +25,15 @@ public class FruitHandler : MonoBehaviour {
     //held food object
     [SerializeField]
     private Food prisoner;
-    private GameObject foodObject;
+    private GameObject prisonerOBJ;
+
+   
 
     //trigger inputs
     private float triggers;
 
+    //INPUT STRINGS
+    public string triggersInput;
 
 
     // Use this for initialization
@@ -34,7 +47,7 @@ public class FruitHandler : MonoBehaviour {
 	void Update () {
 
         //set triggers
-        triggers = Input.GetAxis("triggers1");
+        triggers = Input.GetAxis(triggersInput);
         
 
 
@@ -65,7 +78,6 @@ public class FruitHandler : MonoBehaviour {
             {
                 //call damage method in stats
                 stats.takeDamage(visitor.getType());
-                Debug.Log("Food hit me!");
                 visitor.Smash();
 
                 //HitSound
@@ -75,27 +87,20 @@ public class FruitHandler : MonoBehaviour {
             //if not shot, then check to see if player already has ammo
             else if (prisoner == null)
             {
-                //set it so that you now have a prisoner? idk if this is useful. //%Spot to optimize%, can check the state the prisoner, before taking it as a prisoner. not much damage.
-                prisoner = visitor;
-                     //DEBUG: tells you state of prisoner and type
-                Debug.Log("prisonerstate" + prisoner.foodState);
-                Debug.Log("prisonerType" + prisoner.getType());
-                Debug.Log("PrisonerName" + prisoner.name);
+                    
 
-                if (prisoner.foodState == Food.FoodState.Held)                           
+                if (visitor.foodState != Food.FoodState.Held)                      
                 {
-                    //clear prisoner details if bump into others
-                    prisoner = null;
-                    foodObject = null;
-                }
-                else
-                {
+
+                    prisoner = visitor;
                     //physically capture the object (it now follows)  %optimize% unless there's a glitch, do the prisoner = visitor; here.
                     prisoner.Pickup(this.gameObject);
-                    foodObject = prisoner.gameObject;
+                    prisonerOBJ = prisoner.gameObject;
 
                     //sound
                     FindObjectOfType<AudioManager>().Play("PickUpSound");
+                    //animation
+                    anim.SetTrigger("pickup");
 
                 }
 
@@ -112,12 +117,15 @@ public class FruitHandler : MonoBehaviour {
         if (triggers > .5)
         {
             stats.eatFood(prisoner.getType());
-            Destroy(foodObject);
-            prisoner = null;
-            foodObject = null;
+            prisoner.Smash();
+            BailPrisoner();
+
 
             //sound
             FindObjectOfType<AudioManager>().Play("EatSound");
+
+            //animation
+            anim.SetTrigger("eat");
         }
     }
 
@@ -126,17 +134,30 @@ public class FruitHandler : MonoBehaviour {
     {
         if (triggers < -.5)
         {
-            GameObject player = GameObject.Find("Player");
-            MousePos scriptref = (MousePos)player.GetComponent(typeof(MousePos));
+        
+            MousePos scriptref = this.gameObject.GetComponent<MousePos>();
             float launchAngle = scriptref.RAngle;
             prisoner.Launched(launchAngle);
 
-            prisoner = null;
-            foodObject = null;
+            BailPrisoner();
 
             //sound
             FindObjectOfType<AudioManager>().Play("ThrowSound");
+            //animation
+            anim.SetTrigger("throw");
+
+            //get stats to increment GOthrows
+            this.GetComponent<StatsManager>().CountThrow();
         }
+    }
+
+    //Only this object should ever bail itself. otherwise, it runs into issues when picking up other objects.
+    private Food BailPrisoner()
+    {
+        Food release = prisoner;
+        prisoner = null;
+        prisonerOBJ = null;
+        return release;
     }
 
     /*  Guide to food interaction:

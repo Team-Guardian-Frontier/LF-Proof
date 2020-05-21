@@ -5,6 +5,7 @@ using UnityEngine;
 /* 
  * This script is for controlling player movement on an 8-directional movement
  * It also serves as Sprite changing
+ * 
  */
 
 public class P2PlayerControl : MonoBehaviour

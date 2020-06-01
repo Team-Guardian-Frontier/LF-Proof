@@ -40,6 +40,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3183350647
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Item Tiles
+    uniqueID: 1835183909
+    locked: 0
+  - name: CharObj
+    uniqueID: 1363678373
     locked: 0

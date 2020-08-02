@@ -10,7 +10,6 @@ public class FruitHandler : MonoBehaviour {
          * Input values:
          * Player 1 - "triggers1"
          * Player 2 - "triggers2"
-         * 
          */
 
     //Calls StatsManager script
@@ -22,12 +21,11 @@ public class FruitHandler : MonoBehaviour {
 
     //collision food object
     private Food visitor;
+    
     //held food object
     [SerializeField]
     private Food prisoner;
     private GameObject prisonerOBJ;
-
-   
 
     //trigger inputs
     private float triggers;
@@ -40,7 +38,6 @@ public class FruitHandler : MonoBehaviour {
     void Start () {
         //load stats
         stats = (StatsManager)this.gameObject.GetComponent(typeof(StatsManager));
-		
 	}
 	
 	// Update is called once per frame
@@ -48,14 +45,12 @@ public class FruitHandler : MonoBehaviour {
 
         //set triggers
         triggers = Input.GetAxis(triggersInput);
-        
 
-
-
+        //checks if food is currently held
         if (prisoner !=null)
         {
-            UseFood();
-            CheckShoot();
+            UseFood(); //calls use food method (below)
+            CheckShoot(); //calls shoot food method (below)
         }
 	}
 
@@ -72,43 +67,38 @@ public class FruitHandler : MonoBehaviour {
             //register other object as visitor.
             visitor = other.GetComponent<Food>();
 
-
             //if collide with food that was shot, take damage
             if (visitor.foodState == Food.FoodState.Shot)
             {
-                //call damage method in stats
+                //call damage method in stats manager script
                 stats.takeDamage(visitor.getType());
-                visitor.Smash();
+                visitor.Smash(); //deletes food object
 
                 //HitSound
                 FindObjectOfType<AudioManager>().Play("HitSound");
 
             }
+
             //if not shot, then check to see if player already has ammo
             else if (prisoner == null)
-            {
-                    
-
+            {        
                 if (visitor.foodState != Food.FoodState.Held)                      
                 {
-
                     prisoner = visitor;
-                    //physically capture the object (it now follows)  %optimize% unless there's a glitch, do the prisoner = visitor; here.
-                    prisoner.Pickup(this.gameObject);
+                    
+                    //physically capture the object (it now follows)
+                    prisoner.Pickup(this.gameObject); //calls method in food script
                     prisonerOBJ = prisoner.gameObject;
 
                     //sound
                     FindObjectOfType<AudioManager>().Play("PickUpSound");
+                   
                     //animation
                     anim.SetTrigger("pickup");
 
                 }
-
             }
-
-
         }
-
     }
 
     //method to call eat health function in stats manager, delete object, and clear prisoner.
@@ -116,10 +106,10 @@ public class FruitHandler : MonoBehaviour {
     {
         if (triggers > .5)
         {
+            //adds health to stats
             stats.eatFood(prisoner.getType());
-            prisoner.Smash();
-            BailPrisoner();
-
+            prisoner.Smash(); //deletes food object
+            BailPrisoner(); //clears prisoner variables
 
             //sound
             FindObjectOfType<AudioManager>().Play("EatSound");
@@ -129,20 +119,21 @@ public class FruitHandler : MonoBehaviour {
         }
     }
 
-    //method to launch the food, and clear necesary local variables.
+    //method to launch the food, and clear necessary local variables.
     public void CheckShoot()
     {
         if (triggers < -.5)
         {
-        
+            //launches food
             MousePos scriptref = this.gameObject.GetComponent<MousePos>();
             float launchAngle = scriptref.RAngle;
             prisoner.Launched(launchAngle);
 
-            BailPrisoner();
+            BailPrisoner(); //clears prisoner variables
 
             //sound
             FindObjectOfType<AudioManager>().Play("ThrowSound");
+
             //animation
             anim.SetTrigger("throw");
 
@@ -184,6 +175,5 @@ public class FruitHandler : MonoBehaviour {
      * So this entire system is based off of finding game objects, then
      * referencing and casting the Script components, so we can read
      * values and run methods off of them. this seems to be pretty set then!
-     * 
      */
 }

@@ -44,16 +44,11 @@ public class PlayerControl : MonoBehaviour {
 
         //set up filter to just not pick up the food pickups
         brita.useTriggers = false;
-
-
 	}
-
-
 
     void ControllerCheck() {
         horiz = Input.GetAxis(horizInput);
         verti = Input.GetAxis(vertiInput);
-
 
         if (horiz > togDead)
             horiz = 1;
@@ -75,12 +70,9 @@ public class PlayerControl : MonoBehaviour {
         }
     }
     
-
     void Update () {
-
         ControllerCheck();
         Movement();
-      
     }
     
     void Movement(){
@@ -98,14 +90,18 @@ public class PlayerControl : MonoBehaviour {
             {
                 //E
                 if (CheckDirect(Vector2.right, ROSEDIST))
+                {    
                     transform.Translate(Vector2.right * dPos);
+                }
 
             }
             else if (horiz == -1)
             {
                 //W
                 if (CheckDirect(-Vector2.right, ROSEDIST))
+                {    
                     transform.Translate(-Vector2.right * dPos);
+                }
 
             }
 
@@ -114,13 +110,18 @@ public class PlayerControl : MonoBehaviour {
             {
                 //N
                 if (CheckDirect(Vector2.up, ROSEDIST))
+                {    
                     transform.Translate(Vector2.up * dPos);
+                }
             }
+            
             else if (verti == 1)
             {
                 //S
                 if (CheckDirect(Vector2.down, ROSEDIST))
+                {    
                     transform.Translate(-Vector2.up * dPos);
+                }
             }
         }
         
@@ -130,14 +131,15 @@ public class PlayerControl : MonoBehaviour {
     {
         //Checks to see things are empty, before moving.
         bool empty = false;
+        
         if (myBox.Cast(finnaGo, brita, hitResults, disty, false) == 0)
+        {    
             empty = true;
-
+        }
+        
         return empty;
 
     }
-
-
 
     /* Movement Methods, Pros and Cons.
      * 

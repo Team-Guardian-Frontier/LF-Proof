@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Food : MonoBehaviour, IPooledObject {
-    /*To-Do:
-     * - Add state changes, and behaviors. (public methods)
-     * 
-     */
 
+    #region Enums
     public enum FoodType {
         Vegetable,
         Carbs,
@@ -20,103 +17,54 @@ public class Food : MonoBehaviour, IPooledObject {
         Held,
         Shot
     }
+    #endregion
+
 
     private FoodType foodType;
-    public FoodState foodState;
+    public FoodState foodState; //NOTE: Still uses access on Fruithandler, change when you get the chance.
 
+    //Sprites
+    [SerializeField] private Sprite CarbSprite = null;
+    [SerializeField] private Sprite MeatSprite = null;
+    [SerializeField] private Sprite VegSprite = null;
 
+    #region  PRIVATE FIELDS
     //Object for "Owner" player
     private GameObject player;
 
-    //positioning offset (for held)
-    private Vector3 offset;
-
-    //Launch fields
-    public float maxSpeed;
-    private float xspeed;
-    private float yspeed;
-    private Vector3 speedWagon;
-
-    //Physics and Sprites
-
+    //Obj Components
     private SpriteRenderer spriteRenderer;
-    private Sprite foodSprite;
-    private Texture2D foodTexture;
     private Rigidbody2D foodRigid;
     private BoxCollider2D foodBox;
-    //game object attatched
-    private GameObject foodObject;
 
-    [SerializeField]
+    //Launch/Phys Fields
+    public float maxSpeed = .1f;
+    private Vector3 speedWagon; //current speed
+    private Vector3 offset;     //positioning offset (for held)
+
+    private AudioManager audioManager;
     private Sound flyClone;
 
-    AudioManager audioManager;
+    #endregion
 
-
-    //Add Collider
-
-
-    /*add rigidbody2d, if needed
-    foodRigid = (Rigidbody2D)foodObject.AddComponent(typeof(Rigidbody2D));
-    foodRigid.gravityScale = 0;
-    */
-
-    //add Script ???What???
-
-
-
-    
 
     //Unity Events
     private void Awake()
     {
-        #region initialize 
-        //INITIALIZE
-        //find the object this script is attatched to
-        foodObject = gameObject; 
-
+        //INITIALIZE 
 
         //Get and initialize Rigidbody, Boxcollider, and Sprite Renderer
-        foodBox = foodObject.GetComponent<BoxCollider2D>();
-        if (foodBox != null)
-        { }
-            else
-        { foodBox = foodObject.AddComponent<BoxCollider2D>(); }
+        foodBox = gameObject.GetComponent<BoxCollider2D>();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        foodRigid = gameObject.GetComponent<Rigidbody2D>();
 
-        foodBox.isTrigger = true;
-        foodBox.offset = new Vector2(.16f, .16f);
-        foodBox.edgeRadius = 0;
-        //MAKE SURE EDGE RADIUS IS 0. Who in their right mind would use this on a boxcollider?
-
-
-        foodRigid = foodObject.GetComponent<Rigidbody2D>();
-        if (foodRigid != null)
-        { }
-        else
-        { foodRigid = foodObject.AddComponent<Rigidbody2D>(); }
-        //make it so physics doesn't apply to these objects, but still detect collisions/use oncollisionenter
-        foodRigid.isKinematic = true;
-        foodRigid.useFullKinematicContacts = true;
-
-        //Sprite renderer initialize 
-        spriteRenderer = foodObject.GetComponent<SpriteRenderer>();
-        if (spriteRenderer != null)
-        { }
-        else
-        { spriteRenderer = foodObject.AddComponent<SpriteRenderer>(); }
-
-        //set speed
-        maxSpeed = .1f;
-
-        //sound clone initialize.
-        audioManager = AudioManager.instance;
-
+        
+        //ACCESS AUDIO MANAGER
+        audioManager = GameManager.Instance.RegisterInjection<AudioManager>();
+        //Sound Clone initialize
         flyClone = audioManager.PlayClone("FoodFly");
         flyClone.source.Stop();
-
-        #endregion
-
-
+        
     }
 
     //Pooling functionality
@@ -131,40 +79,28 @@ public class Food : MonoBehaviour, IPooledObject {
             Smash();
         }
 
-        //clear up prisoner
+        //pick food number
+        int foodNumber = Mathf.RoundToInt(Random.Range(0.0f, 2.0f));    //mathf will pick even numbers on .5, may need your own math here.
+        foodType = (Food.FoodType)foodNumber;
 
-        #region OnSpawn
-
-        //mathf will pick even numbers on .5, may need your own math here.
-        int foodNumber = Mathf.RoundToInt(Random.Range(0.0f, 2.0f));                  // Randomizes the FoodType
-        foodType = (Food.FoodType)foodNumber;                                   // Sets the FoodType enum using the random number
-
-        //DEBUG: say type
-        //Debug.Log("I am a " + foodType);
-
-        //SPRITE RENDERING
+        #region Sprites
         //set food sprite
         switch (foodType)
         {
-
             case FoodType.Carbs:
                 {
-                    // setup carb
-                    foodTexture = Resources.Load<Texture2D>("sprites/bread");
+                    spriteRenderer.sprite = CarbSprite;
                     break;
                 }
-
             case FoodType.Proteins:
                 {
-                    // setup proteins
-                    foodTexture = Resources.Load<Texture2D>("sprites/egg");
+                    spriteRenderer.sprite = MeatSprite;
                     break;
                 }
 
             case FoodType.Vegetable:
                 {
-                    // setup vegetables
-                    foodTexture = Resources.Load<Texture2D>("sprites/tomato");
+                    spriteRenderer.sprite = VegSprite;
                     break;
                 }
 
@@ -175,18 +111,13 @@ public class Food : MonoBehaviour, IPooledObject {
                 }
         }
 
-        //Sprite render
-        foodSprite = Sprite.Create(foodTexture,
-                                   new Rect(0, 0, foodTexture.width, foodTexture.height),
-                                   Vector2.zero);
-        spriteRenderer.sprite = foodSprite;
-
         //getting collider to match sprite
         foodBox.size = spriteRenderer.size;
-        //foodBox.offset = new Vector2((spriteRenderer.size.x / 2), (spriteRenderer.size.y / 2));  Is Implied, with all our current sprites.
 
+        #endregion
 
-        //generate location to check
+        #region Randomizing Location
+
         Vector2 spawnLocation = new Vector2(Random.Range(-6.75f, 6.75f), Random.Range(-2.25f, 2.25f));  // Sets the random location of food spawn within a certain area
 
         // check an area around the food to see if another food overlaps, if so then move the spawn location to another spot
@@ -197,16 +128,13 @@ public class Food : MonoBehaviour, IPooledObject {
             foodInArea = null; // reset array
             foodInArea = Physics2D.OverlapCircle(spawnLocation, 1f); // check again
 
-            //Debug.Log("Foodinarea:" + foodInArea);
-
         }
 
         //set position
-        foodObject.transform.position = spawnLocation;
-        //Debug.Log("I Shmoove to " + spawnLocation);
-
+        gameObject.transform.position = spawnLocation;
 
         #endregion
+       
     }
 
     void Update()
@@ -221,15 +149,39 @@ public class Food : MonoBehaviour, IPooledObject {
                 break;
             default:
                 break;
-
-
-
         }
+    }
 
+    #region State Functions
+
+    private void Held() //Held State
+    {
+        this.transform.position = player.transform.position + offset;
+    }
+
+    private void Shot() //Moving state
+    {
+        //move
+        this.transform.Translate(speedWagon);
 
     }
 
-    //State Change calls (call from other scripts.
+    #endregion
+
+
+
+    #region Public Methods
+
+    //get methods
+    public FoodType getType()
+    {
+        return foodType;
+    }
+    public FoodState getState()
+    {
+        return foodState;
+    }
+
 
     public void Pickup(GameObject other)
     {
@@ -239,8 +191,7 @@ public class Food : MonoBehaviour, IPooledObject {
         foodState = FoodState.Held;
 
 
-        offset = Vector3.zero; // this.transform.position - other.transform.position;
-
+        offset = new Vector2(.16f, .16f); // this.transform.position - other.transform.position;
     }
 
     //call on player, when press trigger. (this instance already passed.)
@@ -248,57 +199,28 @@ public class Food : MonoBehaviour, IPooledObject {
     {
         //set speed and transforming
         //calculate xspeed and yspeed with trig, set to Vector3
-        xspeed = Mathf.Cos(angle * Mathf.Deg2Rad) * maxSpeed;
-        yspeed = Mathf.Sin(angle * Mathf.Deg2Rad) * maxSpeed;
+        float xspeed = Mathf.Cos(angle * Mathf.Deg2Rad) * maxSpeed;
+        float yspeed = Mathf.Sin(angle * Mathf.Deg2Rad) * maxSpeed;
         speedWagon = new Vector3(xspeed, yspeed);
 
         foodState = FoodState.Shot;
-
-
         //sound
-
         flyClone.source.Play();
-
-
-        
     }
 
-    //get method
-    public FoodType getType()
+    public void Smash() //"Destroys" food object
     {
-        return foodType;
-    }
-
-    //utility
-    private void Held()
-    {
-        this.transform.position = player.transform.position + offset;
-
-        
-    }
-
-    private void Shot()
-    {
-        //move
-        this.transform.Translate(speedWagon);
-        //do not put sound here, this is an update/state script!
-
-    }
-
-    public void Smash()
-    {
-
         player = null;
 
         foodState = FoodState.None; //reset the player, reset the food's player, reset the foodstate.
 
         this.gameObject.SetActive(false);
 
-
         flyClone.source.Stop(); // this Does work
         //sets up nicely for possible pooling later on
-
     }
+
+    #endregion
 
     private void OnTriggerEnter2D(Collider2D other)
     {

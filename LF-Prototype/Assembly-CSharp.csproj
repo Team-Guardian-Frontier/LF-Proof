@@ -66,23 +66,23 @@
     <Compile Include="Assets\Scripts\Food Scripts\Food.cs" />
     <Compile Include="Assets\Scripts\Food Scripts\FoodPooler.cs" />
     <Compile Include="Assets\Scripts\Food Scripts\FoodSpawner.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IPooledObject.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\FruitHandler.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\MousePos.cs" />
-    <Compile Include="Assets\Scripts\Player Scripts\Player2Scripts\P2FruitHandler.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\Player2Scripts\P2MousePos.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\Player2Scripts\P2PlayerControl.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\PlayerControl.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\StatsManager.cs" />
+    <Compile Include="Assets\Scripts\SceneInjector.cs" />
     <Compile Include="Assets\Scripts\SpriteChange.cs" />
     <Compile Include="Assets\Scripts\UI and Management Scr\AudioManager.cs" />
     <Compile Include="Assets\Scripts\UI and Management Scr\ContinueButton.cs" />
-    <Compile Include="Assets\Scripts\UI and Management Scr\GameManager.cs" />
+    <Compile Include="Assets\Scripts\UI and Management Scr\GameStats.cs" />
     <Compile Include="Assets\Scripts\UI and Management Scr\GlobalTimer.cs" />
     <Compile Include="Assets\Scripts\UI and Management Scr\MainMenu.cs" />
-    <Compile Include="Assets\Scripts\UI and Management Scr\Restart.cs" />
+    <Compile Include="Assets\Scripts\UI and Management Scr\PauseFunction.cs" />
     <Compile Include="Assets\Scripts\UI and Management Scr\Sound.cs" />
-    <Compile Include="Assets\Scripts\UI and Management Scr\WinCondition.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.4f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

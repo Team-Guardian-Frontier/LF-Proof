@@ -22,7 +22,7 @@ using UnityEngine.SceneManagement;
 
 public class GlobalTimer : MonoBehaviour {
     private float startingTime;
-    private Text theText;
+    
     public Text timeUpText;
     public Text playerWin;
 
@@ -30,19 +30,17 @@ public class GlobalTimer : MonoBehaviour {
     public int mealTime;
 
     //objects to manipulate, attatch via public.
+    [SerializeField] private Text TimerText = null;
     public GameObject player1;
     public GameObject player2;
-    public GameObject eventSystem;
+    public SceneInjector SceneLoad;
     //scripts to access from these objects
     private StatsManager p1Stats;
     private StatsManager p2Stats;
     private FoodSpawner spawner;
 
-	// Use this for initialization
-	void Start () {
-
-        //getting the text
-        theText = GetComponent<Text>();
+    // Use this for initialization
+    void Awake() {
 
         //Start with meal time so that the players don't start with hunger damage [hungerDamage()]
         startingTime = mealTime;
@@ -50,11 +48,28 @@ public class GlobalTimer : MonoBehaviour {
         //initialize which scripts to access for stat changes.
         p1Stats = player1.GetComponent<StatsManager>();
         p2Stats = player2.GetComponent<StatsManager>();
-        spawner = eventSystem.GetComponent<FoodSpawner>();
 
-        //start by spawning food
+
+
+        //Subscribe events
+        
+        SceneLoad.SceneJect += injection;
+        SceneLoad.onSceneLoaded += onSceneloaded;
+        
+
+    }
+
+   
+    public void injection(InjectionDict ID)
+    {
+        spawner = ID.Inject<FoodSpawner>();
+    }
+    public void onSceneloaded()
+    {
+        //Start by spawning food
         spawner.RespawnFood();
-	}
+    }
+    
 	
 	// Update is called once per frame
 	void Update () {
@@ -63,7 +78,7 @@ public class GlobalTimer : MonoBehaviour {
         startingTime -= Time.deltaTime;
 
         //updates time onscreen
-        theText.text = "" + Mathf.Ceil(startingTime);
+        TimerText.text = "" + Mathf.Ceil(startingTime);
 
 
         if (Mathf.Ceil(startingTime) == 4)

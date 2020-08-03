@@ -91,7 +91,7 @@ public class PlayerControl : MonoBehaviour {
         if (Mathf.Abs(horiz) + Mathf.Abs(verti) == 2)
             dPos = moveSpeed * cDiag;
 
-        if (Restart.isPaused == false)
+        if (PauseFunction.isPaused == false)
         {
             //horizontal movement
             if (horiz == 1)

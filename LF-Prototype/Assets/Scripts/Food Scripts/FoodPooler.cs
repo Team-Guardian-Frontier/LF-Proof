@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FoodPooler : MonoBehaviour
 {
+    [SerializeField] private SceneInjector SceneLoad = null;
+
     [System.Serializable]
     public class Pool
     {
@@ -11,11 +13,6 @@ public class FoodPooler : MonoBehaviour
         public GameObject prefab;
         public int size;
     }
-
-
-
-
-
 
 
     public List<Pool> pools;
@@ -29,8 +26,18 @@ public class FoodPooler : MonoBehaviour
 
     private void Awake()
     {
+        SceneLoad.FixedSceneLoad += fixedload;
+    }
+
+    #region Sceneject events
+
+    public void fixedload()
+    {
         Populate();
     }
+
+    #endregion
+
 
     private void Update()
     {

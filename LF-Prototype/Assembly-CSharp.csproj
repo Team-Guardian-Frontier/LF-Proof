@@ -70,8 +70,6 @@
     <Compile Include="Assets\Scripts\Interfaces\IPooledObject.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\FruitHandler.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\MousePos.cs" />
-    <Compile Include="Assets\Scripts\Player Scripts\Player2Scripts\P2MousePos.cs" />
-    <Compile Include="Assets\Scripts\Player Scripts\Player2Scripts\P2PlayerControl.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\PlayerControl.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\StatsManager.cs" />
     <Compile Include="Assets\Scripts\SceneInjector.cs" />

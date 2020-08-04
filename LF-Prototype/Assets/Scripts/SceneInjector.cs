@@ -90,6 +90,8 @@ public class SceneInjector : MonoBehaviour
 
     /* Example Injection (Place on your script)
      
+    [SerializeField] private SceneInjector localSceneInjector = null;
+
      private void Awake() 
      { 
         localSceneInjector.SceneJect += myFunction; 
@@ -106,7 +108,7 @@ public class SceneInjector : MonoBehaviour
 
     #region Preloaded event subscriptions
 
-        //PreloadGameover
+    //PreloadGameover
     private void GameOverQuit()
     {
         //Should load main menu
@@ -122,7 +124,6 @@ public class SceneInjector : MonoBehaviour
      * SceneJect
      * FixedSceneLoad
      * onSceneLoaded
-     * onNextDay
      * onGameOver
      *
      * 

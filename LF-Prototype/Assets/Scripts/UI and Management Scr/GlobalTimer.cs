@@ -21,6 +21,9 @@ using UnityEngine.SceneManagement;
  */
 
 public class GlobalTimer : MonoBehaviour {
+
+    [SerializeField] private SceneInjector SceneLoad = null;
+
     private float startingTime;
     
     public Text timeUpText;
@@ -33,7 +36,7 @@ public class GlobalTimer : MonoBehaviour {
     [SerializeField] private Text TimerText = null;
     public GameObject player1;
     public GameObject player2;
-    public SceneInjector SceneLoad;
+
     //scripts to access from these objects
     private StatsManager p1Stats;
     private StatsManager p2Stats;

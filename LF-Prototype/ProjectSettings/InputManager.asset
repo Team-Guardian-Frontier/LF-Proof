@@ -153,7 +153,7 @@ InputManager:
     m_Name: triggers2
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: '[0]'
+    negativeButton: right shift
     positiveButton: right ctrl
     altNegativeButton: 
     altPositiveButton: 

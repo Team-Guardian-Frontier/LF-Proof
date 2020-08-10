@@ -319,13 +319,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef0bb9a6224eec7429c2ebff831ea673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SceneLoad: {fileID: 765036047}
   timeUpText: {fileID: 889090314}
   playerWin: {fileID: 1985322813}
   mealTime: 10
   TimerText: {fileID: 741961790}
   player1: {fileID: 710106595}
   player2: {fileID: 1057730407}
-  SceneLoad: {fileID: 765036047}
 --- !u!114 &818644501 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 250251350221437956, guid: b59c3f998ab7ddb448d9151f46e106d9,
@@ -1819,6 +1819,16 @@ PrefabInstance:
       propertyPath: mainCam
       value: 
       objectReference: {fileID: 1711311965}
+    - target: {fileID: 3893932379295123720, guid: d80e97b456846544c99ffbe3b1ba8d76,
+        type: 3}
+      propertyPath: aimXInput
+      value: Horizontal
+      objectReference: {fileID: 0}
+    - target: {fileID: 3893932379295123720, guid: d80e97b456846544c99ffbe3b1ba8d76,
+        type: 3}
+      propertyPath: aimYInput
+      value: Vertical
+      objectReference: {fileID: 0}
     - target: {fileID: 3893932379295123721, guid: d80e97b456846544c99ffbe3b1ba8d76,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1972,6 +1982,16 @@ PrefabInstance:
       propertyPath: mainCam
       value: 
       objectReference: {fileID: 1711311965}
+    - target: {fileID: 7336647520444655600, guid: cf19703fd93fe1d4da72465d2982df45,
+        type: 3}
+      propertyPath: aimXInput
+      value: P2Horizontal
+      objectReference: {fileID: 0}
+    - target: {fileID: 7336647520444655600, guid: cf19703fd93fe1d4da72465d2982df45,
+        type: 3}
+      propertyPath: aimYInput
+      value: P2Vertical
+      objectReference: {fileID: 0}
     - target: {fileID: 7336647520444655603, guid: cf19703fd93fe1d4da72465d2982df45,
         type: 3}
       propertyPath: playerText

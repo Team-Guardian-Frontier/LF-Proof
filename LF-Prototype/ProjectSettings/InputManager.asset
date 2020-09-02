@@ -73,8 +73,8 @@ InputManager:
     m_Name: triggers1
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: e
-    positiveButton: q
+    negativeButton: t
+    positiveButton: r
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
@@ -89,8 +89,8 @@ InputManager:
     m_Name: P2Horizontal
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: left
-    positiveButton: right
+    negativeButton: j
+    positiveButton: l
     altNegativeButton: 
     altPositiveButton: 
     gravity: 100
@@ -105,8 +105,8 @@ InputManager:
     m_Name: P2Vertical
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: up
-    positiveButton: down
+    negativeButton: i
+    positiveButton: k
     altNegativeButton: 
     altPositiveButton: 
     gravity: 100
@@ -153,8 +153,8 @@ InputManager:
     m_Name: triggers2
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: right shift
-    positiveButton: right ctrl
+    negativeButton: '['
+    positiveButton: p
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000

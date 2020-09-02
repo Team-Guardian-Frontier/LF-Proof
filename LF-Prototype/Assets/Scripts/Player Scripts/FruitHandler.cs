@@ -20,12 +20,13 @@ public class FruitHandler : MonoBehaviour {
 
 
     //collision food object
-    private Food visitor;
+    public Food visitor;
     
     //held food object
     [SerializeField]
     private Food prisoner;
-    private GameObject prisonerOBJ;
+
+    private MousePos scriptref = null;
 
     //trigger inputs
     private float triggers;
@@ -34,11 +35,19 @@ public class FruitHandler : MonoBehaviour {
     public string triggersInput;
 
 
+    #region Cooldowns
+    private float ThrowCool = .25f;
+    private float EatCool = .25f;
+    #endregion
+
+
     // Use this for initialization
     void Start () {
         //load stats
         stats = (StatsManager)this.gameObject.GetComponent(typeof(StatsManager));
-	}
+        //launches food
+        scriptref = this.gameObject.GetComponent<MousePos>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -46,16 +55,40 @@ public class FruitHandler : MonoBehaviour {
         //set triggers
         triggers = Input.GetAxis(triggersInput);
 
+        #region State Machine
+
         //checks if food is currently held
         if (prisoner !=null)
         {
             UseFood(); //calls use food method (below)
             CheckShoot(); //calls shoot food method (below)
         }
-	}
+        // PICKUP
+        else if (visitor != null && visitor.player == null && visitor.foodState == Food.FoodState.None)
+        {
+                //physically capture the object
+                prisoner = visitor;
+                prisoner.Pickup(this.gameObject); //calls method in food script
+
+                //sound
+                FindObjectOfType<AudioManager>().Play("PickUpSound");
+
+                //animation
+                anim.SetTrigger("pickup");
+        }
+
+        #endregion
+
+
+        //Cooldowns
+        ThrowCool -= Time.deltaTime;
+        EatCool -= Time.deltaTime;
+        ThrowCool = Mathf.Clamp(ThrowCool, 0, .25f);
+        EatCool = Mathf.Clamp(EatCool, 0, .25f);
+    }
 
     //Collision --> pickup
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         /*
          * Prevent "Stealing" eggs, while also not registering it in object.
@@ -66,70 +99,67 @@ public class FruitHandler : MonoBehaviour {
         {
             //register other object as visitor.
             visitor = other.GetComponent<Food>();
-
-            //if collide with food that was shot, take damage
-            if (visitor.foodState == Food.FoodState.Shot)
+            if (visitor.foodState == Food.FoodState.Held)
             {
-                //call damage method in stats manager script
-                stats.takeDamage(visitor.getType());
-                visitor.Smash(); //deletes food object
-
-                //HitSound
-                FindObjectOfType<AudioManager>().Play("HitSound");
-
+                visitor = null;
             }
-
-            //if not shot, then check to see if player already has ammo
-            else if (prisoner == null)
-            {        
-                if (visitor.foodState != Food.FoodState.Held)                      
+            else if (visitor.foodState == Food.FoodState.Shot)
+            { 
+                //if collide with food that was shot, take damage
+                if (visitor.player != gameObject)
                 {
-                    prisoner = visitor;
-                    
-                    //physically capture the object (it now follows)
-                    prisoner.Pickup(this.gameObject); //calls method in food script
-                    prisonerOBJ = prisoner.gameObject;
+                    //call damage method in stats manager script
+                    stats.takeDamage(visitor.getType());
+                    visitor.Smash(); //deletes food object
 
-                    //sound
-                    FindObjectOfType<AudioManager>().Play("PickUpSound");
-                   
-                    //animation
-                    anim.SetTrigger("pickup");
+                    //HitSound
+                    FindObjectOfType<AudioManager>().Play("HitSound");
 
                 }
+                visitor = null;
             }
+
+
         }
+        else visitor = null;
     }
 
     //method to call eat health function in stats manager, delete object, and clear prisoner.
     public void UseFood()
     {
-        if (triggers > .5)
+        if (triggers > .5 && EatCool == 0)
         {
+            //Reset Cooldown
+            EatCool = .25f;
+
             //adds health to stats
             stats.eatFood(prisoner.getType());
+
             prisoner.Smash(); //deletes food object
-            BailPrisoner(); //clears prisoner variables
+
 
             //sound
             FindObjectOfType<AudioManager>().Play("EatSound");
 
             //animation
             anim.SetTrigger("eat");
+
+            BailPrisoner(); //Bail after eat.
         }
     }
 
     //method to launch the food, and clear necessary local variables.
     public void CheckShoot()
     {
-        if (triggers < -.5)
+
+        if (triggers < -.5 && ThrowCool == 0)
         {
-            //launches food
-            MousePos scriptref = this.gameObject.GetComponent<MousePos>();
+            //Reset Cooldown
+            ThrowCool = .25f;
+            
             float launchAngle = scriptref.RAngle;
             prisoner.Launched(launchAngle);
 
-            BailPrisoner(); //clears prisoner variables
 
             //sound
             FindObjectOfType<AudioManager>().Play("ThrowSound");
@@ -139,6 +169,9 @@ public class FruitHandler : MonoBehaviour {
 
             //get stats to increment GOthrows
             this.GetComponent<StatsManager>().CountThrow();
+
+            //Only bail after throw.
+            BailPrisoner();
         }
     }
 
@@ -147,7 +180,7 @@ public class FruitHandler : MonoBehaviour {
     {
         Food release = prisoner;
         prisoner = null;
-        prisonerOBJ = null;
+        visitor = null;
         return release;
     }
 

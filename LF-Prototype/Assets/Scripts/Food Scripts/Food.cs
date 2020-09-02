@@ -28,10 +28,11 @@ public class Food : MonoBehaviour, IPooledObject {
     [SerializeField] private Sprite MeatSprite = null;
     [SerializeField] private Sprite VegSprite = null;
 
-    #region  PRIVATE FIELDS
-    //Object for "Owner" player
-    private GameObject player;
 
+    //Object for "Owner" player
+    public GameObject player { get; private set; }
+
+    #region  PRIVATE FIELDS
     //Obj Components
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D foodRigid;
@@ -197,13 +198,15 @@ public class Food : MonoBehaviour, IPooledObject {
     //call on player, when press trigger. (this instance already passed.)
     public void Launched(float angle)
     {
+        foodState = FoodState.Shot;
+
         //set speed and transforming
         //calculate xspeed and yspeed with trig, set to Vector3
         float xspeed = Mathf.Cos(angle * Mathf.Deg2Rad) * maxSpeed;
         float yspeed = Mathf.Sin(angle * Mathf.Deg2Rad) * maxSpeed;
         speedWagon = new Vector3(xspeed, yspeed);
 
-        foodState = FoodState.Shot;
+
         //sound
         flyClone.source.Play();
     }

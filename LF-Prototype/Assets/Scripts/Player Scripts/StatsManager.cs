@@ -148,7 +148,12 @@ public class StatsManager : MonoBehaviour {
 
                         //sound
                         FindObjectOfType<AudioManager>().Play("FoodBarSound");
+
+                        break; //break in if statement so no further buff is added
                     }
+
+                    health += 5;
+                    healthBar.value = health;
 
                     break;
                 }
@@ -169,7 +174,12 @@ public class StatsManager : MonoBehaviour {
 
                         //sound
                         FindObjectOfType<AudioManager>().Play("FoodBarSound");
+
+                        break;
                     }
+
+                    
+
                     break;
                 }
             case Food.FoodType.Proteins:

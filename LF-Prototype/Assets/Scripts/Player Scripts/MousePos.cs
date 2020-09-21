@@ -30,12 +30,6 @@ public class MousePos : MonoBehaviour {
     //Toggle Deadzone
     public float togDead;
 
-
-    void Start()
-    {
-
-    }
-
     void Update()
     {
         //Getting input from axis
@@ -44,9 +38,6 @@ public class MousePos : MonoBehaviour {
 
         //find difference dead zone (circle)
         float aimDelta = Mathf.Sqrt(Mathf.Pow(aimX, 2) + Mathf.Pow(aimY, 2));
-
-
-
 
         if (aimDelta > togDead) //if diff is greater than deadzone
         {
@@ -65,26 +56,18 @@ public class MousePos : MonoBehaviour {
             MouseRotation(); //set sprite
 
         }
-
-        
-
     }
     
     // Calculate angle from controller
     void StickAngle() {
-
         //2 components physics
         RAngle = (Mathf.Atan2(aimY, aimX) * Mathf.Rad2Deg);
-
     }
 
     // Changes sprite according to mouse angle
     void MouseRotation() {
         // call mouse angle
         float angle = RAngle;
-
-        //current state
-        
 
         // Switch case to change sprite
         if (angle <= 22.5 && angle > -22.5) {  // East
@@ -116,8 +99,5 @@ public class MousePos : MonoBehaviour {
         //Set Animator and Sprite
         anim.SetInteger("lookdir", lookdir);
         anim.SetBool("flipdir", flipdir);
-
-
-
     }
 }

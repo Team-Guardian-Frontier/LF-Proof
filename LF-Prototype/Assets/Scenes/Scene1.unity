@@ -1884,6 +1884,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3893932379295123723, guid: d80e97b456846544c99ffbe3b1ba8d76,
+        type: 3}
+      propertyPath: moveSpeed
+      value: 0.025
+      objectReference: {fileID: 0}
     - target: {fileID: 3893932379295123724, guid: d80e97b456846544c99ffbe3b1ba8d76,
         type: 3}
       propertyPath: m_Name
@@ -1991,6 +1996,11 @@ PrefabInstance:
         type: 3}
       propertyPath: aimYInput
       value: P2Vertical
+      objectReference: {fileID: 0}
+    - target: {fileID: 7336647520444655602, guid: cf19703fd93fe1d4da72465d2982df45,
+        type: 3}
+      propertyPath: moveSpeed
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 7336647520444655603, guid: cf19703fd93fe1d4da72465d2982df45,
         type: 3}

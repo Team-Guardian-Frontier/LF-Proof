@@ -239,6 +239,4 @@ public class Food : MonoBehaviour, IPooledObject {
     }
     //oncollisionenter
     //delete the food here, not in the fruit handler.
-
 }
-
